@@ -1,7 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+
 html, body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
 }
 
 div, input {
@@ -16,6 +17,11 @@ a {
 
 input:focus {
   outline: none;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, button, ul, li {
+  color: #333;
+  font-family: 'Roboto Condensed', sans-serif, serif;
 }
 
 #root-container {
@@ -47,9 +53,93 @@ input:focus {
   background-color: rgb(33, 178, 254);
 }
 
+
+#app-name {
+  width: 100%;
+  flex: 0 0 50px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+
+  background-color: red;
+  padding-left: 10px;
+}
+
+#middle-container {
+  width: 100%;
+  flex: 1 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background-color: blue;
+}
+
+#register-form {
+  background-color: orange;
+  width: 80%;
+}
+
+#next {
+  width: 100%;
+  flex: 0 0 150px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  background-color: yellow;
+}
+
+#app-name a {
+  font-size: 30px;
+
+  /*margin-top: 10px;*/
+  /*margin-left: 10px;*/
+}
+
+#register-form h1 {
+  font-weight: 100;
+}
+
+#register-form input {
+  height: 50px;
+  width: 100%;
+
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  padding-left: 8px;
+
+  font-size: 20px;
+  font-weight: 300;
+  color: #444;
+}
+
+#register-form input:focus {
+  border: 2px solid #aaa;
+}
+
+#next-button {
+  height: 50px;
+  width: 130px;
+
+  border: none;
+  border-radius: 5px;
+
+  background-color: #ccc;
+
+  font-size: 20px;
+  color: white;
+}
+
 @media all and (max-height: 450px) {
   #root-container {
-    height: 450px;
+    height: 300px;
   }
 }
 
@@ -78,82 +168,21 @@ input:focus {
 @media all and (max-width: 770px) {
   #root-container {
     flex-wrap: wrap;
-    height: 1400px;
+    /*height: 1400px;*/
   }
 
   #left-container {
     flex: 0 0 100%;
-    height: 600px;
+    height: 400px;
     /*background-color: purple;*/
   }
 
   #right-container {
-    height: 900px;
+    height: 500px;
     flex: 0 0 100%;
   }
-}
 
-#app-name {
-  width: 100%;
-  flex: 0 0 100px;
-
-  background-color: red;
-  /*padding: 20px 20px;*/
-}
-
-#register-form {
-  width: 100%;
-  flex: 1 0 auto;
-
-  background-color: blue;
-  /*padding-left: 60px;*/
-}
-
-#next {
-  width: 100%;
-  flex: 0 0 150px;
-
-  background-color: yellow;
-}
-
-#app-name a {
-  color: #777;
-  font-size: 30px;
-
-  /*margin-top: 10px;*/
-  /*margin-left: 10px;*/
-}
-
-#register-form h1 {
-  font-weight: 100;
-}
-
-#register-form input {
-  height: 35px;
-  width: 200px;
-
-  border: 2px solid #ddd;
-  border-radius: 5px;
-  padding-left: 8px;
-
-  font-size: 20px;
-  font-weight: 300;
-  color: #444;
-}
-
-#register-form input:focus {
-  border: 2px solid #aaa;
-}
-
-#next-button {
-  height: 50px;
-  width: 130px;
-
-  border: none;
-  border-radius: 5px;
-
-  background-color: #ccc;
-
-  font-size: 20px;
-  color: white;
+  #register-form {
+    width: 65%;
+  }
 }
