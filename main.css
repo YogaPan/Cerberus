@@ -63,7 +63,7 @@ h1, h2, h3, h4, h5, h6, p, a, button, ul, li {
   align-items: center;
   justify-content: flex-start;
 
-  background-color: red;
+  /*background-color: red;*/
   padding-left: 10px;
 }
 
@@ -76,11 +76,11 @@ h1, h2, h3, h4, h5, h6, p, a, button, ul, li {
   align-items: center;
   justify-content: center;
 
-  background-color: blue;
+  /*background-color: blue;*/
 }
 
 #register-form {
-  background-color: orange;
+  /*background-color: orange;*/
   width: 80%;
 }
 
@@ -93,7 +93,7 @@ h1, h2, h3, h4, h5, h6, p, a, button, ul, li {
   align-items: center;
   justify-content: center;
 
-  background-color: yellow;
+  /*background-color: yellow;*/
 }
 
 #app-name a {
@@ -113,7 +113,7 @@ h1, h2, h3, h4, h5, h6, p, a, button, ul, li {
 
   border: 2px solid #ddd;
   border-radius: 5px;
-  padding-left: 8px;
+  padding-left: 10px;
 
   font-size: 20px;
   font-weight: 300;
