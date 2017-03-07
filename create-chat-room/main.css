@@ -1,11 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
 
-html, body {
+html, body, div, h1, h2, h3, h4, h5, h6, p, a, ul, ol, li, button, input {
   margin: 0;
   padding: 0;
+
+  color: #333;
+  font-family: 'Roboto Condensed', helvetica sans-serif, serif;
 }
 
-div, input {
+div, input, button {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
@@ -17,11 +20,6 @@ a {
 
 input:focus {
   outline: none;
-}
-
-h1, h2, h3, h4, h5, h6, p, a, button, ul, li {
-  color: #333;
-  font-family: 'Roboto Condensed', sans-serif, serif;
 }
 
 #root-container {
@@ -50,7 +48,8 @@ h1, h2, h3, h4, h5, h6, p, a, button, ul, li {
 #right-container {
   flex: 1 0 auto;
   height: 100%;
-  background-color: rgb(33, 178, 254);
+  background-color: #222;
+  /*background-color: rgb(33, 178, 254);*/
 }
 
 
@@ -107,9 +106,15 @@ h1, h2, h3, h4, h5, h6, p, a, button, ul, li {
   font-weight: 100;
 }
 
+#register-form p {
+  margin-top: 20px;
+}
+
 #register-form input {
   height: 50px;
   width: 100%;
+
+  margin-top: 10px;
 
   border: 2px solid #ddd;
   border-radius: 5px;
@@ -121,7 +126,7 @@ h1, h2, h3, h4, h5, h6, p, a, button, ul, li {
 }
 
 #register-form input:focus {
-  border: 2px solid #aaa;
+  border: 2px solid #888;
 }
 
 #next-button {
@@ -144,7 +149,7 @@ h1, h2, h3, h4, h5, h6, p, a, button, ul, li {
 
 @media all and (max-height: 450px) {
   #root-container {
-    height: 300px;
+    height: 450px;
   }
 }
 
