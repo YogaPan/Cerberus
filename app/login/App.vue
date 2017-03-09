@@ -1,3 +1,30 @@
+<template>
+  <div id="root-container">
+    <div id="top-container">
+      <a href="#">Corna</a>
+    </div>
+
+    <div id="middle-container">
+      <div id="login-form">
+        <h1>Sign in</h1>
+        <p>Enter your email address and password</p>
+        <input id="email" type="email" placeholder="email">
+        <input id="password" type="password" placeholder="password">
+        <button>sign in -></button>
+      </div>
+    </div>
+
+    <div id="bottom-container">
+
+    </div>
+  </div>
+</template>
+
+<script>
+
+</script>
+
+<style>
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
 
 html, body, div, h1, h2, h3, h4, h5, h6, p, a, ul, ol, li, button, input {
@@ -64,9 +91,8 @@ input:focus {
   background-color: #222;
 }
 
-#register-form {
+#login-form {
   flex: 0 0 400px;
-
   width: 650px;
 
   display: flex;
@@ -84,14 +110,13 @@ input:focus {
   font-size: 30px;
 }
 
-#register-form h1 {
+#login-form h1 {
   font-size: 40px;
-  /*margin-top: 10px;*/
 }
 
-#register-form input {
+#login-form input {
   height: 40px;
-  width: 70%;
+  width: 80%;
 
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -100,24 +125,20 @@ input:focus {
   font-size: 20px;
 }
 
-#register-form input:focus {
+#login-form input:focus {
   border: 2px solid #888;
   padding-left: 9px;
 }
 
 #email {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 #password {
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
-#password-repeat {
-  margin-top: 8px;
-}
-
-#register-form button {
+#login-form button {
   height: 50px;
   width: 200px;
 
@@ -131,7 +152,7 @@ input:focus {
   color: white;
 }
 
-#register-form button:hover {
+#login-form button:hover {
   background-color: #333;
   transition: .2s;
 }
@@ -171,9 +192,10 @@ input:focus {
     height: 450px;
   }
 
-  #register-form {
+  #login-form {
     height: 525px;
     width: 100%;
     /*background-color: black;*/
   }
 }
+</style>

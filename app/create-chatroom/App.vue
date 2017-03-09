@@ -1,3 +1,34 @@
+<template>
+  <div id="root-container">
+    <div id="left-container">
+      <div id="app-name">
+        <a href="#">Corna</a>
+      </div>
+
+      <div id="middle-container">
+        <div id="register-form">
+          <h1>Create new Chatroom</h1>
+          <p>Your room name</p>
+          <input type="text" placeholder="#room name">
+        </div>
+      </div>
+
+      <div id="next">
+        <button id="next-button">Next -></button>
+      </div>
+    </div>
+
+    <div id="right-container">
+
+    </div>
+  </div>
+</template>
+
+<script>
+
+</script>
+
+<style>
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
 
 html, body, div, h1, h2, h3, h4, h5, h6, p, a, ul, ol, li, button, input {
@@ -196,3 +227,4 @@ input:focus {
     width: 65%;
   }
 }
+</style>
