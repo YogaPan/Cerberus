@@ -3,9 +3,9 @@ var webpack = require('webpack')
 
 module.exports = {
   entry: {
-    'create-chatroom': buildEntryPoint('./app/create-chatroom/index.js'),
-    login: buildEntryPoint('./app/login/index.js'),
-    register: buildEntryPoint('./app/register/index.js')
+    'create-chatroom': './app/create-chatroom/index.js',
+    login: './app/login/index.js',
+    register: './app/register/index.js'
   },
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -71,12 +71,4 @@ if (process.env.NODE_ENV === 'production') {
       minimize: true
     })
   ])
-}
-
-function buildEntryPoint(entryPoint) {
-  return [
-    'webpack-dev-server/client?http://localhost:3000',
-    'webpack/hot/only-dev-server',
-    entryPoint
-  ]
 }
