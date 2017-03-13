@@ -9,6 +9,7 @@
         <h1>Sign up</h1>
         <p :class="isError">{{ promptMessage }}</p>
 
+        <input v-model="username" id="username" type="text" placeholder="username">
         <input v-model="email" id="email" type="email" placeholder="email">
         <input v-model="password" id="password" type="password" placeholder="password">
         <input v-model="passwordRepeat" id="password-repeat" type="password" placeholder="password again">
@@ -29,6 +30,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      username: '',
       email: '',
       password: '',
       passwordRepeat: '',
@@ -45,6 +47,12 @@ export default {
   },
   methods: {
     submit() {
+      if (this.username === '') {
+        this.promptMessage = 'please fill in your username'
+        this.error = true
+        return
+      }
+
       if (this.email === '') {
         this.promptMessage = 'please fill in your email address'
         this.error = true
@@ -77,12 +85,13 @@ export default {
       }
 
       axios.post('/', {
+        username: this.username,
         email: this.email,
         password: this.password
       }).then(response => {
         console.log(response);
       }).catch(error => {
-        console.log(error);
+        console.error(error);
       });
     }
   }
@@ -198,8 +207,12 @@ input:focus {
   padding-left: 9px;
 }
 
-#email {
+#username {
   margin-top: 20px;
+}
+
+#email {
+  margin-top: 8px;
 }
 
 #password {
