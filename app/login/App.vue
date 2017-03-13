@@ -94,6 +94,10 @@ input:focus {
   outline: none;
 }
 
+.error-message {
+  color: red;
+}
+
 #root-container {
   height: 100vh;
 
@@ -161,7 +165,7 @@ input:focus {
 
 #login-form input {
   height: 40px;
-  width: 80%;
+  width: 70%;
 
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -173,6 +177,10 @@ input:focus {
 #login-form input:focus {
   border: 2px solid #888;
   padding-left: 9px;
+}
+
+#login-form input::placeholder {
+  color: #ccc;
 }
 
 #email {
@@ -200,10 +208,6 @@ input:focus {
 #login-form button:hover {
   background-color: #512DA8;
   transition: .2s;
-}
-
-.error-message {
-  color: red;
 }
 
 @media all and (max-height: 650px) {

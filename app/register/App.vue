@@ -124,6 +124,10 @@ input:focus {
   outline: none;
 }
 
+.error-message {
+  color: red;
+}
+
 #root-container {
   height: 100vh;
 
@@ -207,6 +211,10 @@ input:focus {
   padding-left: 9px;
 }
 
+#register-form input::placeholder {
+  color: #ccc;
+}
+
 #username {
   margin-top: 20px;
 }
@@ -242,10 +250,6 @@ input:focus {
   /*background-color: #333;*/
   background-color: #512da8;
   transition: .2s;
-}
-
-.error-message {
-  color: red;
 }
 
 @media all and (max-height: 650px) {
