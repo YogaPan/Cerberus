@@ -1,7 +1,7 @@
 <template>
   <div id="root-container">
     <div id="top-container">
-      <a href="#">Corna</a>
+      <a href="/">Corna</a>
     </div>
 
     <div id="middle-container">
@@ -34,7 +34,7 @@ export default {
       email: '',
       password: '',
       passwordRepeat: '',
-      promptMessage: 'Enter your email and password',
+      promptMessage: 'Enter your username, email and password',
       error: false
     }
   },
@@ -84,15 +84,25 @@ export default {
         return
       }
 
-      axios.post('/', {
+      axios.post('/register', {
         username: this.username,
         email: this.email,
         password: this.password
       }).then(response => {
-        console.log(response);
+        const body = response.data
+
+        if (body.success) {
+          document.location.href = "/"
+        } else {
+          this.promptMessage = body.message
+          this.error = true
+        }
       }).catch(error => {
-        console.error(error);
-      });
+        this.promptMessage = error.message
+        this.error = true
+
+        console.error(error)
+      })
     }
   }
 }

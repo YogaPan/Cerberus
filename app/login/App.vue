@@ -1,7 +1,7 @@
 <template>
   <div id="root-container">
     <div id="top-container">
-      <a href="#">Corna</a>
+      <a href="/">Corna</a>
     </div>
 
     <div id="middle-container">
@@ -9,7 +9,7 @@
         <h1>Sign in</h1>
         <p :class="isError">{{ promptMessage }}</p>
 
-        <input v-model="email" id="email" type="email" placeholder="email">
+        <input v-model="username" id="username" type="text" placeholder="username or email">
         <input v-model="password" id="password" type="password" placeholder="password">
 
         <button>sign in -></button>
@@ -23,14 +23,14 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 
 export default {
   data() {
     return {
-      email: '',
+      username: '',
       password: '',
-      promptMessage: 'Enter your email address and password',
+      promptMessage: 'Enter your username and password',
       error: false
     }
   },
@@ -43,8 +43,10 @@ export default {
   },
   methods: {
     submit() {
-      if (this.email === '') {
-        this.promptMessage = 'fill in your email address'
+      var isEmail
+
+      if (this.username === '') {
+        this.promptMessage = 'fill in your username or email address'
         this.error = true
         return
       }
@@ -55,12 +57,30 @@ export default {
         return
       }
 
-      axios.post('/', {
-        email: this.email,
-        password: this.password
+      // Check use email or username.
+      if (/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(this.username) === true) {
+        isEmail = true
+      } else {
+        isEmail = false
+      }
+
+      axios.post('/login', {
+        username: this.username,
+        password: this.password,
+        isEmail: isEmail
       }).then(response => {
-        console.log(response)
+        const body = response.data
+
+        if (body.success) {
+          document.location.href = '/'
+        } else {
+          this.promptMessage = body.message
+          this.error = true
+        }
       }).catch(error => {
+        this.promptMessage = error.message
+        this.error = true
+
         console.error(error)
       })
     }
@@ -183,7 +203,7 @@ input:focus {
   color: #ccc;
 }
 
-#email {
+#username {
   margin-top: 30px;
 }
 
