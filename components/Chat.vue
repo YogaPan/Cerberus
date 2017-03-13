@@ -2,29 +2,30 @@
   <div id="app-chat">
     <div class="message-container">
       <div v-for="message in messages">
-            <div class="user">
-              <p>userID</p>
-            </div>
+        <div class="user">
+          <p>userID</p>
+        </div>
+
         <div class="single-message">
 
 
-            <div class="message">
-              <p>{{ message.content }}</p>
+          <div class="message">
+            <p>{{ message.content }}</p>
+          </div>
+
+          <div class="msg-status">
+            <div class="msg-status-read" v-if="message.read">
+              已讀
             </div>
 
-            <div class="msg-status">
-              <div class="msg-status-read" v-if="message.read">
-                已讀
-              </div>
-
-              <div class="msg-status-read" v-else>
-               未讀
-              </div>
-
-              <div class="msg-status-time">
-               {{ message.time }}
-              </div>
+            <div class="msg-status-read" v-else>
+             未讀
             </div>
+
+            <div class="msg-status-time">
+             {{ message.time }}
+            </div>
+          </div>
 
         </div>
       </div>

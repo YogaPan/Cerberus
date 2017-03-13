@@ -5,14 +5,16 @@
     </div>
 
     <div id="middle-container">
-      <div id="register-form">
+      <form @submit.prevent="submit" id="register-form">
         <h1>Sign up</h1>
-        <p>Enter your email and password</p>
-        <input id="email" type="email" placeholder="email">
-        <input id="password" type="password" placeholder="password">
-        <input id="password-repeat" type="password" placeholder="password again">
+        <p :class="isError">{{ promptMessage }}</p>
+
+        <input v-model="email" id="email" type="email" placeholder="email">
+        <input v-model="password" id="password" type="password" placeholder="password">
+        <input v-model="passwordRepeat" id="password-repeat" type="password" placeholder="password again">
+
         <button>sign up -></button>
-      </div>
+      </form>
     </div>
 
     <div id="bottom-container">
@@ -22,6 +24,69 @@
 </template>
 
 <script>
+import axios from 'axios'
+
+export default {
+  data() {
+    return {
+      email: '',
+      password: '',
+      passwordRepeat: '',
+      promptMessage: 'Enter your email and password',
+      error: false
+    }
+  },
+  computed: {
+    isError() {
+      return {
+        'error-message': this.error
+      }
+    }
+  },
+  methods: {
+    submit() {
+      if (this.email === '') {
+        this.promptMessage = 'please fill in your email address'
+        this.error = true
+        return
+      }
+
+      if (this.password === '') {
+        this.promptMessage = 'please fill in your password'
+        this.error = true
+        return
+      }
+
+      if (this.password.length <= 8) {
+        this.promptMessage = 'password must more than 8 charactor'
+        this.error = true
+        return
+      }
+
+      if (this.passwordRepeat === '') {
+        this.promptMessage = 'please fill in your password again'
+        this.error = true
+        return
+      }
+
+      if (this.password !== this.passwordRepeat) {
+        this.promptMessage = 'password repeat not correct'
+        this.passwordRepeat = ''
+        this.error = true
+        return
+      }
+
+      axios.post('/', {
+        email: this.email,
+        password: this.password
+      }).then(response => {
+        console.log(response);
+      }).catch(error => {
+        console.log(error);
+      });
+    }
+  }
+}
 
 </script>
 
@@ -154,14 +219,20 @@ input:focus {
   border: none;
   border-radius: 5px;
 
-  background-color: #666;
+  /*background-color: #666;*/
+  background-color: #333;
   font-size: 20px;
   color: white;
 }
 
 #register-form button:hover {
-  background-color: #333;
+  /*background-color: #333;*/
+  background-color: #512da8;
   transition: .2s;
+}
+
+.error-message {
+  color: red;
 }
 
 @media all and (max-height: 650px) {

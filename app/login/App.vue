@@ -5,13 +5,15 @@
     </div>
 
     <div id="middle-container">
-      <div id="login-form">
+      <form @submit.prevent="submit" id="login-form">
         <h1>Sign in</h1>
-        <p>Enter your email address and password</p>
-        <input id="email" type="email" placeholder="email">
-        <input id="password" type="password" placeholder="password">
+        <p :class="isError">{{ promptMessage }}</p>
+
+        <input v-model="email" id="email" type="email" placeholder="email">
+        <input v-model="password" id="password" type="password" placeholder="password">
+
         <button>sign in -></button>
-      </div>
+      </form>
     </div>
 
     <div id="bottom-container">
@@ -21,6 +23,49 @@
 </template>
 
 <script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      email: '',
+      password: '',
+      promptMessage: 'Enter your email address and password',
+      error: false
+    }
+  },
+  computed: {
+    isError() {
+      return {
+        'error-message': this.error
+      }
+    }
+  },
+  methods: {
+    submit() {
+      if (this.email === '') {
+        this.promptMessage = 'fill in your email address'
+        this.error = true
+        return
+      }
+
+      if (this.password === '') {
+        this.promptMessage = 'fill in your password'
+        this.error = true
+        return
+      }
+
+      axios.post('/', {
+        email: this.email,
+        password: this.password
+      }).then(response => {
+        console.log(response)
+      }).catch(error => {
+        console.error(error)
+      })
+    }
+  }
+}
 
 </script>
 
@@ -147,14 +192,18 @@ input:focus {
   border: none;
   border-radius: 5px;
 
-  background-color: #666;
+  background-color: #333;
   font-size: 20px;
   color: white;
 }
 
 #login-form button:hover {
-  background-color: #333;
+  background-color: #512DA8;
   transition: .2s;
+}
+
+.error-message {
+  color: red;
 }
 
 @media all and (max-height: 650px) {
