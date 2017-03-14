@@ -7,10 +7,10 @@
     <div id="middle-container">
       <form @submit.prevent="submit" id="login-form">
         <h1>Sign in</h1>
-        <p :class="isError">{{ promptMessage }}</p>
+        <p :class="isError()">{{ this.promptMessage }}</p>
 
-        <input v-model="username" id="username" type="text" placeholder="username or email">
-        <input v-model="password" id="password" type="password" placeholder="password">
+        <input v-model="username" id="username" :class="isError('username')" type="text" placeholder="username or email">
+        <input v-model="password" id="password" :class="isError('password')" type="password" placeholder="password">
 
         <button>sign in -></button>
       </form>
@@ -30,30 +30,37 @@ export default {
     return {
       username: '',
       password: '',
-      promptMessage: 'Enter your username and password',
-      error: false
-    }
-  },
-  computed: {
-    isError() {
-      return {
-        'error-message': this.error
-      }
+
+      errorType: '',
+      promptMessage: 'Enter your username and password'
     }
   },
   methods: {
+
+    isError(fieldName) {
+      if (fieldName) {
+        return {
+          'error-input': fieldName === this.errorType
+        }
+      } else {
+        return {
+          'error-message': this.errorType === '' ? false : true
+        }
+      }
+    },
+
     submit() {
       var isEmail
 
       if (this.username === '') {
-        this.promptMessage = 'fill in your username or email address'
-        this.error = true
+        this.errorType = 'username'
+        this.promptMessage = 'please fill in your username or email address'
         return
       }
 
       if (this.password === '') {
-        this.promptMessage = 'fill in your password'
-        this.error = true
+        this.errorType = 'password'
+        this.promptMessage = 'please fill in your password'
         return
       }
 
@@ -74,16 +81,17 @@ export default {
         if (body.success) {
           document.location.href = '/'
         } else {
+          this.errorType = 'login'
           this.promptMessage = body.message
-          this.error = true
         }
       }).catch(error => {
+        this.errorType = 'request'
         this.promptMessage = error.message
-        this.error = true
 
         console.error(error)
       })
     }
+
   }
 }
 
@@ -194,13 +202,27 @@ input:focus {
   font-size: 20px;
 }
 
+#login-form input::placeholder {
+  color: #ccc;
+}
+
 #login-form input:focus {
   border: 2px solid #888;
   padding-left: 9px;
 }
 
-#login-form input::placeholder {
-  color: #ccc;
+#login-form .error-input {
+  border: 2px solid red;
+  padding-left: 9px;
+  color: red;
+}
+
+#login-form .error-input::placeholder {
+  color: pink;
+}
+
+#login-form .error-input:focus {
+  border: 2px solid red;
 }
 
 #username {

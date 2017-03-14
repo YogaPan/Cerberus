@@ -7,12 +7,12 @@
     <div id="middle-container">
       <form @submit.prevent="submit" id="register-form">
         <h1>Sign up</h1>
-        <p :class="isError">{{ promptMessage }}</p>
+        <p :class="isError()">{{ promptMessage }}</p>
 
-        <input v-model="username" id="username" type="text" placeholder="username">
-        <input v-model="email" id="email" type="email" placeholder="email">
-        <input v-model="password" id="password" type="password" placeholder="password">
-        <input v-model="passwordRepeat" id="password-repeat" type="password" placeholder="password again">
+        <input v-model="username" id="username" :class="isError('username')" type="text" placeholder="username">
+        <input v-model="email" id="email" :class="isError('email')" type="email" placeholder="email">
+        <input v-model="password" id="password" :class="isError('password')" type="password" placeholder="password">
+        <input v-model="passwordRepeat" id="password-repeat" :class="isError('repeat')" type="password" placeholder="password again">
 
         <button>sign up -></button>
       </form>
@@ -34,53 +34,61 @@ export default {
       email: '',
       password: '',
       passwordRepeat: '',
-      promptMessage: 'Enter your username, email and password',
-      error: false
-    }
-  },
-  computed: {
-    isError() {
-      return {
-        'error-message': this.error
-      }
+
+      errorType: '',
+      promptMessage: 'Enter your username, email and password'
     }
   },
   methods: {
+
+    isError(fieldName) {
+      if (fieldName) {
+        return {
+          'error-input': fieldName === this.errorType
+        }
+      } else {
+        return {
+          'error-message': this.errorType === '' ? false : true
+        }
+      }
+    },
+
     submit() {
       if (this.username === '') {
+        this.errorType = 'username'
         this.promptMessage = 'please fill in your username'
-        this.error = true
         return
       }
 
       if (this.email === '') {
+        this.errorType = 'email'
         this.promptMessage = 'please fill in your email address'
-        this.error = true
         return
       }
 
       if (this.password === '') {
+        this.errorType = 'password'
         this.promptMessage = 'please fill in your password'
-        this.error = true
         return
       }
 
       if (this.password.length <= 8) {
+        this.errorType = 'password'
         this.promptMessage = 'password must more than 8 charactor'
-        this.error = true
         return
       }
 
       if (this.passwordRepeat === '') {
+        this.errorType = 'repeat'
         this.promptMessage = 'please fill in your password again'
-        this.error = true
         return
       }
 
       if (this.password !== this.passwordRepeat) {
+        this.errorType = 'repeat'
         this.promptMessage = 'password repeat not correct'
+
         this.passwordRepeat = ''
-        this.error = true
         return
       }
 
@@ -95,15 +103,16 @@ export default {
           document.location.href = "/"
         } else {
           this.promptMessage = body.message
-          this.error = true
+          this.errorType = 'register'
         }
       }).catch(error => {
         this.promptMessage = error.message
-        this.error = true
+        this.errorType = 'request'
 
         console.error(error)
       })
     }
+
   }
 }
 
@@ -216,13 +225,27 @@ input:focus {
   font-size: 20px;
 }
 
+#register-form input::placeholder {
+  color: #ccc;
+}
+
 #register-form input:focus {
   border: 2px solid #888;
   padding-left: 9px;
 }
 
-#register-form input::placeholder {
-  color: #ccc;
+#register-form .error-input {
+  border: 2px solid red;
+  padding-left: 9px;
+  color: red;
+}
+
+#register-form .error-input::placeholder {
+  color: pink;
+}
+
+#register-form .error-input:focus {
+  border: 2px solid red;
 }
 
 #username {
