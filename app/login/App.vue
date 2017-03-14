@@ -12,7 +12,10 @@
         <input v-model="username" id="username" :class="isError('username')" type="text" placeholder="username or email">
         <input v-model="password" id="password" :class="isError('password')" type="password" placeholder="password">
 
-        <button>sign in -></button>
+        <div id="button-container">
+          <button type="button" onclick="location.href='/register'">create account</button>
+          <button type="submit">sign in</button>
+        </div>
       </form>
     </div>
 
@@ -183,6 +186,15 @@ input:focus {
   background-color: white;
 }
 
+#button-container {
+  width: 70%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
 #top-container a {
   font-size: 30px;
 }
@@ -233,9 +245,9 @@ input:focus {
   margin-top: 10px;
 }
 
-#login-form button {
+#button-container button {
   height: 50px;
-  width: 200px;
+  flex: 0 0 47%;
 
   margin-top: 30px;
 
@@ -247,7 +259,7 @@ input:focus {
   color: white;
 }
 
-#login-form button:hover {
+#button-container button:hover {
   background-color: #512DA8;
   transition: .2s;
 }

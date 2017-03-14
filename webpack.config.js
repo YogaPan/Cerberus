@@ -6,7 +6,8 @@ module.exports = {
     'create-chatroom': './app/create-chatroom/index.js',
     login: './app/login/index.js',
     register: './app/register/index.js',
-    chatroom: './app/chatroom/index.js'
+    chatroom: './app/chatroom/index.js',
+    board: './app/board/index.js'
   },
   output: {
     path: path.resolve(__dirname, './dist'),

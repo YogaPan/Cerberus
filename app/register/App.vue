@@ -14,7 +14,7 @@
         <input v-model="password" id="password" :class="isError('password')" type="password" placeholder="password">
         <input v-model="passwordRepeat" id="password-repeat" :class="isError('repeat')" type="password" placeholder="password again">
 
-        <button>sign up -></button>
+        <button type="submit">sign up</button>
       </form>
     </div>
 
