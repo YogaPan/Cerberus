@@ -235,9 +235,8 @@ input:focus {
 }
 
 #register-form .error-input {
-  border: 2px solid red;
+  border: 2px solid pink;
   padding-left: 9px;
-  color: red;
 }
 
 #register-form .error-input::placeholder {
@@ -245,7 +244,7 @@ input:focus {
 }
 
 #register-form .error-input:focus {
-  border: 2px solid red;
+  border: 2px solid pink;
 }
 
 #username {

@@ -24,13 +24,13 @@
 
       <div id="room-container">
         <div id="room-1" class="room" v-for="room in rooms">
-          <img src="/assets/down-arrow.svg" alt="down arrow">
+          <!-- <img src="/assets/down-arrow.svg" alt="down arrow"> -->
           <h1>{{ room.name }}</h1>
           <p>{{ room.description }}</p>
         </div>
 
         <div id="room-add" class="room">
-          <img src="/assets/add.svg" alt="add">
+          <!-- <img src="/assets/add.svg" alt="add"> -->
         </div>
       </div>
 
@@ -103,8 +103,6 @@ input:focus {
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-
-  background-color: black;
 }
 
 #left-container {
@@ -122,23 +120,41 @@ input:focus {
 #right-container {
   flex: 1 0 0;
   height: 100%;
-  background-color: white;
 
-  padding: 30px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#info-container {
+  flex: 0 0 100px;
+  width: 100%;
+
+  position: relative;
+}
+
+#info-container:after {
+  position: absolute;
+
+  height: 2px;
+  width: 96%;
+
+  bottom: 0;
+  left: 2%;
+
+  content: "";
+  background-color: #eee;
+}
+
+#room-container {
+  flex: 1 0 0;
 
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  /*align-items: center;*/
-  justify-content: space-around;
-}
-
-#info-container {
-  /* TODO */
-}
-
-#room-container {
-  /* TODO */
+  align-items: center;
+  justify-content: center;
 }
 
 #me {
@@ -162,6 +178,10 @@ input:focus {
   font-size: 20px;
 }
 
+#me h1:hover {
+  cursor: pointer;
+}
+
 #down-arrow {
   margin-left: 10px;
 
@@ -179,6 +199,8 @@ input:focus {
 
   border-radius: 100%;
   background-color: white;
+
+  cursor: pointer;
 }
 
 #list {
@@ -188,7 +210,10 @@ input:focus {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
+
+  padding-top: 40px;
+  padding-left: 40px;
 
   background-color: #222;
 }
@@ -196,6 +221,10 @@ input:focus {
 #list a {
   font-size: 20px;
   color: #ccc;
+}
+
+#list a:hover {
+  background-color: white;
 }
 
 @media all and (max-height: 625px) {
