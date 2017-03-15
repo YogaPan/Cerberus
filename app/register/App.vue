@@ -74,7 +74,7 @@ export default {
 
       if (this.password.length <= 8) {
         this.errorType = 'password'
-        this.promptMessage = 'password must more than 8 charactor'
+        this.promptMessage = 'password must be more than 8 characters'
         return
       }
 
