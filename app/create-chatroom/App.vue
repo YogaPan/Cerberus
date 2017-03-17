@@ -36,7 +36,7 @@ html, body, div, h1, h2, h3, h4, h5, h6, p, a, ul, ol, li, button, input {
   padding: 0;
 
   color: #333;
-  font-family: 'Roboto Condensed', helvetica sans-serif, serif;
+  font-family: 'Roboto Condensed', 'helvetica', sans-serif, serif;
 }
 
 div, input, button {

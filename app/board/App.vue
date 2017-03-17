@@ -8,7 +8,7 @@
         <img id="down-arrow" src="/assets/down-arrow.svg" alt="down arrow">
       </div>
 
-      <div id="list">
+      <div id="list-container">
         <a href="#">Settings</a>
         <a href="#">Rooms</a>
         <a href="#">test</a>
@@ -69,7 +69,7 @@ html, body, div, h1, h2, h3, h4, h5, h6, p, a, ul, ol, li, button, input {
   padding: 0;
 
   color: #333;
-  font-family: 'Roboto Condensed', helvetica sans-serif, serif;
+  font-family: 'Roboto Condensed', 'helvetica', sans-serif, serif;
 }
 
 div, input, button {
@@ -84,15 +84,6 @@ a {
 
 input:focus {
   outline: none;
-}
-
-.room {
-  width: 30%;
-  height: 200px;
-
-  border: 2px solid #ccc;
-
-  background-color: white;
 }
 
 #root-container {
@@ -132,6 +123,11 @@ input:focus {
   width: 100%;
 
   position: relative;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 #info-container:after {
@@ -144,17 +140,33 @@ input:focus {
   left: 2%;
 
   content: "";
-  background-color: #eee;
+  background-color: #efefef;
+}
+
+#info-container h1 {
+  color: #555;
+  font-weight: 100;
 }
 
 #room-container {
   flex: 1 0 0;
+  width: 100%;
 
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  padding: 30px;
+}
+
+.room {
+  width: 30%;
+  height: 200px;
+
+  margin-left: 10px;
+
+  border: 2px solid #ccc;
+
+  background-color: #f8f8f8;
 }
 
 #me {
@@ -203,7 +215,7 @@ input:focus {
   cursor: pointer;
 }
 
-#list {
+#list-container {
   flex: 1 0 0;
   width: 100%;
 
@@ -212,19 +224,23 @@ input:focus {
   align-items: flex-start;
   justify-content: flex-start;
 
-  padding-top: 40px;
-  padding-left: 40px;
+  padding: 40px 0 0 40px;
 
   background-color: #222;
 }
 
-#list a {
+#list-container a {
   font-size: 20px;
   color: #ccc;
 }
 
-#list a:hover {
+#list-container > a + a {
+  margin-top: 10px;
+}
+
+#list-container a:hover {
   background-color: white;
+  color: black;
 }
 
 @media all and (max-height: 625px) {
