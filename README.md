@@ -8,6 +8,9 @@
 # install dependencies
 yarn install
 
+# start server at localhost:8888
+yarn start
+
 # serve with hot reload at localhost:8080
 yarn run dev
 
