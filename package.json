@@ -5,12 +5,16 @@
   "author": "Kyouken <yogapan85321@gmail.com>",
   "private": true,
   "scripts": {
+    "start": "cross-env NODE_ENV=production webpack --progress --hide-modules && node server.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
     "axios": "^0.15.3",
     "babel-preset-stage-2": "^6.22.0",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "mysql": "^2.13.0",
     "socket.io-client": "^1.7.3",
     "vue": "^2.2.1",
     "vue-router": "^2.3.0",
