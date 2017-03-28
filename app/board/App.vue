@@ -22,15 +22,22 @@
         <h1>Rooms</h1>
       </div>
 
-      <div id="room-container">
-        <div id="room-1" class="room" v-for="room in rooms">
-          <!-- <img src="/assets/down-arrow.svg" alt="down arrow"> -->
-          <h1>{{ room.name }}</h1>
-          <p>{{ room.description }}</p>
-        </div>
+      <div id="room-list">
+        <div id="room-container">
+          <div class="room" v-for="room in rooms">
+            <div class="room-content">
+              <!-- <img src="/assets/down-arrow.svg" alt="down arrow"> -->
+              <h1>{{ room.name }}</h1>
+              <p>{{ room.description }}</p>
+            </div>
+          </div>
 
-        <div id="room-add" class="room">
-          <!-- <img src="/assets/add.svg" alt="add"> -->
+          <div id="room-add" class="room">
+            <div class="room-content">
+              <p>+</p>
+              <!-- <img src="/assets/add.svg" alt="add"> -->
+            </div>
+          </div>
         </div>
       </div>
 
@@ -47,6 +54,7 @@ export default {
         { name: 'Final-project', description: 'test', src: '' },
         { name: 'Android', description: 'test', src: '' },
         { name: 'General', description: 'test', src: '' },
+        { name: 'Random', description: 'test', src: '' },
         { name: 'Random', description: 'test', src: '' }
       ]
     }
@@ -148,25 +156,38 @@ input:focus {
   font-weight: 100;
 }
 
-#room-container {
+#room-list {
   flex: 1 0 0;
   width: 100%;
+  overflow: scroll;
+}
 
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+#room-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
 
   padding: 30px;
 }
 
 .room {
-  width: 30%;
-  height: 200px;
+  width: calc(100% / 4);
 
-  margin-left: 10px;
+  margin-bottom: 40px;
 
-  border: 2px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   background-color: #f8f8f8;
+}
+
+.room-content {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #ccc;
 }
 
 #me {
@@ -247,8 +268,16 @@ input:focus {
   /* TODO */
 }
 
-@media all and (max-width: 650px) {
-  /* TODO */
+@media all and (max-width: 1225px) {
+  .room {
+    width: calc(100% / 3);
+  }
+}
+
+@media all and (max-width: 975px) {
+  .room {
+    width: calc(100% / 2);
+  }
 }
 
 </style>
