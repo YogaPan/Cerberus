@@ -32,10 +32,9 @@
             </div>
           </div>
 
-          <div id="room-add" class="room">
+          <div class="room">
             <div class="room-content">
-              <p>+</p>
-              <!-- <img src="/assets/add.svg" alt="add"> -->
+              <img id="room-add" src="/assets/plus-sign.svg" alt="add">
             </div>
           </div>
         </div>
@@ -262,6 +261,11 @@ input:focus {
 #list-container a:hover {
   background-color: white;
   color: black;
+}
+
+#room-add {
+  height: 100%;
+  width: 100%;
 }
 
 @media all and (max-height: 625px) {
