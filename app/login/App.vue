@@ -101,30 +101,6 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
-
-html, body, div, h1, h2, h3, h4, h5, h6, p, a, ul, ol, li, button, input {
-  margin: 0;
-  padding: 0;
-
-  color: #333;
-  font-family: 'Roboto Condensed', 'helvetica', sans-serif, serif;
-}
-
-div, input, button {
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-a {
-  text-decoration: none;
-}
-
-input:focus {
-  outline: none;
-}
-
 .error-message {
   color: red;
 }
@@ -141,7 +117,7 @@ input:focus {
 }
 
 #top-container {
-  flex: 0 0 75px;
+  flex: 0 0 60px;
   width: 100%;
 
   display: flex;
@@ -280,14 +256,14 @@ input:focus {
     top: 0;
 
     display: flex;
-    height: 75px;
+    height: 60px;
 
     border-bottom: 3px solid #fafafa;
   }
 
   #middle-container {
     display: block;
-    margin-top: 75px;
+    margin-top: 60px;
 
     padding-top: 30px;
     padding-bottom: 30px;
@@ -301,7 +277,6 @@ input:focus {
   #login-form {
     height: 525px;
     width: 100%;
-    /*background-color: black;*/
   }
 }
 </style>

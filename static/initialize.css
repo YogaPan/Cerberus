@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+
+html, body, div, h1, h2, h3, h4, h5, h6, p, a, ul, ol, li, button, input {
+  margin: 0;
+  padding: 0;
+
+  color: #333;
+  font-family: 'Roboto Condensed', 'helvetica', sans-serif, serif;
+}
+
+div, input, button {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style-type: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+button {
+  border: none;
+}

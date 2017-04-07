@@ -73,8 +73,8 @@ export default {
         this.$store.dispatch('submit', this.input)
         this.input = ''
 
-        const messageContainer = this.$el.querySelector(".message-container");
-        messageContainer.scrollTop = messageContainer.scrollHeight;
+        const messageContainer = this.$el.querySelector(".message-container")
+        messageContainer.scrollTop = messageContainer.scrollHeight
       }
     }
   }

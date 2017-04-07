@@ -1,43 +1,44 @@
 <template>
   <div id="root-container">
-    <div id="left-container">
 
-      <div id="me">
-        <div id="head"></div>
-        <h1>YogaPan</h1>
-        <img id="down-arrow" src="/assets/down-arrow.svg" alt="down arrow">
-      </div>
-
-      <div id="list-container">
-        <a href="#">Settings</a>
-        <a href="#">Rooms</a>
-        <a href="#">test</a>
-        <a href="#">test</a>
-      </div>
+    <div id="top-container">
+      <button id="menu" href="#menu" @click="toggleLeftBar">
+        &#9776;
+      </button>
+      <a id="corna" href="/">Corna</a>
     </div>
 
-    <div id="right-container">
+    <div id="middle-container">
 
-      <div id="info-container">
-        <h1>Rooms</h1>
+      <div id="left-container" v-if="showLeftBar">
+        <div id="list-container">
+
+          <ul>
+            <li :class="['list-item', isActive('rooms')]">
+              <router-link to="/rooms">
+                <img src="/assets/chat.png" alt="chat">
+                <span>Rooms</span>
+              </router-link>
+            </li>
+            <li :class="['list-item', isActive('settings')]">
+              <router-link to="/settings">
+                <img src="/assets/gear.png" alt="gear">
+                <span>Settings</span>
+              </router-link>
+            </li>
+            <li :class="['list-item', isActive('logout')]">
+              <router-link to="/settings">
+                <img src="/assets/gear.png" alt="gear">
+                <span>Logout</span>
+              </router-link>
+            </li>
+          </ul>
+
+        </div>
       </div>
 
-      <div id="room-list">
-        <div id="room-container">
-          <div class="room" v-for="room in rooms">
-            <div class="room-content">
-              <!-- <img src="/assets/down-arrow.svg" alt="down arrow"> -->
-              <h1>{{ room.name }}</h1>
-              <p>{{ room.description }}</p>
-            </div>
-          </div>
-
-          <div class="room">
-            <div class="room-content">
-              <img id="room-add" src="/assets/plus-sign.svg" alt="add">
-            </div>
-          </div>
-        </div>
+      <div id="right-container">
+        <router-view></router-view>
       </div>
 
     </div>
@@ -48,85 +49,42 @@
 
 export default {
   data() {
+    const showLeftBar = (window.innerWidth > 700 ? true : false)
+
     return {
-      rooms: [
-        { name: 'Final-project', description: 'test', src: '' },
-        { name: 'Android', description: 'test', src: '' },
-        { name: 'General', description: 'test', src: '' },
-        { name: 'Random', description: 'test', src: '' },
-        { name: 'Random', description: 'test', src: '' }
-      ]
+      showLeftBar
     }
   },
   computed: {
     /* TODO */
   },
   methods: {
-    /* TODO */
+    toggleLeftBar() {
+      this.showLeftBar = !this.showLeftBar
+    },
+    isActive(item) {
+      return {
+        'active': item === this.$route.name
+      }
+    }
   }
 }
 
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
-
-html, body, div, h1, h2, h3, h4, h5, h6, p, a, ul, ol, li, button, input {
-  margin: 0;
-  padding: 0;
-
-  color: #333;
-  font-family: 'Roboto Condensed', 'helvetica', sans-serif, serif;
-}
-
-div, input, button {
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-a {
-  text-decoration: none;
-}
-
-input:focus {
-  outline: none;
-}
-
 #root-container {
   height: 100vh;
   width: 100vw;
 
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-#left-container {
-  flex: 0 0 250px;
-  height: 100%;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-
-  background-color: blue;
-}
-
-#right-container {
-  flex: 1 0 0;
-  height: 100%;
-
-  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
 }
 
-#info-container {
-  flex: 0 0 100px;
+#top-container {
+  flex: 0 0 60px;
   width: 100%;
 
   position: relative;
@@ -137,135 +95,119 @@ input:focus {
   justify-content: center;
 }
 
-#info-container:after {
-  position: absolute;
-
-  height: 2px;
-  width: 96%;
-
-  bottom: 0;
-  left: 2%;
-
-  content: "";
-  background-color: #efefef;
-}
-
-#info-container h1 {
-  color: #555;
-  font-weight: 100;
-}
-
-#room-list {
+#middle-container {
   flex: 1 0 0;
   width: 100%;
   overflow: scroll;
-}
 
-#room-container {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
-
-  padding: 30px;
 }
 
-.room {
-  width: calc(100% / 4);
-
-  margin-bottom: 40px;
+#left-container {
+  flex: 0 0 200px;
+  height: 100%;
 
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+
+  border-top: 2px solid #f8f8f8;
+  padding-top: 25px;
+  padding-left: 20px;
+  padding-right: 15px;
+
+  background-color: white;
+}
+
+#right-container {
+  flex: 1 0 10px;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 
   background-color: #f8f8f8;
 }
 
-.room-content {
-  width: 200px;
-  height: 200px;
-  border: 1px solid #ccc;
+#list-container {
+  background-color: white;
+  width: 100%;
 }
 
-#me {
-  width: 100%;
-  flex: 0 0 75px;
+.list-item {
+  /* TODO */
+}
 
+.list-item a {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
 
-  padding-left: 15px;
+  padding-left: 5px;
+  height: 30px;
+  border-radius: 5px;
 
+  font-size: 15px;
+  font-weight: 400;
+  font-family: 'helvetica', sans-serif;
+  color: #555;
+}
+
+.list-item:hover a {
+  background-color: #444;
+  color: white;
+}
+
+.list-item:hover img {
+  filter: invert(1.0);
+}
+
+.list-item img {
+  height: 20px;
+  width: 20px;
+
+  margin-right: 10px;
+
+  filter: invert(.5);
+}
+
+#menu {
+  position: absolute;
+  left: 30px;
+
+  color: #999;
+  font-size: 20px;
+  background-color: white;
+  cursor: pointer;
+}
+
+#menu:focus {
+  outline: none;
+}
+
+#corna {
+  font-size: 25px;
+}
+
+.active a {
   background-color: #512DA8;
+  color: white;
 }
 
-#me h1 {
-  margin-left: 15px;
-
-  color: #eee;
-  font-size: 20px;
+.active:hover a {
+  background-color: #512DA8;
+  color: white;
 }
 
-#me h1:hover {
-  cursor: pointer;
-}
-
-#down-arrow {
-  margin-left: 10px;
-
-  height: 25px;
-  width: 25px;
-}
-
-#down-arrow:hover {
-  cursor: pointer;
-}
-
-#head {
-  width: 40px;
-  height: 40px;
-
-  border-radius: 100%;
-  background-color: white;
-
-  cursor: pointer;
-}
-
-#list-container {
-  flex: 1 0 0;
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-
-  padding: 40px 0 0 40px;
-
-  background-color: #222;
-}
-
-#list-container a {
-  font-size: 20px;
-  color: #ccc;
-}
-
-#list-container > a + a {
-  margin-top: 10px;
-}
-
-#list-container a:hover {
-  background-color: white;
-  color: black;
-}
-
-#room-add {
-  height: 100%;
-  width: 100%;
+.active img {
+  filter: invert(1.0);
 }
 
 @media all and (max-height: 625px) {
@@ -273,14 +215,21 @@ input:focus {
 }
 
 @media all and (max-width: 1225px) {
-  .room {
-    width: calc(100% / 3);
-  }
+  /* TODO */
 }
 
 @media all and (max-width: 975px) {
-  .room {
-    width: calc(100% / 2);
+  /* TODO */
+}
+
+@media all and (max-width: 700px) {
+  #left-container {
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 60px;
+
+    width: 200px;
   }
 }
 

@@ -16,17 +16,6 @@ export default {
 </script>
 
 <style>
-* {
-   -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-html, body {
-  margin: 0;
-  padding: 0;
-}
-
 #app {
   margin: 0;
   position: relative;
