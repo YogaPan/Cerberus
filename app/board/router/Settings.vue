@@ -11,7 +11,7 @@
         </div>
 
         <div id="profile-right">
-          <h2 id="username">Nick Name</h2>
+          <h2 id="username">Username</h2>
           <input type="text" value="yogapan85321">
           <h2 id="nickname">Nick Name</h2>
           <input type="text" value="東谷羽琉秀緒">

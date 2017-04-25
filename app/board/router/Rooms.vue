@@ -1,6 +1,6 @@
 <template>
   <div id="room-container">
-    <div class="room" v-for="room in rooms">
+    <div class="room" v-for="room in rooms" @click="toChatroom">
       <div class="room-content">
         <div class="room-description">
           <h1>{{ room.name }}</h1>
@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <div class="room">
+    <div class="room" @click="createChatroom">
       <div id="room-add">
         <img src="/assets/plus-sign.svg" alt="add">
       </div>
@@ -40,7 +40,12 @@ export default {
     /* TODO */
   },
   methods: {
-    /* TODO */
+    toChatroom() {
+      document.location.href = '/chatroom'
+    },
+    createChatroom() {
+      document.location.href = '/create-chatroom'
+    }
   }
 }
 </script>
