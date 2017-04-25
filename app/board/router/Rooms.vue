@@ -2,14 +2,22 @@
   <div id="room-container">
     <div class="room" v-for="room in rooms">
       <div class="room-content">
-        <h1>{{ room.name }}</h1>
-        <p>{{ room.description }}</p>
+        <div class="room-description">
+          <h1>{{ room.name }}</h1>
+          <p>{{ room.description }}</p>
+        </div>
+        <div class="room-people">
+          <div class="person"></div>
+          <div class="person"></div>
+          <div class="person"></div>
+          <div class="person"></div>
+        </div>
       </div>
     </div>
 
     <div class="room">
-      <div class="room-content">
-        <img id="room-add" src="/assets/plus-sign.svg" alt="add">
+      <div id="room-add">
+        <img src="/assets/plus-sign.svg" alt="add">
       </div>
     </div>
   </div>
@@ -20,11 +28,11 @@ export default {
   data() {
     return {
       rooms: [
-        { name: 'Final-project', description: 'test', src: '' },
-        { name: 'Android', description: 'test', src: '' },
-        { name: 'General', description: 'test', src: '' },
-        { name: 'Random', description: 'test', src: '' },
-        { name: 'Random', description: 'test', src: '' }
+        { name: 'Final-project', description: 'This is fucking asshole project', src: '' },
+        { name: '小屌高峰會', description: 'Come on, you just jerk', src: '' },
+        { name: '普通', description: '一個不小心，就射出來了', src: '' },
+        { name: '期末專題', description: '你好嗎啟智兒？', src: '' },
+        { name: '大雞雞對談', description: 'test', src: '' }
       ]
     }
   },
@@ -51,8 +59,25 @@ export default {
 }
 
 #room-add {
-  height: 100%;
-  width: 100%;
+  width: 200px;
+  height: 200px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#room-add:hover {
+  cursor: pointer;
+}
+
+#room-add img {
+  width: 100px;
+  height: 100px;
 }
 
 .room {
@@ -68,11 +93,72 @@ export default {
 }
 
 .room-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-stretch;
+  justify-content: center;
+
   width: 200px;
   height: 200px;
-  border: 2px solid #ccc;
+  border: 1px solid #ccc;
   border-radius: 10px;
   background-color: white;
+}
+
+.room-content:hover {
+  cursor: pointer;
+}
+
+.room-description {
+  flex: 3 0 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.room-description h1 {
+  font-weight: 100;
+}
+
+.room-description p {
+  font-family: 'helvetica';
+  color: #666;
+  margin-top: 10px;
+}
+
+.room-people {
+  flex: 1 0 10px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding-left: 5px;
+  padding-right: 5px;
+
+  border-top: 1px solid #eee;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+
+  background-color: #222;
+}
+
+.person {
+  height: 30px;
+  width: 30px;
+
+  border-radius: 100%;
+  background-color: #eee;
+
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 @media all and (max-height: 625px) {
