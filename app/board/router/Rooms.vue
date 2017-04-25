@@ -1,7 +1,7 @@
 <template>
   <div id="room-container">
-    <div class="room" v-for="room in rooms" @click="toChatroom">
-      <div class="room-content">
+    <div class="room" v-for="room in rooms">
+      <div class="room-content" @click="toChatroom">
         <div class="room-description">
           <h1>{{ room.name }}</h1>
           <p>{{ room.description }}</p>
@@ -15,8 +15,8 @@
       </div>
     </div>
 
-    <div class="room" @click="createChatroom">
-      <div id="room-add">
+    <div class="room">
+      <div id="room-add" @click="createChatroom">
         <img src="/assets/plus-sign.svg" alt="add">
       </div>
     </div>
