@@ -82,7 +82,7 @@ export default {
         const body = response.data
 
         if (body.success) {
-          document.location.href = '/'
+          document.location.href = '/board'
         } else {
           this.errorType = 'login'
           this.promptMessage = body.message
