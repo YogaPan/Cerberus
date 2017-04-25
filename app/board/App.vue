@@ -2,9 +2,7 @@
   <div id="root-container">
 
     <div id="top-container">
-      <button id="menu" href="#menu" @click="toggleLeftBar">
-        &#9776;
-      </button>
+      <button id="menu" href="#menu" @click="toggleLeftBar">&#9776;</button>
       <a id="corna" href="/">Corna</a>
     </div>
 
@@ -31,7 +29,7 @@
                 <img src="/assets/gear.png" alt="gear">
                 <span>Logout</span>
               </router-link>
-            </li>
+             </li>
           </ul>
 
         </div>
@@ -102,13 +100,12 @@ export default {
 
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: stretch;
   justify-content: flex-start;
 }
 
 #left-container {
   flex: 0 0 200px;
-  height: 100%;
 
   display: flex;
   flex-direction: column;
@@ -124,8 +121,7 @@ export default {
 }
 
 #right-container {
-  flex: 1 0 10px;
-  height: 100%;
+  flex: 1 0 0;
 
   display: flex;
   flex-direction: column;
@@ -181,6 +177,9 @@ export default {
 #menu {
   position: absolute;
   left: 30px;
+
+  top: 50%;
+  transform: translateY(-50%);
 
   color: #999;
   font-size: 20px;
