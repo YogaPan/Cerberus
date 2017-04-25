@@ -28,11 +28,11 @@ export default {
   data() {
     return {
       rooms: [
-        { name: 'Final-project', description: 'This is fucking asshole project', src: '' },
-        { name: '小屌高峰會', description: 'Come on, you just jerk', src: '' },
-        { name: '普通', description: '一個不小心，就射出來了', src: '' },
-        { name: '期末專題', description: '你好嗎啟智兒？', src: '' },
-        { name: '大雞雞對談', description: 'test', src: '' }
+        { name: '期末專題', description: '期末專題的討論', src: '' },
+        { name: '讀書會', description: 'Come on, you just jerk', src: '' },
+        { name: '普通頻道', description: '一個不小心', src: '' },
+        { name: '期末專題', description: '哈囉你好嗎', src: '' },
+        { name: '旅遊討論', description: 'test', src: '' }
       ]
     }
   },
