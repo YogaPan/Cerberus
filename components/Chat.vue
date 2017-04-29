@@ -2,32 +2,34 @@
   <div id="app-chat">
     <div class="message-container">
       <div v-for="message in messages">
-        <div class="user">
-          <p>userID</p>
-        </div>
+      <div class="single-message">
+        <div class="user-img"> </div>
 
-        <div class="single-message">
-
-
-          <div class="message">
-            <p>{{ message.content }}</p>
+        <div class="text-area">
+          <div class="user">
+            <p>userID</p>
           </div>
 
-          <div class="msg-status">
-            <div class="msg-status-read" v-if="message.read">
-              已讀
+          <div class="message-area">
+            <div class="message">
+              {{ message.content }}
             </div>
-
-            <div class="msg-status-read" v-else>
-             未讀
-            </div>
-
-            <div class="msg-status-time">
-             {{ message.time }}
+    
+            <div class="msg-status">
+              <div class="msg-status-read" v-if="message.read">
+                已讀
+              </div>
+              <div class="msg-status-read" v-else>
+               未讀
+              </div>
+              <div class="msg-status-time">
+               {{ message.time }}
+              </div>
             </div>
           </div>
 
         </div>
+      </div>
       </div>
     </div>
 
@@ -109,18 +111,32 @@ export default {
 
   padding: 10px 20px;
 }
-
+.single-message {
+  display: flex;
+  align-items:flex-end;
+  flex-direction:row;
+  align-items:flex-start;
+  margin-bottom: 15px;
+}
+.user-img {
+  width:25px;
+  height:25px;
+  margin-right: 5px;
+  border: 3px solid #ccc;
+}
+.text-area{
+  flex-direction:column;
+}
 .user {
   margin-top: 5px;
   font-size: 12px;
 }
-
-.single-message {
-  align-items:flex-end;
+.message-area {
+  margin-top: 5px;
   display: flex;
-  margin-bottom: 10px;
+  flex-direction:row;
+  align-items:flex-end;
 }
-
 .message {
   font-size: 14px;
   color: white;
@@ -130,7 +146,6 @@ export default {
   border-radius: 15px;
   padding:8px;
 }
-
 .msg-status {
   font-size: 8px;
   display: flex;
@@ -187,6 +202,7 @@ export default {
 }
 
 p {
+  color: ;
   margin: 0px;
   line-height: 16px;
 }
