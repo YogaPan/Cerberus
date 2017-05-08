@@ -143,14 +143,14 @@
   border: none;
   border-radius: 5px;
 
-  background-color: #666;
+  background-color: #333;
 
   font-size: 20px;
   color: white;
 }
 
 #next-button:hover {
-  background-color: #333;
+  background-color: #512DA8;
   transition: .2s;
 }
 
