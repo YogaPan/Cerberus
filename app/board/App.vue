@@ -24,8 +24,8 @@
                 <span>Settings</span>
               </router-link>
             </li>
-            <li class="list-item">
-              <a href="/logout">
+            <li class="list-item" @click="logout">
+              <a href="#">
                 <img src="/assets/logout-2.png" alt="gear">
                 <span>Logout</span>
               </a>
@@ -44,6 +44,8 @@
 </template>
 
 <script>
+
+import axios from 'axios'
 
 export default {
   data() {
@@ -64,6 +66,23 @@ export default {
       return {
         'active': item === this.$route.name
       }
+    },
+    logout() {
+      axios.get('/logout').then(response => {
+        const body = response.data
+
+        if (body.success) {
+          document.location.href = '/login'
+        } else {
+          this.errorType = 'logout'
+          // this.promptMessage = body.message
+        }
+      }).catch(error => {
+        this.errorType = 'request'
+        // this.promptMessage = error.message
+
+        console.error(error)
+      })
     }
   }
 }
