@@ -14,19 +14,19 @@
           <ul>
             <li :class="['list-item', isActive('rooms')]">
               <router-link to="/rooms">
-                <img src="/assets/chat.png" alt="chat">
+                <img src="/assets/chat-2.png" alt="chat">
                 <span>Rooms</span>
               </router-link>
             </li>
             <li :class="['list-item', isActive('settings')]">
               <router-link to="/settings">
-                <img src="/assets/gear.png" alt="gear">
+                <img src="/assets/settings-2.png" alt="gear">
                 <span>Settings</span>
               </router-link>
             </li>
             <li class="list-item">
               <a href="/logout">
-                <img src="/assets/gear.png" alt="gear">
+                <img src="/assets/logout-2.png" alt="gear">
                 <span>Logout</span>
               </a>
              </li>
