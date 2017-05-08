@@ -26,7 +26,7 @@
             </li>
             <li class="list-item" @click="logout">
               <a href="#">
-                <img src="/assets/logout-2.png" alt="gear">
+                <img src="/assets/logout-2.png" alt="logout">
                 <span>Logout</span>
               </a>
              </li>

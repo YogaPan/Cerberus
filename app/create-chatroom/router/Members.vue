@@ -3,15 +3,15 @@
     <div id="middle-container">
       <div id="invite-form">
         <h1>Invite Members</h1>
-        <input type="text" placeholder="#members name">
+        <form @submit.prevent="addMember">
+          <input v-model="input" type="text" placeholder="#members name">
+        </form>
       </div>
 
       <div id="members">
-        <div id="member"></div>
-        <div id="member"></div>
-        <div id="member"></div>
-        <div id="member"></div>
-        <div id="member"></div>
+        <div class="member" v-for="member in members">
+          <p>{{ member }}</p>
+        </div>
       </div>
     </div>
 
@@ -25,17 +25,35 @@
 
 <script>
 
+import axios from 'axios'
+
 export default {
   data() {
     return {
-      /* TODO */
+      input: '',
+      members: []
     }
   },
   computed: {
     /* TODO */
   },
   methods: {
-    /* TODO */
+    search() {
+      axios.post('/search' ,{
+        username: this.input
+      }).then((response) => {
+        const body = response.data
+
+        // body.users
+      })
+    },
+    addMember() {
+      this.members.push(this.input)
+      this.input = ''
+    },
+    deleteUser() {
+      /* TODO */
+    }
   }
 }
 
@@ -49,7 +67,7 @@ export default {
 
   display: flex;
   flex-direction: column;
-  justify-content: stretch;
+  align-items: stretch;
 }
 
 #invite-form {
@@ -90,17 +108,29 @@ export default {
 
   display: flex;
   flex-direction: column;
-  justify-content: stretch;
+  justify-content: flex-start;
+  align-items: stretch;
+
+  margin-top: 15px;
 
   border: 2px solid #ddd;
   border-radius: 5px;
 }
 
-#member {
+.member {
   flex: 0 0 60px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 
   border: 1px solid #ddd;
   border-radius: 5px;
+}
+
+.member p {
+  font-size: 20px;
 }
 
 #next-button {
