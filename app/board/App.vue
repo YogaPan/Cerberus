@@ -24,11 +24,11 @@
                 <span>Settings</span>
               </router-link>
             </li>
-            <li :class="['list-item', isActive('logout')]">
-              <router-link to="/settings">
+            <li class="list-item">
+              <a href="/logout">
                 <img src="/assets/gear.png" alt="gear">
                 <span>Logout</span>
-              </router-link>
+              </a>
              </li>
           </ul>
 
