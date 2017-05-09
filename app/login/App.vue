@@ -101,9 +101,6 @@ export default {
 </script>
 
 <style>
-.error-message {
-  color: red;
-}
 
 #root-container {
   height: 100vh;

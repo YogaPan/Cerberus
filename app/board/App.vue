@@ -14,21 +14,21 @@
           <ul>
             <li :class="['list-item', isActive('rooms')]">
               <router-link to="/rooms">
-                <img src="/assets/chat.png" alt="chat">
+                <img src="/assets/chat-2.png" alt="chat">
                 <span>Rooms</span>
               </router-link>
             </li>
             <li :class="['list-item', isActive('settings')]">
               <router-link to="/settings">
-                <img src="/assets/gear.png" alt="gear">
+                <img src="/assets/settings-2.png" alt="gear">
                 <span>Settings</span>
               </router-link>
             </li>
-            <li :class="['list-item', isActive('logout')]">
-              <router-link to="/settings">
-                <img src="/assets/gear.png" alt="gear">
+            <li class="list-item" @click="logout">
+              <a href="#">
+                <img src="/assets/logout-2.png" alt="logout">
                 <span>Logout</span>
-              </router-link>
+              </a>
              </li>
           </ul>
 
@@ -44,6 +44,8 @@
 </template>
 
 <script>
+
+import axios from 'axios'
 
 export default {
   data() {
@@ -64,6 +66,23 @@ export default {
       return {
         'active': item === this.$route.name
       }
+    },
+    logout() {
+      axios.get('/logout').then(response => {
+        const body = response.data
+
+        if (body.success) {
+          document.location.href = '/login'
+        } else {
+          this.errorType = 'logout'
+          // this.promptMessage = body.message
+        }
+      }).catch(error => {
+        this.errorType = 'request'
+        // this.promptMessage = error.message
+
+        console.error(error)
+      })
     }
   }
 }
