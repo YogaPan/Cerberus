@@ -47,7 +47,7 @@ export default {
       }
 
       axios.post('/search', {
-        username: this.input
+        search: this.input
       }).then(response => {
         const body = response.data
 
