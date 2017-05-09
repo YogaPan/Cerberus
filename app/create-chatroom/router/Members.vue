@@ -3,25 +3,24 @@
     <div id="middle-container">
       <div id="invite-form" class="dropdown">
         <h1>Invite Members</h1>
-        <form @submit.prevent="addMember">
-          <input v-model="input" type="text" placeholder="#members name">
-        </form>
+        <input v-model="input" type="text" placeholder="#members name">
 
         <div id="myDropdown" class="dropdown-content">
-          <li v-for="defaultUser in searchUsers()" @click="addMember(defaultUser)">{{ defaultUser }}</li>
+          <li v-for="user in searchUsers()" @click="addMember(user)">{{ user.name }}</li>
         </div>
       </div>
 
       <div id="members">
         <div class="member" v-for="member in members">
-          <p>{{ member }}</p>
+          <img @click="removeMember(member.id)" src="/assets/cross.png" alt="remove">
+          <p>{{ member.name }}</p>
         </div>
       </div>
     </div>
 
     <div id="next">
       <router-link to="/members">
-        <button id="next-button">Next -></button>
+        <button id="next-button">Create</button>
       </router-link>
     </div>
   </div>
@@ -36,7 +35,7 @@ export default {
     return {
       input: '',
       members: [],
-      defaultUsers: [
+      users: [
         { id: 1, name: 'yogapan' },
         { id: 2, name: 'yogapan_111' },
         { id: 3, name: 'yogapan85321' },
@@ -44,7 +43,11 @@ export default {
         { id: 5, name: 'garylai' },
         { id: 6, name: 'garylai_haha' },
         { id: 7, name: 'hank1120' },
-        { id: 8, name: 'husky' }
+        { id: 8, name: 'husky' },
+        { id: 9, name: 'yanwai_abc' },
+        { id: 10, name: 'official_husky_lovers' },
+        { id: 11, name: 'aka_motherfucker' },
+        { id: 12, name: 'lolikon' }
       ]
     }
   },
@@ -53,7 +56,7 @@ export default {
   },
   methods: {
     searchUsers() {
-      // axios.post('/search' ,{
+      // axios.post('/search', {
           // username: this.input
         // }).then((response) => {
           // const body = response.data
@@ -64,18 +67,46 @@ export default {
         return []
       }
 
-      const matchedUsers = this.defaultUsers.filter(defaultUser => {
-        return (defaultUser.name.indexOf(this.input) === 0) ? true : false
+      let matchedUsers = this.users.filter(user => {
+        return (user.name.indexOf(this.input) === 0) ? true : false
+      })
+
+      matchedUsers = matchedUsers.filter(user => {
+        return this.members.every(member => {
+          return user.id !== member.id
+        })
       })
 
       return matchedUsers;
     },
-    addMember(defaultUser) {
-      this.members.push(defaultUser)
+    addMember(user) {
+      this.members.push(user)
       this.input = ''
+
+      // Delay to wait data push to list.
+      setTimeout(() => {
+        const memberContainer = this.$el.querySelector("#members")
+        memberContainer.scrollTop = memberContainer.scrollHeight
+      }, 100)
     },
-    deleteUser() {
-      /* TODO */
+    removeMember(id) {
+      this.members = this.members.filter(member => {
+        return member.id !== id
+      })
+    },
+    createChatroom() {
+      axios.post('/create-chatroom', {
+        name: '',
+        users: this.members
+      }).then(response => {
+        const body = response.data
+
+        if (body.success) {
+          document.location.href = '/board'
+        } else {
+          console.error("FUCK")
+        }
+      })
     }
   }
 }
@@ -166,8 +197,10 @@ export default {
 
   margin-top: 15px;
 
-  border: 2px solid #ddd;
-  border-radius: 5px;
+  /*border: 2px solid #ddd;
+  border-radius: 5px;*/
+
+  overflow: scroll;
 }
 
 .member {
@@ -178,12 +211,28 @@ export default {
   justify-content: flex-start;
   align-items: center;
 
+  margin-top: 5px;
+
   border: 1px solid #ddd;
   border-radius: 5px;
+
+  padding-left: 15px;
+}
+
+.member img {
+  width: 20px;
+  height: 20px;
+}
+
+.member img:hover {
+  transition: .2s;
+  /*filter: sepia() saturate(10000%) hue-rotate(30deg);*/
+  cursor: pointer;
 }
 
 .member p {
   font-size: 20px;
+  margin-left: 10px;
 }
 
 #next-button {

@@ -3,7 +3,7 @@
     <div id="left-container">
 
       <div id="app-name">
-        <a href="#">Corna</a>
+        <a href="/board">Corna</a>
       </div>
       <router-view></router-view>
 
@@ -118,7 +118,7 @@ export default {
 
   #left-container {
     flex: 0 0 100%;
-    height: 400px;
+    height: 600px;
     /*background-color: purple;*/
   }
 
