@@ -1,11 +1,15 @@
 <template>
   <div id="members-container">
     <div id="middle-container">
-      <div id="invite-form">
+      <div id="invite-form" class="dropdown">
         <h1>Invite Members</h1>
         <form @submit.prevent="addMember">
           <input v-model="input" type="text" placeholder="#members name">
         </form>
+
+        <div id="myDropdown" class="dropdown-content">
+          <li v-for="defaultUser in searchUsers()" @click="addMember(defaultUser)">{{ defaultUser }}</li>
+        </div>
       </div>
 
       <div id="members">
@@ -31,24 +35,43 @@ export default {
   data() {
     return {
       input: '',
-      members: []
+      members: [],
+      defaultUsers: [
+        { id: 1, name: 'yogapan' },
+        { id: 2, name: 'yogapan_111' },
+        { id: 3, name: 'yogapan85321' },
+        { id: 4, name: 'yogapan_love' },
+        { id: 5, name: 'garylai' },
+        { id: 6, name: 'garylai_haha' },
+        { id: 7, name: 'hank1120' },
+        { id: 8, name: 'husky' }
+      ]
     }
   },
   computed: {
-    /* TODO */
+    // TODO
   },
   methods: {
-    search() {
-      axios.post('/search' ,{
-        username: this.input
-      }).then((response) => {
-        const body = response.data
+    searchUsers() {
+      // axios.post('/search' ,{
+          // username: this.input
+        // }).then((response) => {
+          // const body = response.data
+          // body.users
+        // })
 
-        // body.users
+      if (this.input === '') {
+        return []
+      }
+
+      const matchedUsers = this.defaultUsers.filter(defaultUser => {
+        return (defaultUser.name.indexOf(this.input) === 0) ? true : false
       })
+
+      return matchedUsers;
     },
-    addMember() {
-      this.members.push(this.input)
+    addMember(defaultUser) {
+      this.members.push(defaultUser)
       this.input = ''
     },
     deleteUser() {
@@ -101,6 +124,36 @@ export default {
 #invite-form input:focus {
   border: 2px solid #888;
 }
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  /*display: none;*/
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content li {
+  padding: 12px 16px;
+  display: block;
+
+  color: black;
+  cursor: pointer;
+}
+
+.dropdown-content li:hover {
+  background-color: #f1f1f1
+}
+
+/*.show {
+  display: block;
+}*/
 
 #members {
   flex: 0 0 400px;
