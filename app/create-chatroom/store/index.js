@@ -9,6 +9,12 @@ export const store = new Vuex.Store({
     members: []
   },
 
+  getters: {
+    membersId(state) {
+      return state.members.map(member => member.id)
+    }
+  }
+
   mutations: {
     updateRoomName(state, roomName) {
       state.roomName = roomName

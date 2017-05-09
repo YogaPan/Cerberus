@@ -110,7 +110,7 @@ export default {
 
       axios.post('/create-chatroom', {
         name: this.$store.state.roomName,
-        users: this.$store.state.members
+        users: this.$store.getters.membersId
       }).then(response => {
         const body = response.data
 
