@@ -6,13 +6,13 @@
         <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
         <input v-model="input" type="text" placeholder="#members name">
 
-        <div id="myDropdown" class="dropdown-content">
-          <li v-for="user in searchUsers()" @click="addMember(user)">{{ user.name }}</li>
+        <div id="matched-users" class="dropdown-content">
+          <li v-for="user in matchedUsers" @click="addMember(user)">{{ user.name }}</li>
         </div>
       </div>
 
       <div id="members">
-        <div class="member" v-for="member in this.$store.state.members">
+        <div class="member" v-for="member in $store.state.members">
           <img @click="removeMember(member.id)" src="/assets/cross.png" alt="remove">
           <p>{{ member.name }}</p>
         </div>
@@ -36,16 +36,14 @@ export default {
   data() {
     return {
       input: '',
-      errorMessage: ''
+      errorMessage: '',
+      matchedUsers: []
     }
   },
-  computed: {
-    // TODO
-  },
-  methods: {
-    searchUsers() {
+  watch: {
+    input: function () {
       if (this.input === '') {
-        return []
+        return this.matchedUsers = ''
       }
 
       // axios.post('/search', {
@@ -53,16 +51,15 @@ export default {
       // }).then(response => {
       //   const body = response.data
       //
-      //   let matchedUsers = body.users.filter(user => {
-      //     return (user.name.indexOf(this.input) === 0) ? true : false
-      //   })
-      //
-      //   // Prevent repeat users.
-      //   return matchedUsers.filter(user => {
-      //     return this.$store.state.members.every(member => {
-      //       return user.id !== member.id
+      //   this.matchedUsers = body.users.
+      //     filter(user => { // find matched users.
+      //       return (user.name.indexOf(this.input) === 0) ? true : false
       //     })
-      //   })
+      //     .filter(user => {  // Prevent repeat users.
+      //       return this.$store.state.members.every(member => {
+      //         return user.id !== member.id
+      //       })
+      //     })
       // })
 
       // These data is for frontend debug.
@@ -81,17 +78,18 @@ export default {
         { id: 12, name: 'lolikon' }
       ]
 
-      let matchedUsers = users.filter(user => {
-        return (user.name.indexOf(this.input) === 0) ? true : false
-      })
-
-      // Prevent repeat users.
-      return matchedUsers = matchedUsers.filter(user => {
-        return this.$store.state.members.every(member => {
-          return user.id !== member.id
+      this.matchedUsers = users.
+        filter(user => { // find matched users.
+          return (user.name.indexOf(this.input) === 0) ? true : false
         })
-      })
-    },
+        .filter(user => {  // Prevent repeat users.
+          return this.$store.state.members.every(member => {
+            return user.id !== member.id
+          })
+        })
+    }
+  },
+  methods: {
     addMember(newMember) {
       this.$store.commit('addMember', newMember)
       this.input = ''
@@ -106,8 +104,8 @@ export default {
       this.$store.commit('removeMember', id)
     },
     createChatroom() {
-      if (this.members.length === 0) {
-        return this.errorMessage = 'Please add members'
+      if (this.$store.state.members.length === 0) {
+        return this.errorMessage = 'Please add members.'
       }
 
       axios.post('/create-chatroom', {
@@ -119,9 +117,11 @@ export default {
         if (body.success) {
           document.location.href = '/board'
         } else {
-          this.errorMessage = 'Error!'
-          console.error("ERROR!!")
+          this.errorMessage = 'Create chatroom Failed!'
         }
+      }).catch(error => {
+        this.errorMessage = error.message
+        console.error(error)
       })
     }
   }
