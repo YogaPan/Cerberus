@@ -9,7 +9,7 @@ var registerhtml = fs.readFileSync('./pages/register.html');
 var chatroomhtml = fs.readFileSync('./pages/chatroom.html');
 var createchatroomhtml = fs.readFileSync('./pages/create-chatroom.html');
 var bodyParser = require('body-parser'); // for json
-var cookieParser = require('cookie-parser');
+//var cookieParser = require('cookie-parser');
 //var cookie = require('cookie');
 var session = require('express-session');
 /* // if using https
@@ -182,9 +182,15 @@ app.post('/register', function(req,res){ // post 140.136.150.75:[port]/register
             , function (error, results, fields) {
             if (error) throw error;
             console.log(req.body.username+"\n"+req.body.password+"\n"+req.body.email);
-            console.log("true");
-            res.write('{"success": true}');
-            res.end();
+            connection.query('SELECT * FROM user WHERE username = "'+req.body.username+'"' , function (error, results, fields) {
+              if (error) throw error;
+              req.session.uid = results[0].id;
+              req.session.username = results[0].username;
+              req.session.email = results[0].email;
+              console.log("true");
+              res.write('{"success": true}');
+              res.end();
+            });
           });
         }
         else{ // email has been taken
@@ -231,7 +237,7 @@ app.post('/create-chatroom', function(req,res){ // client connect 140.136.150.75
 
 app.post('/search', function(req,res){ // client connect 140.136.150.75:[port]/search
   if(req.session.uid){
-    connection.query('SELECT id, username FROM user WHERE username LIKE "'+req.body.search+'%"', function (error, results, fields) {
+    connection.query('SELECT id, username FROM user WHERE username LIKE "'+req.body.search+'%" AND id <> '+req.session.uid+' LIMIT 10', function (error, results, fields) {
       if (error) throw error;
       res.write("{users:[");
       for(var i in results){
@@ -239,6 +245,28 @@ app.post('/search', function(req,res){ // client connect 140.136.150.75:[port]/s
           res.write('{"id":'+results[i].id+',"name":"'+results[i].username+'"}');
         else
           res.write(',{"id":'+results[i].id+',"name":"'+results[i].username+'"}');
+      }
+      res.write("]}");
+      res.end();
+    });
+  }
+  else{
+    res.write("Please login.");
+    res.end();
+  }
+});
+
+app.post('/board', function(req,res){ // client connect 140.136.150.75:[port]/board
+  if(req.session.uid){
+    connection.query('SELECT id, name FROM chatroom WHERE id IN (SELECT cid FROM chatmember WHERE uid = '+req.session.uid+
+      ' AND status = "accept")', function (error, results, fields) {
+      if (error) throw error;
+      res.write("{chatroom:[");
+      for(var i in results){
+        if(i == 0)
+          res.write('{"id":'+results[i].id+',"name":"'+results[i].name+'"}');
+        else
+          res.write(',{"id":'+results[i].id+',"name":"'+results[i].name+'"}');
       }
       res.write("]}");
       res.end();
