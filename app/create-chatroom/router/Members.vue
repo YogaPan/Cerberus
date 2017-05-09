@@ -49,12 +49,7 @@ export default {
       axios.post('/search', {
         search: this.input
       }).then(response => {
-
-        console.log(response)
-        console.log(body)
-        console.log(body.users)
-
-        const body = JSON.parse(response.data)
+        const body = esponse.data
 
         this.matchedUsers = body.users.
           filter(user => { // find matched users.
