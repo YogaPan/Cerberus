@@ -13,7 +13,7 @@ export const store = new Vuex.Store({
     membersId(state) {
       return state.members.map(member => member.id)
     }
-  }
+  },
 
   mutations: {
     updateRoomName(state, roomName) {
