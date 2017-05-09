@@ -46,47 +46,47 @@ export default {
         return this.matchedUsers = ''
       }
 
-      // axios.post('/search', {
-      //   username: this.input
-      // }).then(response => {
-      //   const body = response.data
-      //
-      //   this.matchedUsers = body.users.
-      //     filter(user => { // find matched users.
-      //       return (user.name.indexOf(this.input) === 0) ? true : false
-      //     })
-      //     .filter(user => {  // Prevent repeat users.
-      //       return this.$store.state.members.every(member => {
-      //         return user.id !== member.id
-      //       })
-      //     })
-      // })
+      axios.post('/search', {
+        username: this.input
+      }).then(response => {
+        const body = response.data
+
+        this.matchedUsers = body.users.
+          filter(user => { // find matched users.
+            return (user.name.indexOf(this.input) === 0) ? true : false
+          })
+          .filter(user => {  // Prevent repeat users.
+            return this.$store.state.members.every(member => {
+              return user.id !== member.id
+            })
+          })
+      })
 
       // These data is for frontend debug.
-      const users =  [
-        { id: 1, name: 'yogapan' },
-        { id: 2, name: 'yogapan_111' },
-        { id: 3, name: 'yogapan85321' },
-        { id: 4, name: 'yogapan_love' },
-        { id: 5, name: 'garylai' },
-        { id: 6, name: 'garylai_haha' },
-        { id: 7, name: 'hank1120' },
-        { id: 8, name: 'husky' },
-        { id: 9, name: 'yanwai_abc' },
-        { id: 10, name: 'official_husky_lovers' },
-        { id: 11, name: 'aka_motherfucker' },
-        { id: 12, name: 'lolikon' }
-      ]
-
-      this.matchedUsers = users.
-        filter(user => { // find matched users.
-          return (user.name.indexOf(this.input) === 0) ? true : false
-        })
-        .filter(user => {  // Prevent repeat users.
-          return this.$store.state.members.every(member => {
-            return user.id !== member.id
-          })
-        })
+      // const users =  [
+      //   { id: 1, name: 'yogapan' },
+      //   { id: 2, name: 'yogapan_111' },
+      //   { id: 3, name: 'yogapan85321' },
+      //   { id: 4, name: 'yogapan_love' },
+      //   { id: 5, name: 'garylai' },
+      //   { id: 6, name: 'garylai_haha' },
+      //   { id: 7, name: 'hank1120' },
+      //   { id: 8, name: 'husky' },
+      //   { id: 9, name: 'yanwai_abc' },
+      //   { id: 10, name: 'official_husky_lovers' },
+      //   { id: 11, name: 'aka_motherfucker' },
+      //   { id: 12, name: 'lolikon' }
+      // ]
+      //
+      // this.matchedUsers = users.
+      //   filter(user => { // find matched users.
+      //     return (user.name.indexOf(this.input) === 0) ? true : false
+      //   })
+      //   .filter(user => {  // Prevent repeat users.
+      //     return this.$store.state.members.every(member => {
+      //       return user.id !== member.id
+      //     })
+      //   })
     }
   },
   methods: {
