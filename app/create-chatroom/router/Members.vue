@@ -50,7 +50,7 @@ export default {
         search: this.input
       }).then(response => {
 
-        const body = response.data
+        const body = JSON.parse(response.data)
 
         console.log(response)
         console.log(body)
