@@ -36,8 +36,31 @@ export default {
   data() {
     return {
       input: '',
-      members: [],
-      users: [
+      errorMessage: ''
+    }
+  },
+  computed: {
+    members: {
+      get() {
+        return this.$store.state.members
+      }
+    }
+  },
+  methods: {
+    searchUsers() {
+      if (this.input === '') {
+        return []
+      }
+
+      // axios.post('/search', {
+      //   username: this.input
+      // }).then((response) => {
+      //   const body = response.data
+      //   body.users
+      // })
+
+      // These data is for frontend debug.
+      const users =  [
         { id: 1, name: 'yogapan' },
         { id: 2, name: 'yogapan_111' },
         { id: 3, name: 'yogapan85321' },
@@ -50,30 +73,13 @@ export default {
         { id: 10, name: 'official_husky_lovers' },
         { id: 11, name: 'aka_motherfucker' },
         { id: 12, name: 'lolikon' }
-      ],
-      errorMessage: ''
-    }
-  },
-  computed: {
-    // TODO
-  },
-  methods: {
-    searchUsers() {
-      // axios.post('/search', {
-          // username: this.input
-        // }).then((response) => {
-          // const body = response.data
-          // body.users
-        // })
+      ]
 
-      if (this.input === '') {
-        return []
-      }
-
-      let matchedUsers = this.users.filter(user => {
+      let matchedUsers = users.filter(user => {
         return (user.name.indexOf(this.input) === 0) ? true : false
       })
 
+      // Prevent repeat users.
       matchedUsers = matchedUsers.filter(user => {
         return this.members.every(member => {
           return user.id !== member.id
@@ -82,8 +88,8 @@ export default {
 
       return matchedUsers;
     },
-    addMember(user) {
-      this.members.push(user)
+    addMember(newMember) {
+      this.$store.commit('addMember', newMember)
       this.input = ''
 
       // Delay to wait data push to list.
@@ -93,9 +99,7 @@ export default {
       }, 100)
     },
     removeMember(id) {
-      this.members = this.members.filter(member => {
-        return member.id !== id
-      })
+      this.$store.commit('removeMember', id)
     },
     createChatroom() {
       if (this.members.length === 0) {
@@ -103,8 +107,8 @@ export default {
       }
 
       axios.post('/create-chatroom', {
-        name: '',
-        users: this.members
+        name: this.$store.state.roomName,
+        users: this.$store.state.members
       }).then(response => {
         const body = response.data
 

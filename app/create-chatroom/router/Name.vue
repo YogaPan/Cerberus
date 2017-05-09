@@ -21,16 +21,22 @@
 export default {
   data() {
     return {
-      roomName: '',
       errorMessage: ''
     }
   },
   computed: {
-    /* TODO */
+    roomName: {
+      get() {
+        return this.$store.state.roomName
+      },
+      set(value) {
+        this.$store.commit('updateRoomName', value)
+      }
+    }
   },
   methods: {
     nextStep() {
-      this.roomName === '' ? this.errorMessage = 'Please fill in your room name.' : document.location.href = '#members'
+      this.$store.state.roomName === '' ? this.errorMessage = 'Please fill in your room name.' : document.location.href = '#members'
     }
   }
 }

@@ -5,6 +5,8 @@ import App from './App.vue'
 import Name from './router/Name.vue'
 import Members from './router/Members.vue'
 
+import { store } from './store'
+
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -19,5 +21,6 @@ const router = new VueRouter({
 new Vue({
   el: '#app',
   router,
+  store,
   render: h => h(App)
 })

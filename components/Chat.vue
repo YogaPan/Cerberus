@@ -14,7 +14,7 @@
             <div class="message">
               {{ message.content }}
             </div>
-    
+
             <div class="msg-status">
               <div class="msg-status-read" v-if="message.read">
                 已讀
@@ -59,11 +59,7 @@ export default {
       messages: 'messages'
     }),
     typing() {
-      if (this.input === '') {
-        return false
-      } else {
-        return true
-      }
+      return (this.input === '') ? true : false
     }
   },
   methods: {
