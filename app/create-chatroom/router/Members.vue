@@ -18,10 +18,11 @@
       </div>
     </div>
 
-    <div id="next">
-      <router-link to="/members">
-        <button id="next-button">Create</button>
+    <div id="btn-area">
+      <router-link to="/name">
+        <button id="create-button">Back</button>
       </router-link>
+      <button id="create-button">Create</button>
     </div>
   </div>
 </template>
@@ -125,7 +126,6 @@ export default {
 }
 
 #invite-form {
-  /*background-color: orange;*/
   width: 80%;
 }
 
@@ -235,7 +235,20 @@ export default {
   margin-left: 10px;
 }
 
-#next-button {
+#btn-area {
+  width: 100%;
+  flex: 0 0 150px;
+
+  padding-left: 100px;
+  padding-right: 100px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#create-button {
   height: 50px;
   width: 130px;
 
@@ -248,9 +261,20 @@ export default {
   color: white;
 }
 
-#next-button:hover {
+#create-button:hover {
   background-color: #512DA8;
   transition: .2s;
+}
+
+@media all and (max-width: 770px) {
+  #members {
+    flex: 0 0 275px;
+  }
+
+  #btn-area {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 
 </style>

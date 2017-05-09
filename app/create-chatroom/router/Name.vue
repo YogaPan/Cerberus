@@ -71,8 +71,6 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-
-  /*background-color: yellow;*/
 }
 
 #register-form h1 {
