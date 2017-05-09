@@ -12,7 +12,7 @@
       </div>
 
       <div id="members">
-        <div class="member" v-for="member in members">
+        <div class="member" v-for="member in this.$store.state.members">
           <img @click="removeMember(member.id)" src="/assets/cross.png" alt="remove">
           <p>{{ member.name }}</p>
         </div>
@@ -40,11 +40,7 @@ export default {
     }
   },
   computed: {
-    members: {
-      get() {
-        return this.$store.state.members
-      }
-    }
+    // TODO
   },
   methods: {
     searchUsers() {
@@ -54,9 +50,19 @@ export default {
 
       // axios.post('/search', {
       //   username: this.input
-      // }).then((response) => {
+      // }).then(response => {
       //   const body = response.data
-      //   body.users
+      //
+      //   let matchedUsers = body.users.filter(user => {
+      //     return (user.name.indexOf(this.input) === 0) ? true : false
+      //   })
+      //
+      //   // Prevent repeat users.
+      //   return matchedUsers.filter(user => {
+      //     return this.$store.state.members.every(member => {
+      //       return user.id !== member.id
+      //     })
+      //   })
       // })
 
       // These data is for frontend debug.
@@ -80,13 +86,11 @@ export default {
       })
 
       // Prevent repeat users.
-      matchedUsers = matchedUsers.filter(user => {
-        return this.members.every(member => {
+      return matchedUsers = matchedUsers.filter(user => {
+        return this.$store.state.members.every(member => {
           return user.id !== member.id
         })
       })
-
-      return matchedUsers;
     },
     addMember(newMember) {
       this.$store.commit('addMember', newMember)
@@ -115,6 +119,7 @@ export default {
         if (body.success) {
           document.location.href = '/board'
         } else {
+          this.errorMessage = 'Error!'
           console.error("ERROR!!")
         }
       })
