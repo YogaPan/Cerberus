@@ -50,11 +50,11 @@ export default {
         search: this.input
       }).then(response => {
 
-        const body = JSON.parse(response.data)
-
         console.log(response)
         console.log(body)
         console.log(body.users)
+
+        const body = JSON.parse(response.data)
 
         this.matchedUsers = body.users.
           filter(user => { // find matched users.
