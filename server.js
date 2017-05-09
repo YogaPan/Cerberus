@@ -240,7 +240,7 @@ app.post('/search', function(req,res){ // client connect 140.136.150.75:[port]/s
   if(req.session.uid){
     connection.query('SELECT id, username FROM user WHERE username LIKE "'+req.body.search+'%" AND id <> '+req.session.uid+' LIMIT 10', function (error, results, fields) {
       if (error) throw error;
-      res.write("{"users":[");
+      res.write('{"users":[');
       for(var i in results){
         if(i == 0)
           res.write('{"id":'+results[i].id+',"name":"'+results[i].username+'"}');
