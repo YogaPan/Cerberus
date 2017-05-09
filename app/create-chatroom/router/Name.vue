@@ -4,14 +4,13 @@
    <div id="middle-container">
      <div id="register-form">
        <h1>Create new Chatroom</h1>
-       <input type="text" placeholder="#room name">
+       <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+       <input v-model="roomName" type="text" placeholder="#room name">
      </div>
    </div>
 
    <div id="next">
-     <router-link to="/members">
-       <button id="next-button">Next -></button>
-     </router-link>
+    <button @click="nextStep" id="next-button">Next -></button>
    </div>
 
  </div>
@@ -22,14 +21,17 @@
 export default {
   data() {
     return {
-      /* TODO */
+      roomName: '',
+      errorMessage: ''
     }
   },
   computed: {
     /* TODO */
   },
   methods: {
-    /* TODO */
+    nextStep() {
+      this.roomName === '' ? this.errorMessage = 'Please fill in your room name.' : document.location.href = '#members'
+    }
   }
 }
 
@@ -77,8 +79,9 @@ export default {
   font-weight: 100;
 }
 
-#register-form p {
-  margin-top: 20px;
+#register-form .error-message {
+  margin-top: 15px;
+  color: red;
 }
 
 #register-form input {
@@ -100,6 +103,10 @@ export default {
   border: 2px solid #888;
 }
 
+#register-form input::placeholder {
+  color: #ccc;
+}
+
 #next-button {
   height: 50px;
   width: 130px;
@@ -116,6 +123,10 @@ export default {
 #next-button:hover {
   background-color: #512DA8;
   transition: .2s;
+}
+
+.error-message {
+  color: red;
 }
 
 </style>

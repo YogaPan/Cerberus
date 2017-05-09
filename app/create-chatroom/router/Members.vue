@@ -3,6 +3,7 @@
     <div id="middle-container">
       <div id="invite-form" class="dropdown">
         <h1>Invite Members</h1>
+        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
         <input v-model="input" type="text" placeholder="#members name">
 
         <div id="myDropdown" class="dropdown-content">
@@ -22,7 +23,7 @@
       <router-link to="/name">
         <button id="create-button">Back</button>
       </router-link>
-      <button id="create-button">Create</button>
+      <button @click="createChatroom" id="create-button">Create</button>
     </div>
   </div>
 </template>
@@ -49,7 +50,8 @@ export default {
         { id: 10, name: 'official_husky_lovers' },
         { id: 11, name: 'aka_motherfucker' },
         { id: 12, name: 'lolikon' }
-      ]
+      ],
+      errorMessage: ''
     }
   },
   computed: {
@@ -96,6 +98,10 @@ export default {
       })
     },
     createChatroom() {
+      if (this.members.length === 0) {
+        return this.errorMessage = 'Please add members'
+      }
+
       axios.post('/create-chatroom', {
         name: '',
         users: this.members
@@ -105,7 +111,7 @@ export default {
         if (body.success) {
           document.location.href = '/board'
         } else {
-          console.error("FUCK")
+          console.error("ERROR!!")
         }
       })
     }
@@ -133,10 +139,6 @@ export default {
   font-weight: 100;
 }
 
-#invite-form p {
-  margin-top: 20px;
-}
-
 #invite-form input {
   height: 50px;
   width: 100%;
@@ -154,6 +156,10 @@ export default {
 
 #invite-form input:focus {
   border: 2px solid #888;
+}
+
+#invite-form input::placeholder {
+  color: #ccc;
 }
 
 .dropdown {
@@ -196,9 +202,6 @@ export default {
   align-items: stretch;
 
   margin-top: 15px;
-
-  /*border: 2px solid #ddd;
-  border-radius: 5px;*/
 
   overflow: scroll;
 }
@@ -264,6 +267,11 @@ export default {
 #create-button:hover {
   background-color: #512DA8;
   transition: .2s;
+}
+
+.error-message {
+  margin-top: 15px;
+  color: red;
 }
 
 @media all and (max-width: 770px) {
