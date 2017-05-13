@@ -58,7 +58,7 @@ export default {
       messages: 'messages'
     }),
     typing() {
-      return (this.input === '') ? true : false
+      return (this.input === '') ? false : true
     }
   },
   methods: {
@@ -144,6 +144,7 @@ export default {
 */
 .msg-status-read {
   line-height: 12px;
+  margin-bottom: 2px;
 }
 .msg-status-time {
   line-height: 12px;
