@@ -219,7 +219,7 @@ export default {
 
 @media all and (max-width: 700px) {
   #profile {
-    flex: 0 0 550px;
+    flex: 0 0 450px;
 
     display: flex;
     flex-direction: column;
@@ -229,7 +229,7 @@ export default {
   }
 
   #profile-left {
-    flex: 0 0 350px;
+    flex: 0 0 250px;
     width: 100%;
   }
 

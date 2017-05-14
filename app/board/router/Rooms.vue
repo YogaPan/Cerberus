@@ -29,6 +29,7 @@ import axios from 'axios'
 
 export default {
   data() {
+    console.log('test2')
     return {
       rooms: []
     }
@@ -46,6 +47,8 @@ export default {
       .catch(error => {
         console.error(error)
       })
+
+    console.log('test1')
 
     // This is for frontend debug.
     // this.rooms = [
