@@ -39,6 +39,9 @@ export default {
         const body = response.data
 
         this.rooms = body.chatroom
+
+        console.log(body.chatroom)
+        console.log(this.rooms)
       })
       .catch(error => {
         console.error(error)
