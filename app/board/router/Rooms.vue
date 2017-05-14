@@ -44,13 +44,14 @@ export default {
         console.error(error)
       })
 
-    this.rooms = [
-      { name: '期末專題', description: '期末專題的討論', src: '' },
-      { name: '讀書會', description: 'Come on, you just jerk', src: '' },
-      { name: '普通頻道', description: '一個不小心', src: '' },
-      { name: '期末專題', description: '哈囉你好嗎', src: '' },
-      { name: '旅遊討論', description: 'test', src: '' }
-    ]
+    // This is for frontend debug.
+    // this.rooms = [
+    //   { name: '期末專題', description: '期末專題的討論', src: '' },
+    //   { name: '讀書會', description: 'Come on, you just jerk', src: '' },
+    //   { name: '普通頻道', description: '一個不小心', src: '' },
+    //   { name: '期末專題', description: '哈囉你好嗎', src: '' },
+    //   { name: '旅遊討論', description: 'test', src: '' }
+    // ]
   },
   computed: {
     /* TODO */
