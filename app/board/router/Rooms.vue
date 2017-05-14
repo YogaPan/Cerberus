@@ -38,17 +38,11 @@ export default {
     axios.post('/board')
       .then(response => {
         const body = response.data
-
         this.rooms = body.chatroom
-
-        console.log(body.chatroom)
-        console.log(this.rooms)
       })
       .catch(error => {
         console.error(error)
       })
-
-    console.log('test1')
 
     // This is for frontend debug.
     // this.rooms = [
