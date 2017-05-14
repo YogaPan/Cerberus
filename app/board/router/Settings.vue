@@ -76,8 +76,6 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-
-  /*background-color: red;*/
 }
 
 #profile-left {
@@ -220,6 +218,33 @@ export default {
 }
 
 @media all and (max-width: 700px) {
+  #profile {
+    flex: 0 0 600px;
+
+    display: flex;
+    flex-direction: column;
+    /*flex-wrap: wrap;*/
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  #profile-left {
+    flex: 0 0 350px;
+    width: 100%;
+  }
+
+  #profile-right {
+    flex: 0 0 550px;
+    width: 100%;
+
+    padding-left: 0;
+    padding-top: 0;
+  }
+
+  #head-image {
+    width: 50%;
+  }
+
   /*
   #left-container {
     display: block;
@@ -229,6 +254,11 @@ export default {
 
     width: 200px;
   }*/
+}
+@media all and (max-width: 550px) {
+  #profile-left {
+    flex: 0 0 250px;
+  }
 }
 
 </style>

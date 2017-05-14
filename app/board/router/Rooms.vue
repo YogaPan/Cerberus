@@ -36,7 +36,7 @@ export default {
   mounted() {
     axios.post('/board')
       .then(response => {
-        const body = response.body
+        const body = response.data
 
         this.rooms = body.rooms
       })
