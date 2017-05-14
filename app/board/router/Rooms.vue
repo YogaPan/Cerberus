@@ -38,7 +38,7 @@ export default {
       .then(response => {
         const body = response.data
 
-        this.rooms = body.rooms
+        this.rooms = body.chatroom
       })
       .catch(error => {
         console.error(error)
