@@ -262,7 +262,7 @@ app.post('/board', function(req,res){ // client connect 140.136.150.75:[port]/bo
     connection.query('SELECT id, name FROM chatroom WHERE id IN (SELECT cid FROM chatmember WHERE uid = '+req.session.uid+
       ' AND status = "accept")', function (error, results, fields) {
       if (error) throw error;
-      res.write("{chatroom:[");
+      res.write('{"chatroom":[');
       for(var i in results){
         if(i == 0)
           res.write('{"id":'+results[i].id+',"name":"'+results[i].name+'"}');
