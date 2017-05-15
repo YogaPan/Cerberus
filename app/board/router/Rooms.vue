@@ -24,17 +24,34 @@
 </template>
 
 <script>
+
+import axios from 'axios'
+
 export default {
   data() {
+    console.log('test2')
     return {
-      rooms: [
-        { name: '期末專題', description: '期末專題的討論', src: '' },
-        { name: '讀書會', description: 'Come on, you just jerk', src: '' },
-        { name: '普通頻道', description: '一個不小心', src: '' },
-        { name: '期末專題', description: '哈囉你好嗎', src: '' },
-        { name: '旅遊討論', description: 'test', src: '' }
-      ]
+      rooms: []
     }
+  },
+  mounted() {
+    axios.post('/board')
+      .then(response => {
+        const body = response.data
+        this.rooms = body.chatroom
+      })
+      .catch(error => {
+        console.error(error)
+      })
+
+    // This is for frontend debug.
+    // this.rooms = [
+    //   { name: '期末專題', description: '期末專題的討論', src: '' },
+    //   { name: '讀書會', description: 'Come on, you just jerk', src: '' },
+    //   { name: '普通頻道', description: '一個不小心', src: '' },
+    //   { name: '期末專題', description: '哈囉你好嗎', src: '' },
+    //   { name: '旅遊討論', description: 'test', src: '' }
+    // ]
   },
   computed: {
     /* TODO */
@@ -178,7 +195,7 @@ export default {
 
 @media all and (max-width: 975px) {
   .room {
-    width: calc(100% / 2);
-  }
+  width: calc(100% / 2);
+}
 }*/
 </style>

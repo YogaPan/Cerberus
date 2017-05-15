@@ -7,7 +7,7 @@
       <div id="profile">
 
         <div id="profile-left">
-          <div id="head-image"></div>
+          <img id="head-image" src="/assets/snake.jpg"></img>
         </div>
 
         <div id="profile-right">
@@ -19,11 +19,8 @@
 
       </div>
 
-      <div id="other-settings">
-        <!-- <h2>Image</h2>
-        <h2>Name</h2>
-        <h2>Name</h2> -->
-        <button id="save">Save Change</button>
+      <div id="button-container">
+        <button id="save-button">Save Change</button>
       </div>
 
     </div>
@@ -66,7 +63,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
 
   padding-top: 25px;
 }
@@ -79,12 +76,10 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-
-  /*background-color: red;*/
 }
 
 #profile-left {
-  flex: 0 0 250px;
+  flex: 0 0 32%;
   height: 100%;
 
   display: flex;
@@ -105,14 +100,12 @@ export default {
   justify-content: flex-start;
 
   padding-top: 30px;
-  padding-left: 50px;
+  padding-left: 10%;
 }
 
 #head-image {
-  height: 200px;
-  width: 200px;
+  width: 90%;
   border-radius: 50%;
-
   background-color: #eee;
 }
 
@@ -159,12 +152,20 @@ export default {
   margin-bottom: 20px;
 }
 
-#save {
+#button-container {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  padding-top: 50px;
+}
+
+#save-button {
   height: 50px;
   width: 200px;
-
-  margin-top: 30px;
-  margin-left: 250px;
 
   border: none;
   border-radius: 5px;
@@ -174,9 +175,90 @@ export default {
   color: white;
 }
 
-#save:hover {
+#save-button:hover {
   background-color: #512DA8;
   transition: .2s;
+}
+
+@media all and (max-height: 625px) {
+  /* TODO */
+}
+
+@media all and (max-width: 1225px) {
+  #settings-container {
+    width: 80%;
+  }
+
+  #profile-right {
+    /* TODO */
+  }
+}
+
+@media all and (max-width: 975px) {
+  #settings-container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  #username {
+    font-size: 20px;
+  }
+
+  #nickname {
+    font-size: 20px;
+  }
+
+  #profile-left {
+
+  }
+
+  #profile-right {
+
+  }
+}
+
+@media all and (max-width: 700px) {
+  #profile {
+    flex: 0 0 450px;
+
+    display: flex;
+    flex-direction: column;
+    /*flex-wrap: wrap;*/
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  #profile-left {
+    flex: 0 0 250px;
+    width: 100%;
+  }
+
+  #profile-right {
+    flex: 0 0 200px;
+    width: 100%;
+
+    padding-left: 0;
+    padding-top: 0;
+  }
+
+  #head-image {
+    width: 50%;
+  }
+
+  /*
+  #left-container {
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 60px;
+
+    width: 200px;
+  }*/
+}
+@media all and (max-width: 550px) {
+  #profile-left {
+    flex: 0 0 250px;
+  }
 }
 
 </style>
