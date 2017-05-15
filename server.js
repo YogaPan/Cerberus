@@ -33,7 +33,7 @@ var connection = mysql.createConnection({
   database : 'final_project'
 });
 
-var port = 3000;
+var port = 8888;
 
 app.use('/dist', express.static('dist'));
 app.use('/assets', express.static('assets'));

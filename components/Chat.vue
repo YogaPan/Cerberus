@@ -48,7 +48,7 @@
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-var socket = require('socket.io-client')('http://140.136.150.75:3000');
+var socket = require('socket.io-client')('http://140.136.150.75:8888');
 import { mapGetters } from 'vuex'
 export default {
   data() {
