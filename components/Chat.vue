@@ -45,7 +45,10 @@
   </div>
 </template>
 
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
 <script>
+var socket = require('socket.io-client')('http://140.136.150.75:3000');
 import { mapGetters } from 'vuex'
 export default {
   data() {
@@ -67,14 +70,21 @@ export default {
     },
     submit() {
       if (this.input !== '') {
+        socket.emit('new message', this.input);
         this.$store.dispatch('submit', this.input)
         this.input = ''
         const messageContainer = this.$el.querySelector(".message-container")
         messageContainer.scrollTop = messageContainer.scrollHeight
+        
       }
     }
   }
 }
+socket.on('new message', function (data) {
+  this.$store.dispatch('submit', data)
+  const messageContainer = this.$el.querySelector(".message-container")
+  messageContainer.scrollTop = messageContainer.scrollHeight
+});
 </script>
 
 <style scoped>

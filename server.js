@@ -21,7 +21,10 @@ var options = {
 var server = https.createServer(options, app);
 */
 
+var io = require('socket.io')(server);
+
 var mysql = require('mysql');
+
 
 var connection = mysql.createConnection({
   host     : 'localhost',
@@ -30,7 +33,7 @@ var connection = mysql.createConnection({
   database : 'final_project'
 });
 
-var port = 8888;
+var port = 3000;
 
 app.use('/dist', express.static('dist'));
 app.use('/assets', express.static('assets'));
@@ -280,3 +283,22 @@ app.post('/board', function(req,res){ // client connect 140.136.150.75:[port]/bo
 });
 
 server.listen(port);
+
+
+io.on('connection', function (socket) {
+  console.log("io.on");
+  // when the client emits 'new message', this listens and executes
+  socket.on('new message', function (data) {
+    // we tell the client to execute 'new message'
+    /*
+    socket.broadcast.emit('new message', {
+      username: socket.username,
+      message: data
+    });
+    */
+    socket.broadcast.emit('new message', data);
+    console.log(data);
+  });
+
+  
+});
