@@ -236,6 +236,10 @@ export default {
   transition: .2s;
 }
 
+.error-message {
+  color: red;
+}
+
 @media all and (max-height: 650px) {
   #root-container {
     height: 650px;
