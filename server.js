@@ -1,46 +1,37 @@
 var http = require('http');
 var express = require('express');
-var fs = require('fs');
 var app = express();
 var server = http.createServer(app);
-var loginhtml = fs.readFileSync('./pages/login.html');
-var boardhtml = fs.readFileSync('./pages/board.html');
-var registerhtml = fs.readFileSync('./pages/register.html');
-var chatroomhtml = fs.readFileSync('./pages/chatroom.html');
-var createchatroomhtml = fs.readFileSync('./pages/create-chatroom.html');
-var bodyParser = require('body-parser'); // for json
-
-var session = require('express-session')({
-    secret: "Haha&!@^#%&^!@%8787ni hao ma?",
-    resave: true,
-    saveUninitialized: true,
-    cookie: { maxAge: 600 * 1000 }
-  });
-var sharedsession = require("express-socket.io-session");
 var io = require('socket.io')(server);
-io.use(sharedsession(session)); 
-app.use(session);
-
+var fs = require('fs');
+var bodyParser = require('body-parser'); // for json
+app.use(bodyParser.json());
 var mysql = require('mysql');
-
-
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'fuckyou',
   database : 'final_project'
 });
-
-var port = 8888;
-
+var sharedsession = require("express-socket.io-session");
+var session = require('express-session')({
+  secret: "Haha&!@^#%&^!@%8787ni hao ma?",
+  resave: true,
+  saveUninitialized: true,
+  cookie: { maxAge: 600 * 1000 }
+});
+io.use(sharedsession(session)); 
+app.use(session);
+var loginhtml = fs.readFileSync('./pages/login.html');
+var boardhtml = fs.readFileSync('./pages/board.html');
+var registerhtml = fs.readFileSync('./pages/register.html');
+var chatroomhtml = fs.readFileSync('./pages/chatroom.html');
+var createchatroomhtml = fs.readFileSync('./pages/create-chatroom.html');
 app.use('/dist', express.static('dist'));
 app.use('/assets', express.static('assets'));
 app.use('/static', express.static('static'));
-app.use(bodyParser.json());
-
-//app.use(cookieParser("sdtKLL@*#&$^*@#&$LkjlklJlIHyugyu@#($*(!*@$@!yyvyvU"));
-
-
+var port = 8888;
+server.listen(port);
 
 app.get('/test', function(req,res){ // test
   if(req.session.uid) {
@@ -55,8 +46,6 @@ app.get('/test', function(req,res){ // test
     res.write("Welcome!");
     res.end();
   }
-  
-  
 });
 
 app.get('/', function(req,res){ // client connect 140.136.150.75:[port]/
@@ -107,7 +96,6 @@ app.get('/logout', function(req,res){ // client connect 140.136.150.75:[port]/lo
     res.write('{"success": true}');
     //res.write("cookie cleared.");
   }
-  
   res.end();
 });
 
@@ -132,7 +120,6 @@ app.post('/login', function(req,res){ // post 140.136.150.75:[port]/login
     '" AND password = "'+req.body.password+'"', function (error, results, fields) { // check username and password
       if (error) throw error;
       if(results.length > 0){
-        //res.cookie("cookie", req.body.username, {maxAge: 900000, signed: true});
         req.session.uid = results[0].id;
         req.session.username = results[0].username;
         req.session.email = results[0].email;
@@ -151,7 +138,6 @@ app.post('/login', function(req,res){ // post 140.136.150.75:[port]/login
     '" AND password = "'+req.body.password+'"', function (error, results, fields) {  // check email and password
       if (error) throw error;
       if(results.length > 0){
-        //res.cookie("cookie", req.body.username, {maxAge: 900000, signed: true});
         req.session.uid = results[0].id;
         req.session.username = results[0].username;
         req.session.email = results[0].email;
@@ -277,14 +263,9 @@ app.post('/board', function(req,res){ // client connect 140.136.150.75:[port]/bo
   }
 });
 
-server.listen(port);
-
 io.on('connection', function (socket) {
   console.log(socket.id, "io.on");
-  // when the client emits 'new message', this listens and executes
-
-  socket.on('new message', function (data) {
-    // we tell the client to execute 'new message'
+  socket.on('new message', function (data) {// when the client emits 'new message', this listens and executes
     /*
     socket.broadcast.emit('new message', {
       username: socket.username,
@@ -292,7 +273,6 @@ io.on('connection', function (socket) {
     });
     */
     socket.broadcast.emit('new message', data);
-
     console.log(socket.handshake.session.uid, socket.handshake.session.username, data);
   });
 });
