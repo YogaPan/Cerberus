@@ -9,19 +9,17 @@ var registerhtml = fs.readFileSync('./pages/register.html');
 var chatroomhtml = fs.readFileSync('./pages/chatroom.html');
 var createchatroomhtml = fs.readFileSync('./pages/create-chatroom.html');
 var bodyParser = require('body-parser'); // for json
-//var cookieParser = require('cookie-parser');
-//var cookie = require('cookie');
-var session = require('express-session');
-/* // if using https
-var https = require('https');
-var options = {
-  key: fs.readFileSync('./privatekey.pem'),
-  cert: fs.readFileSync('./certificate.pem')
-};
-var server = https.createServer(options, app);
-*/
 
+var session = require('express-session')({
+    secret: "Haha&!@^#%&^!@%8787ni hao ma?",
+    resave: true,
+    saveUninitialized: true,
+    cookie: { maxAge: 600 * 1000 }
+  });
+var sharedsession = require("express-socket.io-session");
 var io = require('socket.io')(server);
+io.use(sharedsession(session)); 
+app.use(session);
 
 var mysql = require('mysql');
 
@@ -41,10 +39,7 @@ app.use('/static', express.static('static'));
 app.use(bodyParser.json());
 
 //app.use(cookieParser("sdtKLL@*#&$^*@#&$LkjlklJlIHyugyu@#($*(!*@$@!yyvyvU"));
-app.use(session({
-  secret: "lisg;OIjg;oISFGRrie:JOIREj*&^%@asdfasdfewr234235j6574$&@^#%",
-  cookie: { maxAge: 600 * 1000 }
-}));
+
 
 
 app.get('/test', function(req,res){ // test
@@ -284,10 +279,10 @@ app.post('/board', function(req,res){ // client connect 140.136.150.75:[port]/bo
 
 server.listen(port);
 
-
 io.on('connection', function (socket) {
-  console.log("io.on");
+  console.log(socket.id, "io.on");
   // when the client emits 'new message', this listens and executes
+
   socket.on('new message', function (data) {
     // we tell the client to execute 'new message'
     /*
@@ -297,8 +292,7 @@ io.on('connection', function (socket) {
     });
     */
     socket.broadcast.emit('new message', data);
-    console.log(data);
-  });
 
-  
+    console.log(socket.handshake.session.uid, socket.handshake.session.username, data);
+  });
 });
