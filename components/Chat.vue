@@ -75,8 +75,8 @@ export default {
     socket.on('new message', data => {
         this.$store.dispatch('submit', data)
         setTimeout(() => {
-          const messageContainer = this.$el.querySelector(".message-container")
-          messageContainer.scrollTop = messageContainer.scrollHeight
+        	const messageContainer = this.$el.querySelector(".message-container")
+        	messageContainer.scrollTop = messageContainer.scrollHeight
         }, 200)
     });
   },
@@ -90,8 +90,8 @@ export default {
         this.$store.dispatch('submit', this.input)
         this.input = ''
         setTimeout(() => {
-          const messageContainer = this.$el.querySelector(".message-container")
-          messageContainer.scrollTop = messageContainer.scrollHeight
+        	const messageContainer = this.$el.querySelector(".message-container")
+        	messageContainer.scrollTop = messageContainer.scrollHeight
         }, 200)
       }
     }
