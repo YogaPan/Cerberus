@@ -62,7 +62,23 @@ export default {
     }),
     typing() {
       return (this.input === '') ? false : true
-    }
+    },
+    /*getmsg() {
+      socket.on('new message', function (data) {
+      this.$store.dispatch('submit', data)
+      const messageContainer = this.$el.querySelector(".message-container")
+      messageContainer.scrollTop = messageContainer.scrollHeight
+    });
+    }*/
+  },
+  mounted: function () {
+    socket.on('new message', data => {
+        this.$store.dispatch('submit', data)
+        setTimeout(() => {
+          const messageContainer = this.$el.querySelector(".message-container")
+          messageContainer.scrollTop = messageContainer.scrollHeight
+        }, 200)
+    });
   },
   methods: {
     read() {
@@ -73,18 +89,15 @@ export default {
         socket.emit('new message', this.input);
         this.$store.dispatch('submit', this.input)
         this.input = ''
-        const messageContainer = this.$el.querySelector(".message-container")
-        messageContainer.scrollTop = messageContainer.scrollHeight
-        
+        setTimeout(() => {
+          const messageContainer = this.$el.querySelector(".message-container")
+          messageContainer.scrollTop = messageContainer.scrollHeight
+        }, 200)
       }
     }
   }
 }
-socket.on('new message', function (data) {
-  this.$store.dispatch('submit', data)
-  const messageContainer = this.$el.querySelector(".message-container")
-  messageContainer.scrollTop = messageContainer.scrollHeight
-});
+
 </script>
 
 <style scoped>
