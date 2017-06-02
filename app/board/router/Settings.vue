@@ -12,9 +12,9 @@
 
         <div id="profile-right">
           <h2 id="username">Username</h2>
-          <input type="text" value="yogapan85321">
+          <input type="text" v-bind:value="this.$store.state.username">
           <h2 id="nickname">Nick Name</h2>
-          <input type="text" value="東谷羽琉秀緒">
+          <input type="text" v-bind:value="this.$store.state.nickname">
         </div>
 
       </div>
@@ -32,11 +32,10 @@ export default {
   data() {
     return {}
   },
-  computed: {
-    /* TODO */
-  },
   methods: {
-    /* TODO */
+    update() {
+      /* TODO */
+    }
   }
 }
 </script>

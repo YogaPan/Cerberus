@@ -5,6 +5,8 @@ import App from './App.vue'
 import Rooms from './router/Rooms.vue'
 import Settings from './router/Settings.vue'
 
+import { store } from './store'
+
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -19,5 +21,6 @@ const router = new VueRouter({
 new Vue({
   el: '#app',
   router,
+  store,
   render: h => h(App)
 })

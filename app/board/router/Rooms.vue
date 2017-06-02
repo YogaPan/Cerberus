@@ -1,7 +1,7 @@
 <template>
   <div id="room-container">
-    <div class="room" v-for="room in rooms">
-      <div class="room-content" @click="toChatroom">
+    <div class="room" v-for="room in this.$store.state.rooms">
+      <div class="room-content" @click="toChatroom(room.url)">
         <div class="room-description">
           <h1>{{ room.name }}</h1>
           <p>{{ room.description }}</p>
@@ -29,36 +29,11 @@ import axios from 'axios'
 
 export default {
   data() {
-    console.log('test2')
-    return {
-      rooms: []
-    }
-  },
-  mounted() {
-    axios.post('/board')
-      .then(response => {
-        const body = response.data
-        this.rooms = body.chatroom
-      })
-      .catch(error => {
-        console.error(error)
-      })
-
-    // This is for frontend debug.
-    // this.rooms = [
-    //   { name: '期末專題', description: '期末專題的討論', src: '' },
-    //   { name: '讀書會', description: 'Come on, you just jerk', src: '' },
-    //   { name: '普通頻道', description: '一個不小心', src: '' },
-    //   { name: '期末專題', description: '哈囉你好嗎', src: '' },
-    //   { name: '旅遊討論', description: 'test', src: '' }
-    // ]
-  },
-  computed: {
-    /* TODO */
+    return {}
   },
   methods: {
-    toChatroom() {
-      document.location.href = '/chatroom'
+    toChatroom(url) {
+      document.location.href = '/chatroom/' + url
     },
     createChatroom() {
       document.location.href = '/create-chatroom'

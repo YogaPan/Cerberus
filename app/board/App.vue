@@ -15,8 +15,8 @@
             <img class="circle-image" src="/assets/snake.jpg" alt="head">
           </div>
           <div id="dropdown-self-right">
-            <p>yogapan85321</p>
-            <p>東谷羽琉</p>
+            <p>{{ this.$store.state.username }}</p>
+            <p>{{ this.$store.state.nickname }}</p>
           </div>
         </div>
 
@@ -44,7 +44,7 @@
 
       <img id="notification-button" src="/assets/notification.png" alt="notification" @click="toggleNotificationDropdown">
       <div id="notification-dropdown" class="dropdown-content" v-if="showNotificationDropdown">
-        <div class="invite-item" v-for="invite in invites">
+        <div class="invite-item" v-for="invite in this.$store.state.invites">
 
           <div class="invite-item-left">
             <img class="circle-image" src="/assets/snake.jpg" alt="from">
@@ -115,23 +115,17 @@ export default {
     const showHeadDropdown = false
     const showNotificationDropdown = false;
 
-    const invites = [
-      { roomName: 'fuck', from: 'garylai' },
-      { roomName: '大屌群組', from: 'husky' },
-      { roomName: '大屌群組', from: 'husky' },
-      { roomName: '大屌群組', from: 'husky' },
-      { roomName: '大屌群組', from: 'husky' },
-      { roomName: '大屌群組', from: 'husky' }
-    ]
-
     return {
       showLeftBar,
       showHeadDropdown,
       showNotificationDropdown,
-      invites
     }
   },
   mounted() {
+    // Get all data
+    this.$store.dispatch('getAllInformation')
+
+    // Add global event listener
     document.addEventListener('click', this.hideDropdown)
   },
   methods: {
@@ -154,7 +148,6 @@ export default {
       event.stopPropagation()
     },
     hideDropdown() {
-      console.log('hide')
       this.showHeadDropdown = false
       this.showNotificationDropdown = false
     },
@@ -165,13 +158,9 @@ export default {
         if (body.success) {
           document.location.href = '/login'
         } else {
-          this.errorType = 'logout'
-          // this.promptMessage = body.message
+          console.error(body)
         }
       }).catch(error => {
-        this.errorType = 'request'
-        // this.promptMessage = error.message
-
         console.error(error)
       })
     }
@@ -240,13 +229,6 @@ export default {
 
   background-color: #f8f8f8;
 }
-
-/*
-#list-container {
-  background-color: white;
-  width: 100%;
-}
-*/
 
 #menu {
   position: absolute;
@@ -346,7 +328,7 @@ export default {
   font-size: 20px;
   font-weight: 400;
   font-family: 'helvetica', sans-serif;
-  color: #555;
+  color: #222;
 }
 
 .list-item:hover a {
@@ -393,9 +375,9 @@ export default {
   border-bottom: 1px solid #eee;
 }
 
-/*.invite-item:hover > .invite-item-left, .invite-item:hover .invite-item-middle {*/
-  /*background-color: #eee;*/
-/*}*/
+.invite-item:hover {
+  background-color: #f8f8f8;
+}
 
 .invite-item-left {
   flex: 0 0 50px;
