@@ -22,8 +22,14 @@
 
         <div id="self-list">
           <li class="list-item">
+            <router-link to="/rooms">
+              <img src="/assets/earth.png" alt="rooms">
+              <span>Rooms</span>
+            </router-link>
+          </li>
+          <li class="list-item">
             <router-link to="/settings">
-              <img src="/assets/settings-2.png" alt="gear">
+              <img src="/assets/settings-2.png" alt="settings">
               <span>Settings</span>
             </router-link>
           </li>
@@ -44,8 +50,17 @@
             <img class="circle-image" src="/assets/snake.jpg" alt="from">
           </div>
 
-          <div class="invite-item-right">
+          <div class="invite-item-middle">
             <p>{{ invite.from }} 邀請你進入『{{ invite.roomName }}』聊天室</p>
+          </div>
+
+          <div class="invite-item-right">
+            <div class="accept-area">
+              <img class="accept-button" src="/assets/accept.png">
+            </div>
+            <div class="reject-area">
+              <img class="reject-button" src="/assets/reject.png">
+            </div>
           </div>
 
         </div>
@@ -102,6 +117,8 @@ export default {
 
     const invites = [
       { roomName: 'fuck', from: 'garylai' },
+      { roomName: '大屌群組', from: 'husky' },
+      { roomName: '大屌群組', from: 'husky' },
       { roomName: '大屌群組', from: 'husky' },
       { roomName: '大屌群組', from: 'husky' },
       { roomName: '大屌群組', from: 'husky' }
@@ -311,6 +328,8 @@ export default {
   right: 50px;
   top: 50px;
 
+  min-width: 300px;
+
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -351,6 +370,7 @@ export default {
   top: 50px;
 
   height: 400px;
+  min-width: 400px;
   overflow-y: scroll;
 
   display: flex;
@@ -367,14 +387,16 @@ export default {
   flex-direction: row;
   align-items: stretch;
   justify-content: flex-start;
+
+  border-bottom: 1px solid #eee;
 }
 
-.invite-item:hover {
-  background-color: #eee;
-}
+/*.invite-item:hover > .invite-item-left, .invite-item:hover .invite-item-middle {*/
+  /*background-color: #eee;*/
+/*}*/
 
 .invite-item-left {
-  flex: 0 0 60px;
+  flex: 0 0 50px;
 
   display: flex;
   flex-direction: column;
@@ -382,17 +404,61 @@ export default {
   justify-content: center;
 }
 
-.invite-item-right {
+.invite-item-middle {
   flex: 1 0 0;
 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.invite-item-middle p {
+  padding-right: 15px;
+}
+
+.invite-item-right {
+  flex: 0 0 75px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-around;
+
+  /*border-left: 2px solid #eee;*/
+  /* TODO */
+}
+
+.accept-button, .reject-button {
+  height: 25px;
+}
+
+.accept-area {
+  flex: 1 0 0;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
 
-.invite-item-right p {
-  padding-right: 15px;
+.reject-area {
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.accept-area:hover {
+  transition: .2s;
+  background-color: #00D62B;
+  cursor: pointer;
+}
+
+.reject-area:hover {
+  transition: .2s;
+  background-color: #EF0035;
+  cursor: pointer;
 }
 
 .dropdown-content {
@@ -400,7 +466,6 @@ export default {
   position: absolute;
 
   border-radius: 10px;
-  min-width: 300px;
 
   background-color: white;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
