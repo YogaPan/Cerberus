@@ -100,23 +100,19 @@ export default {
 
 </script>
 
-<style scoped>
+<style>
 #app-chat {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100vh;
-  width: 350px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: stretch;
+  height: 100%;
   border-left: 2px solid black;
 }
 .message-container {
   overflow: scroll;
   overflow-x: hidden;
-  height: 100vh;
+  flex: 1 0 0;
   width: 100%;
   align-self: stretch;
   padding: 10px 20px;
@@ -183,12 +179,12 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 40px;
+  flex: 0 0 40px;
   background-color:#f2f1f4;
   align-self: stretch;
 }
 .user-input {
-  height: 35px;
+  flex: 0 0 35px;
 }
 .user-input input {
   /* box model */
