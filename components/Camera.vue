@@ -14,11 +14,13 @@ export default {
   },
   mounted() {
     if (this.hasGetUserMedia()) {
-      navigator.getUserMedia({ video: true, audio: true }, stream => {
+      navigator.getUserMedia({
+        video: true, audio: true
+      }, stream => {  // success callback
         const video = this.$el.querySelector('#camera')
         video.src = window.URL.createObjectURL(stream)
-        video.muted = true; // no sound feedback
-      }, error => {
+        video.muted = true;  // no sound feedback
+      }, error => {  //fail callback
         alert('ERROR!')
       })
     } else {
