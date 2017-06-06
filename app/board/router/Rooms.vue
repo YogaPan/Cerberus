@@ -7,10 +7,10 @@
           <p>{{ room.description }}</p>
         </div>
         <div class="room-people">
-          <div class="person"></div>
-          <div class="person"></div>
-          <div class="person"></div>
-          <div class="person"></div>
+          <img class="person" src="/assets/snake.jpg" alt="person">
+          <img class="person" src="/assets/snake.jpg" alt="person">
+          <img class="person" src="/assets/snake.jpg" alt="person">
+          <img class="person" src="/assets/snake.jpg" alt="person">
         </div>
       </div>
     </div>
@@ -92,7 +92,7 @@ export default {
 .room-content {
   display: flex;
   flex-direction: column;
-  align-items: flex-stretch;
+  align-items: stretch;
   justify-content: center;
 
   width: 200px;
@@ -162,7 +162,7 @@ export default {
   /* TODO */
 }
 
-/*@media all and (max-width: 1225px) {
+@media all and (max-width: 1225px) {
   .room {
     width: calc(100% / 3);
   }
@@ -170,7 +170,7 @@ export default {
 
 @media all and (max-width: 975px) {
   .room {
-  width: calc(100% / 2);
+    width: calc(100% / 2);
+  }
 }
-}*/
 </style>
