@@ -224,7 +224,7 @@ export default {
 
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: center;
   justify-content: flex-start;
 
   background-color: #f8f8f8;

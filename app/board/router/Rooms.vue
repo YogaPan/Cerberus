@@ -45,6 +45,7 @@ export default {
 <style>
 #room-container {
   flex: 1 0 0;
+  width: 100%;
 
   display: flex;
   flex-direction: row;
