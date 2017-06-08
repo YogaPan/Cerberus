@@ -51,7 +51,7 @@
           </div>
 
           <div class="invite-item-middle">
-            <p>{{ invite.from }} 邀請你進入『{{ invite.roomName }}』聊天室</p>
+            <p>{{ invite.from }} invites you to join『{{ invite.roomName }}』chatroom</p>
           </div>
 
           <div class="invite-item-right">
