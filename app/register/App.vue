@@ -1,7 +1,7 @@
 <template>
   <div id="root-container">
     <div id="top-container">
-      <a href="/">Corna</a>
+      <a href="/">Cerberus</a>
     </div>
 
     <div id="middle-container">

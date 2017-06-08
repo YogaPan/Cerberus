@@ -3,7 +3,7 @@
 
     <div id="top-container">
       <button id="menu" href="#menu" @click="toggleLeftBar">&#9776;</button>
-      <a id="corna" href="/">Corna</a>
+      <a id="cerberus" href="/">Cerberus</a>
 
       <button>
 
@@ -277,7 +277,7 @@ export default {
   outline: none;
 }
 
-#corna {
+#cerberus {
   font-size: 25px;
 }
 
