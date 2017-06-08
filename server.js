@@ -4,6 +4,7 @@ var app = express();
 var server = http.createServer(app);
 var io = require('socket.io')(server);
 var fs = require('fs');
+var crypto = require("crypto");
 var bodyParser = require('body-parser'); // for json
 app.use(bodyParser.json());
 var mysql = require('mysql');
@@ -15,7 +16,7 @@ var connection = mysql.createConnection({
 });
 var sharedsession = require("express-socket.io-session");
 var session = require('express-session')({
-  secret: "Haha&!@^#%&^!@%8787ni hao ma?",
+  secret: "Haha&!@^#%&^!@%8787ni hao Ma?",
   resave: true,
   saveUninitialized: true,
   cookie: { maxAge: 600 * 1000 }
@@ -66,8 +67,9 @@ app.get('/board', function(req,res){ // client connect 140.136.150.75:[port]/boa
   }
 });
 
-app.get('/chatroom', function(req,res){ // client connect 140.136.150.75:[port]/chatroom
+app.get('/chatroom(/*)?', function(req,res){ // client connect 140.136.150.75:[port]/chatroom
   if(req.session.uid){
+    req.session.joinroom = req.url.substring(10);
     res.writeHeader(200,{'Content-Type':'text/html'});
     res.write(chatroomhtml); // response chatroom.html
     res.end();
@@ -209,6 +211,15 @@ app.post('/create-chatroom', function(req,res){ // client connect 140.136.150.75
           });
         }
       });
+      connection.query('SELECT MAX(id) AS id FROM chatroom WHERE manager = '+req.session.uid, function (error, results, fields) {
+        if (error) throw error;
+        var cipher = crypto.createCipher('aes-256-cbc', 'IloveTzuyuilovetzuYu');
+        var encrypted = cipher.update(results[0].id.toString(), 'utf8', 'hex');
+        encrypted += cipher.final('hex');
+        connection.query('UPDATE chatroom SET url = "'+encrypted+'" WHERE id = '+results[0].id, function (error, results, fields) {
+          if (error) throw error;
+        });
+      });
       res.write('{"success":true}');
       res.end();
     });
@@ -243,18 +254,31 @@ app.post('/search', function(req,res){ // client connect 140.136.150.75:[port]/s
 
 app.post('/board', function(req,res){ // client connect 140.136.150.75:[port]/board
   if(req.session.uid){
-    connection.query('SELECT id, name FROM chatroom WHERE id IN (SELECT cid FROM chatmember WHERE uid = '+req.session.uid+
-      ' AND status = "accept")', function (error, results, fields) {
+    connection.query('SELECT id, name, url FROM chatroom WHERE id IN (SELECT cid FROM chatmember WHERE uid = '+req.session.uid+
+      ' AND status = "accept")', function (error, results, fields) { // user's chatrooms
       if (error) throw error;
-      res.write('{"chatroom":[');
+      res.write('{"username":"'+req.session.username+'","chatroom":[');
       for(var i in results){
         if(i == 0)
-          res.write('{"id":'+results[i].id+',"name":"'+results[i].name+'"}');
+          res.write('{"id":'+results[i].id+',"name":"'+results[i].name+'","url":"'+results[i].url+'"}');
         else
-          res.write(',{"id":'+results[i].id+',"name":"'+results[i].name+'"}');
+          res.write(',{"id":'+results[i].id+',"name":"'+results[i].name+'","url":"'+results[i].url+'"}');
       }
-      res.write("]}");
-      res.end();
+      res.write("],");
+      connection.query('SELECT chatroom.id AS id, name, username FROM chatroom, user WHERE chatroom.id IN (SELECT cid FROM chatmember WHERE uid = '+req.session.uid+
+        ' AND status = "pending") AND chatroom.manager = user.id', function (error, results, fields) { // invite chatrooms
+        if (error) throw error;
+        res.write('"chatroom_invite":[');
+        for(var i in results){
+          if(i == 0)
+            res.write('{"id":'+results[i].id+',"roomName":"'+results[i].name+'","from":"'+results[i].username+'"}');
+          else
+            res.write(',{"id":'+results[i].id+',"roomName":"'+results[i].name+'","from":"'+results[i].username+'"}');
+        }
+        res.write("]}");
+
+        res.end();
+      });
     });
   }
   else{
@@ -263,16 +287,31 @@ app.post('/board', function(req,res){ // client connect 140.136.150.75:[port]/bo
   }
 });
 
+app.post('/invite', function(req,res){ // show invite notification
+	console.log("invite");
+	if(req.session.uid){
+		connection.query('UPDATE chatmember SET status = "'+req.body.accept+'" WHERE cid = '+req.body.id+' AND uid = '+req.session.uid, function (error, results, fields) {
+			if (error) throw error;
+			res.write('{"success": true}');
+			res.end();
+		});
+	}
+	else{
+		res.write("Please login.");
+		res.end();
+	}
+});
+
 io.on('connection', function (socket) {
   console.log(socket.id, "io.on");
-  socket.on('new message', function (data) {// when the client emits 'new message', this listens and executes
-    /*
+  //console.log(socket.handshake.session.joinroom);
+  socket.on('new message', function (data) { // when the client emits 'new message', this listens and executes
+    
     socket.broadcast.emit('new message', {
-      username: socket.username,
+      username: socket.handshake.session.username,
       message: data
     });
-    */
-    socket.broadcast.emit('new message', data);
+    
     console.log(socket.handshake.session.uid, socket.handshake.session.username, data);
   });
 });
