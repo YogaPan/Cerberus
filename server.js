@@ -303,11 +303,13 @@ app.post('/invite', function(req,res){ // show invite notification
 });
 
 io.on('connection', function (socket) {
-  console.log(socket.id, "io.on");
+  console.log(socket.handshake.session.uid, socket.id, "io.on");
   //console.log(socket.handshake.session.joinroom);
+  socket.room = socket.handshake.session.joinroom;
+  socket.join(socket.room);
   socket.on('new message', function (data) { // when the client emits 'new message', this listens and executes
     
-    socket.broadcast.emit('new message', {
+    io.sockets.in(socket.room).emit('new message', {
       username: socket.handshake.session.username,
       message: data
     });
