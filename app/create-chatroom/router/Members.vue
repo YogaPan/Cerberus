@@ -7,7 +7,7 @@
         <input v-model="input" type="text" placeholder="#members name">
 
         <div id="matched-users" class="dropdown-content">
-          <li v-for="user in matchedUsers" @click="addMember(user)">{{ user.name }}</li>
+          <li v-for="user in this.$store.state.matchedUsers" @click="addMember(user)">{{ user.name }}</li>
         </div>
       </div>
 
@@ -37,56 +37,11 @@ export default {
     return {
       input: '',
       errorMessage: '',
-      matchedUsers: []
     }
   },
   watch: {
     input: function () {
-      if (this.input === '') {
-        return this.matchedUsers = ''
-      }
-
-      axios.post('/search', {
-        search: this.input
-      }).then(response => {
-        const body = response.data
-
-        this.matchedUsers = body.users.
-          filter(user => { // find matched users.
-            return (user.name.indexOf(this.input) === 0) ? true : false
-          })
-          .filter(user => {  // Prevent repeat users.
-            return this.$store.state.members.every(member => {
-              return user.id !== member.id
-            })
-          })
-      })
-
-      // These data is for frontend debug.
-      // const users =  [
-      //   { id: 1, name: 'yogapan' },
-      //   { id: 2, name: 'yogapan_111' },
-      //   { id: 3, name: 'yogapan85321' },
-      //   { id: 4, name: 'yogapan_love' },
-      //   { id: 5, name: 'garylai' },
-      //   { id: 6, name: 'garylai_haha' },
-      //   { id: 7, name: 'hank1120' },
-      //   { id: 8, name: 'husky' },
-      //   { id: 9, name: 'yanwai_abc' },
-      //   { id: 10, name: 'official_husky_lovers' },
-      //   { id: 11, name: 'aka_motherfucker' },
-      //   { id: 12, name: 'lolikon' }
-      // ]
-      //
-      // this.matchedUsers = users.
-      //   filter(user => { // find matched users.
-      //     return (user.name.indexOf(this.input) === 0) ? true : false
-      //   })
-      //   .filter(user => {  // Prevent repeat users.
-      //     return this.$store.state.members.every(member => {
-      //       return user.id !== member.id
-      //     })
-      //   })
+      this.$store.dispatch('getMatchedUsers', this.input)
     }
   },
   methods: {
@@ -177,18 +132,21 @@ export default {
 }
 
 .dropdown-content {
-  /*display: none;*/
   position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
+  min-width: 300px;
+
+  border-radius: 10px;
+  background-color: white;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
 
 .dropdown-content li {
-  padding: 12px 16px;
   display: block;
+  padding: 12px 16px;
+  border-top: 1px solid #f8f8f8;
 
+  font-size: 20px;
   color: black;
   cursor: pointer;
 }
