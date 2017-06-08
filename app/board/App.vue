@@ -154,7 +154,7 @@ export default {
     acceptInvite(id) {
       axios.post('/invite', {
         id: id,
-        accept: true
+        accept: 'accept'
       }).then(response => {
         const body = response.body
         if (body.success) {
@@ -169,7 +169,7 @@ export default {
     rejectInvite(id) {
       axios.post('/invite', {
         id: id,
-        accept: false
+        accept: 'reject'
       }).then(response => {
         const body = response.body
         if (body.success) {
