@@ -7,7 +7,7 @@
 
         <div class="text-area">
           <div class="user">
-            <p>userID</p>
+            <p>{{ message.username }}</p>
           </div>
 
           <div class="message-area">
@@ -17,10 +17,10 @@
 
             <div class="msg-status">
               <div class="msg-status-read" v-if="message.read">
-                已讀
+                read
               </div>
               <div class="msg-status-read" v-else>
-               未讀
+                unread
               </div>
               <div class="msg-status-time">
                {{ message.time }}
@@ -53,7 +53,9 @@ import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      input: ''
+      input: '',
+      userID: '',
+      roomID: ''
     }
   },
   computed: {
@@ -61,15 +63,15 @@ export default {
       messages: 'messages'
     }),
     typing() {
+      setTimeout(() => {
+          const messageContainer = this.$el.querySelector(".message-container")
+          messageContainer.scrollTop = messageContainer.scrollHeight
+        }, 50)
       return (this.input === '') ? false : true
     },
-    /*getmsg() {
-      socket.on('new message', function (data) {
-      this.$store.dispatch('submit', data)
-      const messageContainer = this.$el.querySelector(".message-container")
-      messageContainer.scrollTop = messageContainer.scrollHeight
-    });
-    }*/
+  },
+  created: function () {
+    console.log("init");
   },
   mounted: function () {
     socket.on('new message', data => {
@@ -77,7 +79,8 @@ export default {
         setTimeout(() => {
         	const messageContainer = this.$el.querySelector(".message-container")
         	messageContainer.scrollTop = messageContainer.scrollHeight
-        }, 200)
+        }, 50)
+        //this.userID = data.username;
     });
   },
   methods: {
@@ -87,13 +90,21 @@ export default {
     submit() {
       if (this.input !== '') {
         socket.emit('new message', this.input);
-        this.$store.dispatch('submit', this.input)
+        //this.$store.dispatch('submit', this.input)
         this.input = ''
         setTimeout(() => {
         	const messageContainer = this.$el.querySelector(".message-container")
         	messageContainer.scrollTop = messageContainer.scrollHeight
-        }, 200)
+        }, 50)
       }
+    },
+    join() {
+      console.log("123");
+      socket.on('connection', function (socket) {
+        var url = socket.request.headers.referer;
+        var split_arr = url.split('/');
+        var roomID = split_arr[split_arr.length-1] || 'index';
+      });
     }
   }
 }

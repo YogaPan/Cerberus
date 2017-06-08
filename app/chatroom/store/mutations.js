@@ -4,9 +4,10 @@ export default {
   submit(state, messageContent) {
     state.messages.push({
       id: state.count,
-      content: messageContent,
+      content: messageContent.message,
       time: getTimeString(),
-      read: false
+      read: false,
+      username: messageContent.username
     })
 
     state.count++
