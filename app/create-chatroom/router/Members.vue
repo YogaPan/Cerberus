@@ -7,14 +7,18 @@
         <input v-model="input" type="text" placeholder="#members name">
 
         <div id="matched-users" class="dropdown-content">
-          <li v-for="user in this.$store.state.matchedUsers" @click="addMember(user)">{{ user.name }}</li>
+          <li v-for="user in this.$store.state.matchedUsers" @click="addMember(user)">
+            <img class="circle-image" src="/assets/snake.jpg" alt="head">
+            <p>{{ user.name }}</p>
+          </li>
         </div>
       </div>
 
       <div id="members">
         <div class="member" v-for="member in $store.state.members">
-          <img @click="removeMember(member.id)" src="/assets/cross.png" alt="remove">
+          <img class="circle-image" src="/assets/snake.jpg" alt="head">
           <p>{{ member.name }}</p>
+          <img class="cancel" @click="removeMember(member.id)" src="/assets/cross.png" alt="remove">
         </div>
       </div>
     </div>
@@ -39,6 +43,10 @@ export default {
       errorMessage: '',
     }
   },
+  mounted() {
+    // Add global event listener
+    document.addEventListener('click', this.hideDropdown)
+  },
   watch: {
     input: function () {
       this.$store.dispatch('getMatchedUsers', this.input)
@@ -57,6 +65,9 @@ export default {
     },
     removeMember(id) {
       this.$store.commit('removeMember', id)
+    },
+    hideDropdown() {
+      this.$store.state.matchedUsers = []
     },
     createChatroom() {
       if (this.$store.state.members.length === 0) {
@@ -142,7 +153,11 @@ export default {
 }
 
 .dropdown-content li {
-  display: block;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+
   padding: 12px 16px;
   border-top: 1px solid #f8f8f8;
 
@@ -155,9 +170,15 @@ export default {
   background-color: #f1f1f1
 }
 
-/*.show {
-  display: block;
-}*/
+.dropdown-content li p {
+  padding-left: 15px;
+}
+
+.circle-image {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
 
 #members {
   flex: 0 0 400px;
@@ -180,21 +201,25 @@ export default {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  position: relative;
 
   margin-top: 5px;
-
   border: 1px solid #ddd;
   border-radius: 5px;
-
   padding-left: 15px;
 }
 
-.member img {
+.cancel {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+
   width: 20px;
   height: 20px;
 }
 
-.member img:hover {
+.cancel:hover {
   transition: .2s;
   /*filter: sepia() saturate(10000%) hue-rotate(30deg);*/
   cursor: pointer;
