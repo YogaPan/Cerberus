@@ -47,7 +47,7 @@ export const store = new Vuex.Store({
       }
 
       axios.post('/search', {
-        search: this.input
+        search: input
       }).then(response => {
         const body = response.data
 
