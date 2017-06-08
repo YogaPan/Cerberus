@@ -156,8 +156,11 @@ export default {
         id: id,
         accept: 'accept'
       }).then(response => {
+        console.log(response)
+
         const body = response.body
         if (body.success) {
+          console.log('success!!')
           this.$store.dispatch('getAllInformation')
         } else {
           console.error('Invite Error!')
@@ -167,12 +170,15 @@ export default {
       })
     },
     rejectInvite(id) {
+      console.log(response)
+
       axios.post('/invite', {
         id: id,
         accept: 'reject'
       }).then(response => {
         const body = response.body
         if (body.success) {
+          console.log('success!!')
           this.$store.dispatch('getAllInformation')
         } else {
           console.error('Invite Error!')
