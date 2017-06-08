@@ -55,10 +55,10 @@
           </div>
 
           <div class="invite-item-right">
-            <div class="accept-area">
+            <div class="accept-area" @click="acceptInvite(invite.id)">
               <img class="accept-button" src="/assets/accept.png">
             </div>
-            <div class="reject-area">
+            <div class="reject-area" @click="rejectInvite(invite.id)">
               <img class="reject-button" src="/assets/reject.png">
             </div>
           </div>
@@ -150,6 +150,36 @@ export default {
     hideDropdown() {
       this.showHeadDropdown = false
       this.showNotificationDropdown = false
+    },
+    acceptInvite(id) {
+      axios.post('/invite', {
+        id: id,
+        accept: true
+      }).then(response => {
+        const body = response.body
+        if (body.success) {
+          this.$store.dispatch('getAllInformation')
+        } else {
+          console.error('Invite Error!')
+        }
+      }).catch(error => {
+        console.error(error)
+      })
+    },
+    rejectInvite(id) {
+      axios.post('/invite', {
+        id: id,
+        accept: false
+      }).then(response => {
+        const body = response.body
+        if (body.success) {
+          this.$store.dispatch('getAllInformation')
+        } else {
+          console.error('Invite Error!')
+        }
+      }).catch(error => {
+        console.error(error)
+      })
     },
     logout() {
       axios.get('/logout').then(response => {
