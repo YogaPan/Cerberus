@@ -7,12 +7,11 @@
 
         <div class="text-area">
           <div class="user">
-            <p>{{ message.username }}</p>
+            <p>{{ message.username}}</p>
           </div>
 
           <div class="message-area">
-            <div class="message">
-              {{ message.content }}
+            <div class="message" v-html="$options.filters.tolink(message.content)">
             </div>
 
             <div class="msg-status">
@@ -37,6 +36,7 @@
       <div class="loader"></div>
     </div>
     <button @click="fb">facebook</button>
+    <button @click="link">LK</button>
     <div class="user-input">
       <form @submit.prevent="submit">
         <input v-model="input" @click="read" placeholder="#chatroom">
@@ -44,11 +44,18 @@
     </div>
   </div>
 </template>
-
+<!-- socket io-->
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
+<!-- linkify-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="linkify.min.js"></script>
+<script src="linkify-jquery.min.js"></script>
 <script>
 var socket = require('socket.io-client')('http://140.136.150.75:8888');
+var linkify = require('linkifyjs');
+var linkifyHtml = require('linkifyjs/html');
+                  require('linkifyjs/plugins/hashtag')(linkify);
 import { mapGetters } from 'vuex'
 export default {
   data() {
@@ -71,6 +78,7 @@ export default {
     },
   },
   created: function () {
+    // init FB API
     window.fbAsyncInit = function() {
         FB.init({
           appId            : '1045259632196338',
@@ -132,9 +140,33 @@ export default {
           }
         );   
         } ); 
+    },
+    isURL(input) {
+        str = input;
+        //str = str.match(/http:\/\/.+/); 
+        str = str.match(/^http:\/\/.+\..+/i);
+        if (str == null){
+            return false;
+        }
+        else{
+            return true;
+        }
+    },
+    link(){
+      var obj = linkifyHtml('The site github.com is #awesome.', {
+                defaultProtocol: 'https'
+                });
+
+      console.log(obj);
+    }
+  },
+  filters: {
+    tolink: function (value) {
+      return linkifyHtml(value,{defaultProtocol: 'https'});
     }
   }
 }
+
 
 </script>
 
@@ -194,6 +226,9 @@ export default {
   max-width:220px;
   word-break: break-all;
 }
+.linkified {
+  color: #4169E1;
+}
 .msg-status {
   color: #5B5B5B;
   font-size: 8px;
@@ -201,9 +236,6 @@ export default {
   flex-direction: column;
   margin-left: 5px;
 }
-/* margin-left: 8px;
-   margin-bottom: 5px;
-*/
 .msg-status-read {
   font-size: 5px;
   line-height: 12px;
