@@ -40,11 +40,12 @@ export default {
 <style>
 #camera-container {
   width: 100%;
-  height: 100%;
+
+  flex: 1 0 0;
 }
 
 #camera {
   /*object-fit: fill;*/
-  width: 100%;
+  height: 100%;
 }
 </style>
