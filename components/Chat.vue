@@ -36,7 +36,6 @@
       <div class="loader"></div>
     </div>
     <button @click="fb">facebook</button>
-    <button @click="link">LK</button>
     <div class="user-input">
       <form @submit.prevent="submit">
         <input v-model="input" @click="read" placeholder="#chatroom">
@@ -141,24 +140,6 @@ export default {
         );   
         } ); 
     },
-    isURL(input) {
-        str = input;
-        //str = str.match(/http:\/\/.+/); 
-        str = str.match(/^http:\/\/.+\..+/i);
-        if (str == null){
-            return false;
-        }
-        else{
-            return true;
-        }
-    },
-    link(){
-      var obj = linkifyHtml('The site github.com is #awesome.', {
-                defaultProtocol: 'https'
-                });
-
-      console.log(obj);
-    }
   },
   filters: {
     tolink: function (value) {
