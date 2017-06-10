@@ -36,7 +36,7 @@
     <div class="is-typing" v-if="typing">
       <div class="loader"></div>
     </div>
-
+    <button @click="fb">facebook</button>
     <div class="user-input">
       <form @submit.prevent="submit">
         <input v-model="input" @click="read" placeholder="#chatroom">
@@ -71,14 +71,31 @@ export default {
     },
   },
   created: function () {
-    console.log("init");
+    window.fbAsyncInit = function() {
+        FB.init({
+          appId            : '1045259632196338',
+          autoLogAppEvents : true,
+          xfbml            : false,
+          status           : true,
+          version          : 'v2.9'
+        });
+        FB.AppEvents.logPageView();   
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
   },
   mounted: function () {
     socket.on('new message', data => {
         this.$store.dispatch('submit', data)
         setTimeout(() => {
-        	const messageContainer = this.$el.querySelector(".message-container")
-        	messageContainer.scrollTop = messageContainer.scrollHeight
+          const messageContainer = this.$el.querySelector(".message-container")
+          messageContainer.scrollTop = messageContainer.scrollHeight
         }, 50)
         //this.userID = data.username;
     });
@@ -93,18 +110,28 @@ export default {
         //this.$store.dispatch('submit', this.input)
         this.input = ''
         setTimeout(() => {
-        	const messageContainer = this.$el.querySelector(".message-container")
-        	messageContainer.scrollTop = messageContainer.scrollHeight
+          const messageContainer = this.$el.querySelector(".message-container")
+          messageContainer.scrollTop = messageContainer.scrollHeight
         }, 50)
       }
     },
-    join() {
-      console.log("123");
-      socket.on('connection', function (socket) {
-        var url = socket.request.headers.referer;
-        var split_arr = url.split('/');
-        var roomID = split_arr[split_arr.length-1] || 'index';
-      });
+    fb() {
+      FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+          var accessToken = response.authResponse.accessToken;
+        }
+        var url = "http://logdown.com";
+        FB.api(
+          '/?id='+url+'&fields=id,og_object{id,title,image}',
+          'GET',
+          {access_token: accessToken},
+          function(response) {
+              //var img = JSON.parse(response.og_object.image);
+              console.log(response.og_object.image);
+              console.log(response.og_object.image[0].url); //img url
+          }
+        );   
+        } ); 
     }
   }
 }
