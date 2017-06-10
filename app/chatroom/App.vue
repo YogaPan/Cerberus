@@ -4,42 +4,30 @@
       <router-view></router-view>
 
       <div id="menubar-container">
-        <div class="menu-item">
-          <router-link to="/camera">
-            <img class="item-image" src="/assets/cross.png" alt="snake">
-            <p>Video</p>
-          </router-link>
-        </div>
-        <div class="menu-item">
-          <router-link to="/screen">
-            <img class="item-image" src="/assets/cross.png" alt="snake">
-            <p>Screen</p>
-          </router-link>
-        </div>
-        <div class="menu-item">
-          <router-link to="/whiteboard">
-            <img class="item-image" src="/assets/cross.png" alt="snake">
-            <p>Whiteboard</p>
-          </router-link>
-        </div>
-        <div class="menu-item">
-          <router-link to="/vote">
-            <img class="item-image" src="/assets/cross.png" alt="snake">
-            <p>Vote</p>
-          </router-link>
-        </div>
-        <div class="menu-item">
-          <router-link to="/notes">
-            <img class="item-image" src="/assets/cross.png" alt="snake">
-            <p>Notes</p>
-          </router-link>
-        </div>
-        <div class="menu-item">
-          <router-link to="/files">
-            <img class="item-image" src="/assets/cross.png" alt="snake">
-            <p>Files</p>
-          </router-link>
-        </div>
+        <router-link class="menu-item" tag="div" to="/camera">
+          <img class="item-image" src="/assets/cross.png" alt="snake">
+          <p>Video</p>
+        </router-link>
+        <router-link class="menu-item" tag="div" to="/screen">
+          <img class="item-image" src="/assets/cross.png" alt="snake">
+          <p>Screen</p>
+        </router-link>
+        <router-link class="menu-item" tag="div" to="/whiteboard">
+          <img class="item-image" src="/assets/cross.png" alt="snake">
+          <p>Whiteboard</p>
+        </router-link>
+        <router-link class="menu-item" tag="div" to="/vote">
+          <img class="item-image" src="/assets/cross.png" alt="snake">
+          <p>Vote</p>
+        </router-link>
+        <router-link class="menu-item" tag="div" to="/notes">
+          <img class="item-image" src="/assets/cross.png" alt="snake">
+          <p>Notes</p>
+        </router-link>
+        <router-link class="menu-item" tag="div" to="/files">
+          <img class="item-image" src="/assets/cross.png" alt="snake">
+          <p>Files</p>
+        </router-link>
       </div>
     </div>
 
@@ -119,7 +107,7 @@ export default {
   border: 1px solid #ddd;
   background-color: #eee;
 
-  /*cursor: pointer;*/
+  cursor: pointer;
 }
 
 .menu-item p {
