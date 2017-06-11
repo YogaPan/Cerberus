@@ -316,7 +316,10 @@ io.on('connection', function (socket) {
       username: socket.handshake.session.username,
       message: data
     });
-    
+    connection.query('INSERT INTO chatmessage(url, uid, message) VALUES("'+socket.room+'", '+socket.handshake.session.uid
+      +', "'+data+'")', function (error, results, fields) {
+      if (error) throw error;
+    });
     console.log(socket.handshake.session.uid, socket.handshake.session.username, data);
   });
 });
