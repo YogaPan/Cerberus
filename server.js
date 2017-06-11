@@ -67,7 +67,7 @@ app.get('/board', function(req,res){ // client connect 140.136.150.75:[port]/boa
   }
 });
 
-app.get('/chatroom(/*)?', function(req,res){ // client connect 140.136.150.75:[port]/chatroom
+app.get('/chatroom/*', function(req,res){ // client connect 140.136.150.75:[port]/chatroom
   if(req.session.uid){
     req.session.joinroom = req.url.substring(10);
     res.writeHeader(200,{'Content-Type':'text/html'});
@@ -198,6 +198,8 @@ app.post('/register', function(req,res){ // post 140.136.150.75:[port]/register
 
 app.post('/create-chatroom', function(req,res){ // client connect 140.136.150.75:[port]/create-chatroom
   if(req.session.uid){
+  	//console.log(req.body.name);
+  	
     connection.query('INSERT INTO chatroom(name, manager) VALUES("'+ // insert new chatroom into database
     req.body.name+'", "'+req.session.uid+'")', function (error, results, fields) {
       if (error) throw error;
@@ -223,6 +225,7 @@ app.post('/create-chatroom', function(req,res){ // client connect 140.136.150.75
       res.write('{"success":true}');
       res.end();
     });
+    
   }
   else{
     res.write("Please login.");
