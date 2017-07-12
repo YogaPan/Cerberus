@@ -2,20 +2,22 @@
   <div id="whiteboard-container">
     <!-- <h1>whiteboard here...</h1> -->
 
-    <canvas id="whiteboard" @mousedown="onMouseDown" @mouseup="onMouseUp" @mouseout="onMouseUp" @mousemove="onMouseMove"></canvas>
-
-    <div class="colors">
-      <div class="color black" @click="changeColor('black')"></div>
-      <div class="color red" @click="changeColor('red')"></div>
-      <div class="color green" @click="changeColor('green')"></div>
-      <div class="color blue" @click="changeColor('blue')"></div>
-      <div class="color yellow" @click="changeColor('yellow')"></div>
+    <div id="leftbar">
+      <div class="colors">
+        <div class="color black" v-bind:class="isSelected('black')" @click="changeColor('black')"></div>
+        <div class="color red" v-bind:class="isSelected('red')" @click="changeColor('red')"></div>
+        <div class="color green" v-bind:class="isSelected('green')" @click="changeColor('green')"></div>
+        <div class="color blue" v-bind:class="isSelected('blue')" @click="changeColor('blue')"></div>
+        <div class="color yellow" v-bind:class="isSelected('yellow')" @click="changeColor('yellow')"></div>
+      </div>
     </div>
+
+    <canvas id="whiteboard" @mousedown="onMouseDown" @mouseup="onMouseUp" @mouseout="onMouseUp" @mousemove="onMouseMove"></canvas>
   </div>
 </template>
 
 <script>
-var socket = require('socket.io-client')('http://140.136.150.75:8888')
+const socket = require('socket.io-client')('http://140.136.150.75:8888')
 
 export default {
   data() {
@@ -25,19 +27,28 @@ export default {
         y: 0,
         color: 'black'
       },
-      drawing: false
+      drawing: false,
+      classObject: {
+        // TODO
+      }
     }
   },
   mounted() {
     this.canvas = this.$el.querySelector('#whiteboard')
-    this.context = this.canvas.getContext('2d');
+    this.context = this.canvas.getContext('2d')
 
-    this.colors =this.$el.querySelector('.color')
+    this.canvas.style.height = 500
+    this.canvas.style.width = 600
 
-    socket.on('drawing', onDrawingEvent);
+    socket.on('drawing', onDrawingEvent)
 
-    window.addEventListener('resize', this.onResize, false);
+    window.addEventListener('resize', this.onResize, false)
     onResize();
+
+    function onResize() {
+      this.canvas.width = window.innerWidth
+      this.canvas.height = window.innerHeight
+    }
   },
   methods: {
     changeColor(color) {
@@ -89,8 +100,8 @@ export default {
       this.current.y = e.clientY
     },
     onResize() {
-      this.canvas.width = window.innerWidth;
-      this.canvas.height = window.innerHeight;
+      this.canvas.width = window.innerWidth
+      this.canvas.height = window.innerHeight
     },
     throttle(callback, delay) {
       var previousCall = new Date().getTime();
@@ -101,6 +112,11 @@ export default {
           previousCall = time
           callback.apply(null, arguments)
         }
+      }
+    },
+    isSelected(color) {
+      return {
+        selected: this.current.color === color
       }
     }
   }
@@ -121,21 +137,57 @@ export default {
 
 #whiteboard {
   /*flex: 1 0 0;*/
+  position: relative;
+}
+
+#leftbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+
+  /*background-color: #eee;*/
 }
 
 .colors {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: space-around;
 
-  position: fixed;
-  height: 250px;
-  width: 50px;
+  height: 300px;
+  width: 80px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+
+  background-color: #eee;
+}
+
+.colors:hover {
+  background-color: #ddd;
+  transition: .5s;
 }
 
 .color {
-  flex: 1 0 0;
+  flex: 0 1 50px;
+  width: 50px;
+
+  border-radius: 100%;
+  /*cursor: pointer;*/
+}
+
+.color:hover {
+  flex: 0 1 60px;
+  width: 60px;
+
+  transition: .2s;
+  cursor: pointer;
 }
 
 .color.black {
@@ -156,5 +208,16 @@ export default {
 
 .color.yellow {
   background-color: yellow;
+}
+
+.selected {
+  flex: 0 1 65px;
+  width: 65px;
+  transition: .2s;
+}
+
+.selected:hover {
+  flex: 0 1 65px;
+  width: 65px;
 }
 </style>
