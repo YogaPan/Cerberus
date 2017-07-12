@@ -64,14 +64,12 @@ export default {
       this.ctx.closePath()
 
       if (!emit) { return }
-      var w = this.canvas.width
-      var h = this.canvas.height
 
       socket.emit('drawing', {
-        x0: x0 / w,
-        y0: y0 / h,
-        x1: x1 / w,
-        y1: y1 / h,
+        x0: x0,
+        y0: y0,
+        x1: x1,
+        y1: y1,
         color: color
       })
     },
@@ -83,9 +81,7 @@ export default {
       evt.target.download = filename
     },
     onDrawingEvent(data){
-      var w = this.canvas.width
-      var h = this.canvas.height
-      this.drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color)
+      this.drawLine(data.x0, data.y0, data.x1, data.y1, data.color)
     },
     onMouseDown(evt) {
       const pos = this.getMousePos(evt)
@@ -101,7 +97,7 @@ export default {
       const pos = this.getMousePos(evt)
 
       this.drawing = false
-      this.drawLine(this.current.x, this.current.y, pos.x, pos.y, this.current.color, false)
+      this.drawLine(this.current.x, this.current.y, pos.x, pos.y, this.current.color, true)
     },
     onMouseMove(evt) {
       if (!this.drawing)
@@ -109,7 +105,7 @@ export default {
 
       const pos = this.getMousePos(evt)
 
-      this.drawLine(this.current.x, this.current.y, pos.x, pos.y, this.current.color, false)
+      this.drawLine(this.current.x, this.current.y, pos.x, pos.y, this.current.color, true)
       this.current.x = pos.x
       this.current.y = pos.y
     },
