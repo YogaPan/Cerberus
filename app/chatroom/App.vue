@@ -74,6 +74,7 @@ export default {
 #left-container {
   flex: 1 0 0;
   /*background-color: black;*/
+  min-width: 0;
 
   display: flex;
   flex-direction: column;

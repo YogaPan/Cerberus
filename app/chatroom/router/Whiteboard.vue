@@ -11,7 +11,7 @@
 
     <div id="zoomer">
       <canvas id="whiteboard"
-        height="750px" width="750px"
+        height="2000px" width="2000px"
         @mousedown="onMouseDown" @mouseup="onMouseUp" @mouseout="onMouseUp" @mousemove="onMouseMove">
       </canvas>
     </div>
@@ -38,19 +38,12 @@ export default {
 
     // Initial canvas color.
     this.ctx.beginPath()
-    this.ctx.rect(0, 0, 750, 750)
+    this.ctx.rect(0, 0, this.canvas.width, this.canvas.height)
     this.ctx.fillStyle = "#fefefe"
     this.ctx.fill()
 
+    // Listen to other people's drawing event.
     socket.on('drawing', this.onDrawingEvent)
-
-    // window.addEventListener('resize', this.onResize, false)
-    // onResize();
-
-    function onResize() {
-      this.canvas.width = window.innerWidth
-      this.canvas.height = window.innerHeight
-    }
   },
   methods: {
     changeColor(color) {
@@ -108,12 +101,9 @@ export default {
       this.current.x = pos.x
       this.current.y = pos.y
     },
-    onResize() {
-      this.canvas.width = window.innerWidth
-      this.canvas.height = window.innerHeight
-    },
     getMousePos(evt) {
       const rect = this.canvas.getBoundingClientRect()
+
       return {
         x: evt.clientX - rect.left,
         y: evt.clientY - rect.top
@@ -144,6 +134,8 @@ export default {
   flex: 1 0 0;
   position: relative;
 
+  min-height: 0;
+
   /*display : flex;*/
   /*flex-direction: row;*/
   /*align-items: stretch;*/
@@ -151,9 +143,10 @@ export default {
 }
 
 #zoomer {
+  height: 100%;
+  width: 100%;
   overflow-x: scroll;
   overflow-y: scroll;
-  /*background-color: red;*/
 }
 
 #whiteboard {
