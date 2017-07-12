@@ -9,10 +9,12 @@
       <div class="color yellow" v-bind:class="isSelected('yellow')" @click="changeColor('yellow')"></div>
     </div>
 
-    <canvas id="whiteboard"
-      height="750px" width="750px"
-      @mousedown="onMouseDown" @mouseup="onMouseUp" @mouseout="onMouseUp" @mousemove="onMouseMove">
-    </canvas>
+    <div id="zoomer">
+      <canvas id="whiteboard"
+        height="750px" width="750px"
+        @mousedown="onMouseDown" @mouseup="onMouseUp" @mouseout="onMouseUp" @mousemove="onMouseMove">
+      </canvas>
+    </div>
   </div>
 </template>
 
@@ -80,28 +82,42 @@ export default {
       var h = this.canvas.height
       this.drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color)
     },
-    onMouseDown(e) {
-      this.drawing = true;
-      this.current.x = e.clientX
-      this.current.y = e.clientY
+    onMouseDown(evt) {
+      const pos = this.getMousePos(evt)
 
-      // DEBUG
-      console.log(this.current)
+      this.drawing = true;
+      this.current.x = pos.x
+      this.current.y = pos.y
     },
-    onMouseUp(e) {
-      if (!this.drawing) { return }
+    onMouseUp(evt) {
+      if (!this.drawing)
+        return
+
+      const pos = this.getMousePos(evt)
+
       this.drawing = false
-      this.drawLine(this.current.x, this.current.y, e.clientX, e.clientY, this.current.color, false)
+      this.drawLine(this.current.x, this.current.y, pos.x, pos.y, this.current.color, false)
     },
-    onMouseMove(e) {
-      if (!this.drawing) { return }
-      this.drawLine(this.current.x, this.current.y, e.clientX, e.clientY, this.current.color, false)
-      this.current.x = e.clientX
-      this.current.y = e.clientY
+    onMouseMove(evt) {
+      if (!this.drawing)
+        return
+
+      const pos = this.getMousePos(evt)
+
+      this.drawLine(this.current.x, this.current.y, pos.x, pos.y, this.current.color, false)
+      this.current.x = pos.x
+      this.current.y = pos.y
     },
     onResize() {
       this.canvas.width = window.innerWidth
       this.canvas.height = window.innerHeight
+    },
+    getMousePos(evt) {
+      const rect = this.canvas.getBoundingClientRect()
+      return {
+        x: evt.clientX - rect.left,
+        y: evt.clientY - rect.top
+      }
     },
     throttle(callback, delay) {
       var previousCall = new Date().getTime();
@@ -127,13 +143,17 @@ export default {
 #whiteboard-container {
   flex: 1 0 0;
   position: relative;
-  overflow-x: scroll;
-  overflow-y: scroll;
 
   /*display : flex;*/
   /*flex-direction: row;*/
   /*align-items: stretch;*/
   /*justify-content: center;*/
+}
+
+#zoomer {
+  overflow-x: scroll;
+  overflow-y: scroll;
+  /*background-color: red;*/
 }
 
 #whiteboard {
