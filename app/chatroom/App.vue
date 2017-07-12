@@ -67,6 +67,7 @@ export default {
   justify-content: flex-start;
 
   height: 100vh;
+  width: 100vw;
   /*background-color: blue;*/
 }
 

@@ -1,18 +1,22 @@
 <template>
   <div id="whiteboard-container">
     <!-- <h1>whiteboard here...</h1> -->
-
-    <div id="leftbar">
-      <div class="colors">
-        <div class="color black" v-bind:class="isSelected('black')" @click="changeColor('black')"></div>
-        <div class="color red" v-bind:class="isSelected('red')" @click="changeColor('red')"></div>
-        <div class="color green" v-bind:class="isSelected('green')" @click="changeColor('green')"></div>
-        <div class="color blue" v-bind:class="isSelected('blue')" @click="changeColor('blue')"></div>
-        <div class="color yellow" v-bind:class="isSelected('yellow')" @click="changeColor('yellow')"></div>
-      </div>
+    <div class="colors">
+      <div class="color black" v-bind:class="isSelected('black')" @click="changeColor('black')"></div>
+      <div class="color red" v-bind:class="isSelected('red')" @click="changeColor('red')"></div>
+      <div class="color green" v-bind:class="isSelected('green')" @click="changeColor('green')"></div>
+      <div class="color blue" v-bind:class="isSelected('blue')" @click="changeColor('blue')"></div>
+      <div class="color yellow" v-bind:class="isSelected('yellow')" @click="changeColor('yellow')"></div>
     </div>
 
-    <canvas id="whiteboard" @mousedown="onMouseDown" @mouseup="onMouseUp" @mouseout="onMouseUp" @mousemove="onMouseMove"></canvas>
+    <canvas id="whiteboard"
+      height="500px" width="500px"
+      @mousedown="onMouseDown" @mouseup="onMouseUp" @mouseout="onMouseUp" @mousemove="onMouseMove">
+    </canvas>
+    <!-- <canvas id="whiteboard"
+      height="2000px" width="2000px"
+      @mousedown="onMouseDown" @mouseup="onMouseUp" @mouseout="onMouseUp" @mousemove="onMouseMove">
+    </canvas> -->
   </div>
 </template>
 
@@ -28,22 +32,22 @@ export default {
         color: 'black'
       },
       drawing: false,
-      classObject: {
-        // TODO
-      }
     }
   },
   mounted() {
     this.canvas = this.$el.querySelector('#whiteboard')
-    this.context = this.canvas.getContext('2d')
+    this.ctx = this.canvas.getContext('2d')
 
-    this.canvas.style.height = 500
-    this.canvas.style.width = 600
+    // Initial canvas color.
+    this.ctx.beginPath()
+    this.ctx.rect(0, 0, 500, 500)
+    this.ctx.fillStyle = "#fefefe"
+    this.ctx.fill()
 
-    socket.on('drawing', onDrawingEvent)
+    socket.on('drawing', this.onDrawingEvent)
 
-    window.addEventListener('resize', this.onResize, false)
-    onResize();
+    // window.addEventListener('resize', this.onResize, false)
+    // onResize();
 
     function onResize() {
       this.canvas.width = window.innerWidth
@@ -55,13 +59,13 @@ export default {
       this.current.color = color
     },
     drawLine(x0, y0, x1, y1, color, emit) {
-      this.context.beginPath()
-      this.context.moveTo(x0, y0)
-      this.context.lineTo(x1, y1)
-      this.context.strokeStyle = color
-      this.context.lineWidth = 2
-      this.context.stroke()
-      this.context.closePath()
+      this.ctx.beginPath()
+      this.ctx.moveTo(x0, y0)
+      this.ctx.lineTo(x1, y1)
+      this.ctx.strokeStyle = color
+      this.ctx.lineWidth = 2
+      this.ctx.stroke()
+      this.ctx.closePath()
 
       if (!emit) { return }
       var w = this.canvas.width
@@ -127,33 +131,26 @@ export default {
 #whiteboard-container {
   flex: 1 0 0;
   position: relative;
+  overflow-x: scroll;
+  overflow-y: scroll;
 
-  display : flex;
-  flex-direction: row;
-  align-items: stretch;
-  justify-content: center;
+  /*display : flex;*/
+  /*flex-direction: row;*/
+  /*align-items: stretch;*/
+  /*justify-content: center;*/
 }
 
 #whiteboard {
   /*flex: 1 0 0;*/
-  background-color: #fefefe;
-}
-
-#leftbar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  height: 100%;
+  /*background-color: #fefefe;*/
 }
 
 .colors {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(0, -50%);
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -165,6 +162,7 @@ export default {
   border-bottom-right-radius: 20px;
 
   background-color: #eee;
+  z-index: 99;
 }
 
 .colors:hover {
@@ -177,7 +175,6 @@ export default {
   width: 50px;
 
   border-radius: 100%;
-  /*cursor: pointer;*/
 }
 
 .color:hover {
