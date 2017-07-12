@@ -132,14 +132,8 @@ export default {
 <style>
 #whiteboard-container {
   flex: 1 0 0;
+  min-height: 0;  /* flexbox overflow */
   position: relative;
-
-  min-height: 0;
-
-  /*display : flex;*/
-  /*flex-direction: row;*/
-  /*align-items: stretch;*/
-  /*justify-content: center;*/
 }
 
 #zoomer {
@@ -150,8 +144,7 @@ export default {
 }
 
 #whiteboard {
-  /*flex: 1 0 0;*/
-  /*background-color: #fefefe;*/
+  /* TODO */
 }
 
 .colors {
@@ -167,18 +160,16 @@ export default {
 
   height: 300px;
   width: 80px;
-  /*border: 2px solid #ddd;*/
-  box-shadow: 0px 0px 16px 10px rgba(0,0,0,0.2);
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 
-  background-color: #eee;
-  z-index: 99;
+  background-color: rgba(238, 238, 238, .95);  /* #eee */
+  box-shadow: 0px 0px 16px 10px rgba(0,0,0,0.2);
 }
 
 .colors:hover {
-  background-color: #ddd;
-  transition: .5s;
+  /*background-color: #ddd;*/
+  /*transition: .5s;*/
 }
 
 .color {

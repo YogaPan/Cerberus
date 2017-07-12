@@ -73,8 +73,7 @@ export default {
 
 #left-container {
   flex: 1 0 0;
-  /*background-color: black;*/
-  min-width: 0;
+  min-width: 0;  /* flexbox overflow */
 
   display: flex;
   flex-direction: column;
