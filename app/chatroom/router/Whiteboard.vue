@@ -9,6 +9,11 @@
       <div class="color yellow" v-bind:class="isSelected('yellow')" @click="changeColor('yellow')"></div>
     </div>
 
+    <div class="edit-area">
+      <a id="save" class="edit" @click="downloadCanvas($event, 'canvas')"></a>
+      <img id="delete" class="edit" src="/assets/trash-2.svg" alt="delete" @click="cleanCanvas">
+    </div>
+
     <div id="zoomer">
       <canvas id="whiteboard"
         height="2000px" width="2000px"
@@ -69,6 +74,13 @@ export default {
         y1: y1 / h,
         color: color
       })
+    },
+    cleanCanvas() {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    },
+    downloadCanvas(evt, filename) {
+      evt.target.href = this.canvas.toDataURL()
+      evt.target.download = filename
     },
     onDrawingEvent(data){
       var w = this.canvas.width
@@ -163,7 +175,7 @@ export default {
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 
-  background-color: rgba(238, 238, 238, .95);  /* #eee */
+  background-color: rgba(238, 238, 238, 0.95);  /* #eee */
   box-shadow: 0px 0px 16px 10px rgba(0,0,0,0.2);
 }
 
@@ -216,5 +228,44 @@ export default {
 .selected:hover {
   flex: 0 1 65px;
   width: 65px;
+}
+
+.edit-area {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+
+  height: 125px;
+  width: 80px;
+  /*background-color: black;*/
+}
+
+.edit {
+  flex: 0 1 50px;
+  width: 50px;
+  filter : invert(0.5);
+}
+
+.edit:hover {
+  filter : invert(0);
+  transition: .2s;
+  cursor: pointer;
+}
+
+#save {
+  background-image: url('/assets/save.svg');
+  background-size: 50px;
+  background-repeat: no-repeat;
+  background-position: center;
+  /*background-color: blue;*/
+}
+
+#delete {
+  /*background-color: red;*/
 }
 </style>
