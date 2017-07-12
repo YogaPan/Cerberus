@@ -67,12 +67,12 @@ export default {
   justify-content: flex-start;
 
   height: 100vh;
-  background-color: blue;
+  /*background-color: blue;*/
 }
 
 #left-container {
   flex: 1 0 0;
-  background-color: black;
+  /*background-color: black;*/
 
   display: flex;
   flex-direction: column;

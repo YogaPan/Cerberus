@@ -126,24 +126,24 @@ export default {
 <style>
 #whiteboard-container {
   flex: 1 0 0;
+  position: relative;
 
-  /*display : flex;*/
-  /*flex-direction: column;*/
-  /*align-items: stretch;*/
-  /*justify-content: center;*/
-
-  background-color: #fff;
+  display : flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
 }
 
 #whiteboard {
   /*flex: 1 0 0;*/
-  position: relative;
+  background-color: #fefefe;
 }
 
 #leftbar {
   position: absolute;
   top: 0;
   left: 0;
+  bottom: 0;
 
   display: flex;
   flex-direction: column;
@@ -151,8 +151,6 @@ export default {
   justify-content: center;
 
   height: 100%;
-
-  /*background-color: #eee;*/
 }
 
 .colors {
