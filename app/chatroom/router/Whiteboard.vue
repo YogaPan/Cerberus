@@ -10,13 +10,9 @@
     </div>
 
     <canvas id="whiteboard"
-      height="500px" width="500px"
+      height="750px" width="750px"
       @mousedown="onMouseDown" @mouseup="onMouseUp" @mouseout="onMouseUp" @mousemove="onMouseMove">
     </canvas>
-    <!-- <canvas id="whiteboard"
-      height="2000px" width="2000px"
-      @mousedown="onMouseDown" @mouseup="onMouseUp" @mouseout="onMouseUp" @mousemove="onMouseMove">
-    </canvas> -->
   </div>
 </template>
 
@@ -40,7 +36,7 @@ export default {
 
     // Initial canvas color.
     this.ctx.beginPath()
-    this.ctx.rect(0, 0, 500, 500)
+    this.ctx.rect(0, 0, 750, 750)
     this.ctx.fillStyle = "#fefefe"
     this.ctx.fill()
 
@@ -158,6 +154,8 @@ export default {
 
   height: 300px;
   width: 80px;
+  /*border: 2px solid #ddd;*/
+  box-shadow: 0px 0px 16px 10px rgba(0,0,0,0.2);
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 
