@@ -1,5 +1,9 @@
 <template>
   <div id="root-container">
+    <!-- <div id="vote" class="pop-fullscreen">
+      <h1>Pop Up Test!</h1>
+    </div> -->
+
     <div id="left-container">
       <router-view></router-view>
 
@@ -118,5 +122,14 @@ export default {
 .item-image {
   height: 20px;
   width: 20px;
+}
+
+#vote {
+  /* TODO */
+}
+
+#vote h1, #vote p {
+  font-size: 100px;
+  color: white;
 }
 </style>

@@ -114,6 +114,7 @@ button {
 
 .input {
   height: 40px;
+  width: 80%;
 
   padding-left: 10px;
   border: 1px solid #ddd;
@@ -192,7 +193,48 @@ button {
 
 /* ============================= Pop Ups ================================== */
 
-/* TODO */
+.pop-fullscreen {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+
+  background-color: black;
+  opacity: .9;
+}
+
+.pop-dropdown {
+  position: absolute;
+  min-width: 300px;
+
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/*
+.dropdown-content li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding: 12px 16px;
+  border-top: 1px solid #f8f8f8;
+
+  font-size: 20px;
+  color: black;
+  cursor: pointer;
+}
+
+.dropdown-content li:hover {
+  background-color: #f1f1f1
+}
+
+.dropdown-content li p {
+  padding-left: 15px;
+}
+*/
 
 /* ============================== Others ================================== */
 

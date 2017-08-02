@@ -12,15 +12,15 @@
 
         <div id="profile-right">
           <h2 id="username">Username</h2>
-          <input type="text" v-bind:value="this.$store.state.username">
+          <input class="input" type="text" v-bind:value="this.$store.state.username">
           <h2 id="nickname">Nick Name</h2>
-          <input type="text" v-bind:value="this.$store.state.nickname">
+          <input class="input" type="text" v-bind:value="this.$store.state.nickname">
         </div>
 
       </div>
 
       <div id="button-container">
-        <button id="save-button">Save Change</button>
+        <button id="save-button" class="button-trans">Save Change</button>
       </div>
 
     </div>
@@ -119,22 +119,8 @@ export default {
 }
 
 #profile-right input {
-  height: 40px;
   width: 100%;
-
   margin-top: 10px;
-
-  border: 2px solid #ddd;
-  border-radius: 5px;
-  padding-left: 10px;
-
-  font-size: 20px;
-  font-weight: 300;
-  color: #444;
-}
-
-#profile-right input:focus {
-  border: 2px solid #888;
 }
 
 .center {
@@ -161,20 +147,7 @@ export default {
 }
 
 #save-button {
-  height: 50px;
   width: 200px;
-
-  border: none;
-  border-radius: 5px;
-
-  background-color: #333;
-  font-size: 20px;
-  color: white;
-}
-
-#save-button:hover {
-  background-color: #512DA8;
-  transition: .2s;
 }
 
 @media all and (max-height: 625px) {

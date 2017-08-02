@@ -3,13 +3,13 @@
 
     <div id="top-container">
       <button id="menu" href="#menu" @click="toggleLeftBar">&#9776;</button>
-      <a id="cerberus" href="/">Cerberus</a>
+      <a class="app-link" href="/">Cerberus</a>
 
       <button>
 
       </button>
       <img id="head-button" class="circle-image" src="/assets/snake.jpg" alt="head" @click="toggleHeadDropdown">
-      <div id="head-dropdown" class="dropdown-content" v-if="showHeadDropdown">
+      <div id="head-dropdown" class="pop-dropdown" v-if="showHeadDropdown">
         <div id="dropdown-self">
           <div id="dropdown-self-left">
             <img class="circle-image" src="/assets/snake.jpg" alt="head">
@@ -43,7 +43,7 @@
       </div>
 
       <img id="notification-button" src="/assets/notification.png" alt="notification" @click="toggleNotificationDropdown">
-      <div id="notification-dropdown" class="dropdown-content" v-if="showNotificationDropdown">
+      <div id="notification-dropdown" class="pop-dropdown" v-if="showNotificationDropdown">
         <div class="invite-item" v-for="invite in this.$store.state.invites">
 
           <div class="invite-item-left">
@@ -277,10 +277,6 @@ export default {
   outline: none;
 }
 
-#cerberus {
-  font-size: 25px;
-}
-
 #notification-button {
   position: absolute;
   right: 100px;
@@ -473,22 +469,6 @@ export default {
   transition: .2s;
   background-color: #EF0035;
   cursor: pointer;
-}
-
-.dropdown-content {
-  z-index: 1;
-  position: absolute;
-
-  border-radius: 10px;
-
-  background-color: white;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-
-.circle-image {
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
 }
 
 .active a {
