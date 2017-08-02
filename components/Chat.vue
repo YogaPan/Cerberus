@@ -36,11 +36,13 @@
       <div class="loader"></div>
     </div>
     <button @click="fb">facebook</button>
+    <button @click="toggleEmojiMenu">Emoji</button>
     <div class="user-input">
       <form @submit.prevent="submit">
         <input v-model="input" @click="read" placeholder="#chatroom">
       </form>
     </div>
+    <div class="emoji-menu emoji" v-if="showEmojiMenu">
   </div>
 </template>
 <!-- socket io-->
@@ -58,6 +60,7 @@ var linkifyHtml = require('linkifyjs/html');
 import { mapGetters } from 'vuex'
 export default {
   data() {
+    const showEmojiMenu = false;
     return {
       input: '',
       userID: '',
@@ -77,7 +80,7 @@ export default {
     },
   },
   created: function () {
-    // init FB API
+    //  init FB API
     window.fbAsyncInit = function() {
         FB.init({
           appId            : '1045259632196338',
@@ -96,6 +99,10 @@ export default {
          js.src = "//connect.facebook.net/en_US/sdk.js";
          fjs.parentNode.insertBefore(js, fjs);
        }(document, 'script', 'facebook-jssdk'));
+    //  Init, get leatest 20 messages
+    //  Get Data from API
+    //  Submit to State
+
   },
   mounted: function () {
     socket.on('new message', data => {
@@ -121,6 +128,13 @@ export default {
           messageContainer.scrollTop = messageContainer.scrollHeight
         }, 50)
       }
+    },
+    oldMessages() {
+        this.$store.dispatch('submit', data)
+    },
+    toggleEmojiMenu(event) {
+      this.showEmojiMenu = !this.showEmojiMenu
+      event.stopPropagation()
     },
     fb() {
       FB.getLoginStatus(function(response) {
@@ -320,5 +334,26 @@ p {
     box-shadow: 0 2.5em 0 0;
   }
 }
+.emoji {
+  z-index: 1;
+  position: absolute;
 
+  border-radius: 10px;
+
+  background-color: white;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+.emoji-menu {
+  right: 100px;
+  top: 50px;
+
+  height: 400px;
+  min-width: 400px;
+  overflow-y: scroll;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
 </style>

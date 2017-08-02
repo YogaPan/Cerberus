@@ -6,5 +6,8 @@ export default {
   },
   read({ commit }) {
     commit('read')
-  }
+  },
+  insert({ commit }, messageContent) {
+    commit('insert', messageContent)
+  },
 }
