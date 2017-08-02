@@ -25,9 +25,9 @@
 
     <div id="btn-area">
       <router-link to="/name">
-        <button id="create-button" class="background-black-light trans-purple">Back</button>
+        <button id="create-button" class="button-trans">Back</button>
       </router-link>
-      <button id="create-button" class="background-black-light trans-purple" @click="createChatroom" >Create</button>
+      <button id="create-button" class="button-trans" @click="createChatroom" >Create</button>
     </div>
   </div>
 </template>
@@ -221,14 +221,7 @@ export default {
 }
 
 #create-button {
-  height: 50px;
   width: 130px;
-
-  border: none;
-  border-radius: 5px;
-
-  font-size: 20px;
-  color: white;
 }
 
 #invite-form .error-message {

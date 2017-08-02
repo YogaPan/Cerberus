@@ -10,7 +10,7 @@
    </div>
 
    <div id="next">
-     <button id="next-button" class="background-black-light trans-purple" @click="nextStep">Next -></button>
+     <button id="next-button" class="button-trans" @click="nextStep">Next -></button>
    </div>
 
  </div>
@@ -97,14 +97,7 @@ export default {
 }
 
 #next-button {
-  height: 50px;
   width: 130px;
-
-  border: none;
-  border-radius: 5px;
-
-  font-size: 20px;
-  color: white;
 }
 
 </style>

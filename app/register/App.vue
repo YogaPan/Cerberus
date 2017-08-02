@@ -7,14 +7,14 @@
     <div id="middle-container" class="background-gray">
       <form @submit.prevent="submit" id="register-form" class="background-white">
         <h1>Sign up</h1>
-        <p :class="isError()">{{ promptMessage }}</p>
+        <p class="purple" :class="isError()">{{ promptMessage }}</p>
 
         <input ref="username" class="input" v-model="username" id="username" type="text" placeholder="username" autofocus>
         <input ref="email" class="input" v-model="email" id="email" type="email" placeholder="email">
         <input ref="password" class="input" v-model="password" id="password" type="password" placeholder="password">
         <input ref="password-repeat" class="input" v-model="passwordRepeat" id="password-repeat" type="password" placeholder="password again">
 
-        <button class="background-black-light trans-purple" type="submit">sign up</button>
+        <button class="button-trans" type="submit">sign up</button>
       </form>
     </div>
 
@@ -203,16 +203,8 @@ export default {
 }
 
 #register-form button {
-  height: 50px;
   width: 200px;
-
   margin-top: 30px;
-
-  border: none;
-  border-radius: 5px;
-
-  font-size: 20px;
-  color: white;
 }
 
 @media all and (max-height: 650px) {
