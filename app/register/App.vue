@@ -9,10 +9,10 @@
         <h1>Sign up</h1>
         <p :class="isError()">{{ promptMessage }}</p>
 
-        <input class="input" v-model="username" id="username" :class="isError('username')" type="text" placeholder="username" autofocus>
-        <input class="input" v-model="email" id="email" :class="isError('email')" type="email" placeholder="email">
-        <input class="input" v-model="password" id="password" :class="isError('password')" type="password" placeholder="password">
-        <input class="input" v-model="passwordRepeat" id="password-repeat" :class="isError('repeat')" type="password" placeholder="password again">
+        <input ref="username" class="input" v-model="username" id="username" type="text" placeholder="username" autofocus>
+        <input ref="email" class="input" v-model="email" id="email" type="email" placeholder="email">
+        <input ref="password" class="input" v-model="password" id="password" type="password" placeholder="password">
+        <input ref="password-repeat" class="input" v-model="passwordRepeat" id="password-repeat" type="password" placeholder="password again">
 
         <button class="background-black-light trans-purple" type="submit">sign up</button>
       </form>
@@ -57,38 +57,48 @@ export default {
       if (this.username === '') {
         this.errorType = 'username'
         this.promptMessage = 'please fill in your username'
+        this.$refs.username.focus()
+        this.$refs.username.select()
         return
       }
 
       if (this.email === '') {
         this.errorType = 'email'
         this.promptMessage = 'please fill in your email address'
+        this.$refs.email.focus()
+        this.$refs.email.select()
         return
       }
 
       if (this.password === '') {
         this.errorType = 'password'
         this.promptMessage = 'please fill in your password'
+        this.$refs.password.focus()
+        this.$refs.password.select()
         return
       }
 
       if (this.password.length <= 8) {
         this.errorType = 'password'
         this.promptMessage = 'password must be more than 8 characters'
+        this.$refs.password.focus()
+        this.$refs.password.select()
         return
       }
 
       if (this.passwordRepeat === '') {
         this.errorType = 'repeat'
         this.promptMessage = 'please fill in your password again'
+        this.$refs['password-repeat'].focus()
+        this.$refs['password-repeat'].select()
         return
       }
 
       if (this.password !== this.passwordRepeat) {
         this.errorType = 'repeat'
         this.promptMessage = 'password repeat not correct'
-
-        this.passwordRepeat = ''
+        this.$refs['password-repeat'].focus()
+        this.$refs['password-repeat'].select()
         return
       }
 

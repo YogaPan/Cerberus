@@ -9,8 +9,8 @@
         <h1>Sign in</h1>
         <p :class="isError()">{{ this.promptMessage }}</p>
 
-        <input class="input" v-model="username" id="username" :class="isError('username')" type="text" placeholder="username or email" autofocus>
-        <input class="input" v-model="password" id="password" :class="isError('password')" type="password" placeholder="password">
+        <input ref="username" class="input" v-model="username" id="username" type="text" placeholder="username or email" autofocus>
+        <input ref="password" class="input" v-model="password" id="password" type="password" placeholder="password">
 
         <div id="button-container">
           <button class="background-black-light trans-purple" type="button" onclick="location.href='/register'">create account</button>
@@ -58,12 +58,16 @@ export default {
       if (this.username === '') {
         this.errorType = 'username'
         this.promptMessage = 'please fill in your username or email address'
+        this.$refs.username.focus()
+        this.$refs.username.select()
         return
       }
 
       if (this.password === '') {
         this.errorType = 'password'
         this.promptMessage = 'please fill in your password'
+        this.$refs.password.focus()
+        this.$refs.password.select()
         return
       }
 
