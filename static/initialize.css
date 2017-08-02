@@ -127,8 +127,35 @@ button {
   padding-left: 9px;
 }
 
+.input-big {
+  height: 50px;
+
+  border: 2px solid #ddd;
+  border-radius: 5px;
+
+  font-size: 20px;
+  font-weight: 300;
+  color: #444;
+  padding-left: 10px;
+
+  transition: .2s;
+}
+
+.input-big::placeholder {
+  color: #ccc;
+}
+
+.input-big:focus {
+  border-color: #888;
+}
+
+.input-big:focus::placeholder {
+  color: #ddd;
+}
+
 .input-error {
-  border: 2px solid pink;
+  color: #ED2643;
+  border: 2px solid #ED2643;
   padding-left: 9px;
 }
 
@@ -137,7 +164,17 @@ button {
 }
 
 .input-error:focus {
-  border: 2px solid pink;
+  border: 2px solid #ED2643;
+}
+
+/* ============================== Buttons ================================= */
+
+button-style {
+  /* TODO */
+}
+
+button-style {
+  /* TODO */
 }
 
 /* ============================== Others ================================== */
@@ -148,4 +185,21 @@ button {
 
 .error-message {
   color: red;
+}
+
+.shadow {
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.circle-image {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+/* ================================ Grid =================================== */
+
+.fullscreen {
+  height: 100%;
+  width: 100%;
 }

@@ -3,13 +3,13 @@
     <div id="left-container">
 
       <div id="app-name">
-        <a href="/board">Cerberus</a>
+        <a class="app-link" href="/board">Cerberus</a>
       </div>
       <router-view></router-view>
 
     </div>
 
-    <div id="right-container">
+    <div id="right-container" class="background-black">
     </div>
   </div>
 </template>
@@ -34,8 +34,6 @@ export default {
 
 <style>
 #root-container {
-  background-color: black;
-
   height: 100vh;
   width: 100vw;
 
@@ -59,7 +57,6 @@ export default {
 #right-container {
   flex: 1 0 auto;
   height: 100%;
-  background-color: #222;
 }
 
 #app-name {
@@ -73,13 +70,6 @@ export default {
 
   /*background-color: red;*/
   padding-left: 10px;
-}
-
-#app-name a {
-  font-size: 30px;
-
-  /*margin-top: 10px;*/
-  /*margin-left: 10px;*/
 }
 
 @media all and (max-height: 450px) {

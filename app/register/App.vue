@@ -9,12 +9,12 @@
         <h1>Sign up</h1>
         <p :class="isError()">{{ promptMessage }}</p>
 
-        <input class="input" v-model="username" id="username" :class="isError('username')" type="text" placeholder="username">
+        <input class="input" v-model="username" id="username" :class="isError('username')" type="text" placeholder="username" autofocus>
         <input class="input" v-model="email" id="email" :class="isError('email')" type="email" placeholder="email">
         <input class="input" v-model="password" id="password" :class="isError('password')" type="password" placeholder="password">
         <input class="input" v-model="passwordRepeat" id="password-repeat" :class="isError('repeat')" type="password" placeholder="password again">
 
-        <button class="background-black trans-purple" type="submit">sign up</button>
+        <button class="background-black-light trans-purple" type="submit">sign up</button>
       </form>
     </div>
 

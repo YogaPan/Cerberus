@@ -4,7 +4,7 @@
       <div id="invite-form" class="dropdown">
         <h1>Invite Members</h1>
         <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-        <input v-model="input" type="text" placeholder="#members name">
+        <input ref="member-form" class="input-big" v-model="input" type="text" placeholder="#members name" autofocus>
 
         <div id="matched-users" class="dropdown-content">
           <li v-for="user in this.$store.state.matchedUsers" @click="addMember(user)">
@@ -25,9 +25,9 @@
 
     <div id="btn-area">
       <router-link to="/name">
-        <button id="create-button">Back</button>
+        <button id="create-button" class="background-black-light trans-purple">Back</button>
       </router-link>
-      <button @click="createChatroom" id="create-button">Create</button>
+      <button id="create-button" class="background-black-light trans-purple" @click="createChatroom" >Create</button>
     </div>
   </div>
 </template>
@@ -71,6 +71,8 @@ export default {
     },
     createChatroom() {
       if (this.$store.state.members.length === 0) {
+        this.$refs['member-form'].focus()
+
         return this.errorMessage = 'Please add members.'
       }
 
@@ -115,26 +117,8 @@ export default {
 }
 
 #invite-form input {
-  height: 50px;
   width: 100%;
-
   margin-top: 10px;
-
-  border: 2px solid #ddd;
-  border-radius: 5px;
-  padding-left: 10px;
-
-  font-size: 20px;
-  font-weight: 300;
-  color: #444;
-}
-
-#invite-form input:focus {
-  border: 2px solid #888;
-}
-
-#invite-form input::placeholder {
-  color: #ccc;
 }
 
 .dropdown {
@@ -172,12 +156,6 @@ export default {
 
 .dropdown-content li p {
   padding-left: 15px;
-}
-
-.circle-image {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
 }
 
 #members {
@@ -221,7 +199,6 @@ export default {
 
 .cancel:hover {
   transition: .2s;
-  /*filter: sepia() saturate(10000%) hue-rotate(30deg);*/
   cursor: pointer;
 }
 
@@ -250,20 +227,12 @@ export default {
   border: none;
   border-radius: 5px;
 
-  background-color: #333;
-
   font-size: 20px;
   color: white;
 }
 
-#create-button:hover {
-  background-color: #512DA8;
-  transition: .2s;
-}
-
-.error-message {
+#invite-form .error-message {
   margin-top: 15px;
-  color: red;
 }
 
 @media all and (max-width: 770px) {

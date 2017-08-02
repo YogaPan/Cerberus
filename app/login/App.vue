@@ -9,7 +9,7 @@
         <h1>Sign in</h1>
         <p :class="isError()">{{ this.promptMessage }}</p>
 
-        <input class="input" v-model="username" id="username" :class="isError('username')" type="text" placeholder="username or email">
+        <input class="input" v-model="username" id="username" :class="isError('username')" type="text" placeholder="username or email" autofocus>
         <input class="input" v-model="password" id="password" :class="isError('password')" type="password" placeholder="password">
 
         <div id="button-container">

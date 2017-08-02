@@ -5,12 +5,12 @@
      <div id="register-form">
        <h1>Create new Chatroom</h1>
        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-       <input v-model="roomName" type="text" placeholder="#room name">
+       <input ref="room-name" class="input-big" v-model="roomName" type="text" placeholder="#room name" autofocus>
      </div>
    </div>
 
    <div id="next">
-    <button @click="nextStep" id="next-button">Next -></button>
+     <button id="next-button" class="background-black-light trans-purple" @click="nextStep">Next -></button>
    </div>
 
  </div>
@@ -36,7 +36,12 @@ export default {
   },
   methods: {
     nextStep() {
-      this.$store.state.roomName === '' ? this.errorMessage = 'Please fill in your room name.' : document.location.href = '#members'
+      if (this.$store.state.roomName === '') {
+        this.errorMessage = 'Please fill in your room name.'
+        this.$refs['room-name'].focus()
+      } else {
+        document.location.href = '#members'
+      }
     }
   }
 }
@@ -62,12 +67,9 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  /*background-color: blue;*/
 }
 
 #register-form {
-  /*background-color: orange;*/
   width: 80%;
 }
 
@@ -87,30 +89,11 @@ export default {
 
 #register-form .error-message {
   margin-top: 15px;
-  color: red;
 }
 
 #register-form input {
-  height: 50px;
   width: 100%;
-
   margin-top: 10px;
-
-  border: 2px solid #ddd;
-  border-radius: 5px;
-  padding-left: 10px;
-
-  font-size: 20px;
-  font-weight: 300;
-  color: #444;
-}
-
-#register-form input:focus {
-  border: 2px solid #888;
-}
-
-#register-form input::placeholder {
-  color: #ccc;
 }
 
 #next-button {
@@ -120,19 +103,8 @@ export default {
   border: none;
   border-radius: 5px;
 
-  background-color: #333;
-
   font-size: 20px;
   color: white;
-}
-
-#next-button:hover {
-  background-color: #512DA8;
-  transition: .2s;
-}
-
-.error-message {
-  color: red;
 }
 
 </style>
