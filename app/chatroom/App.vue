@@ -1,5 +1,28 @@
 <template>
   <div id="root-container">
+    <div id="vote-popup">
+      <div class="vote-title">
+        <h1>想要射精嗎？</h1>
+      </div>
+
+      <!-- <div class="vote-items">
+        <p class="vote-item">想</p>
+        <p class="vote-item">不想</p>
+        <p class="vote-item">好興奮喔</p>
+      </div> -->
+
+      <form action="POST" class="vote-items">
+        <input type="radio" id="radio01" name="radio" />
+        <label for="radio01"><span></span>想要</label>
+
+        <input type="radio" id="radio02" name="radio" />
+        <label for="radio02"><span></span>不要</label>
+
+        <input type="radio" id="radio03" name="radio" />
+        <label for="radio03"><span></span>好興奮</label>
+      </form>
+    </div>
+
     <div id="left-container">
       <router-view></router-view>
 
@@ -118,5 +141,87 @@ export default {
 .item-image {
   height: 20px;
   width: 20px;
+}
+
+#vote-popup {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+
+  background-color: black;
+
+  opacity: .9;
+}
+
+.vote-title {
+  flex: 1 0 0;
+  width: 100%;
+
+  /* Center */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.vote-title h1 {
+  color: white;
+  font-size: 100px;
+}
+
+.vote-items {
+  flex: 1 0 0;
+  width: 100%;
+
+  /* Center */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.vote-item {
+  color: white;
+  font-size: 50px;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"] + label {
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 50px;
+}
+
+input[type="radio"] + label span {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+
+    margin: -1px 4px 0 0;
+    border-radius:  50%;
+
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+input[type="radio"] + label span {
+  background-color: white;
+}
+
+input[type="radio"]:checked + label span {
+  background-color: #512DA8;
+}
+
+input[type="radio"] + label span,
+input[type="radio"]:checked + label span {
+  transition: background-color 0.3s linear;
 }
 </style>

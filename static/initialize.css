@@ -30,3 +30,122 @@ button {
   border: none;
   cursor: pointer;
 }
+
+/* ============================= Font Colors ================================ */
+
+.black-deep {
+  color: #000;
+}
+
+.black {
+  color: #222;
+}
+
+.black-light {
+  color: #333;
+}
+
+.gray {
+ color: #fafafa;
+}
+
+.white {
+  color: #fff;
+}
+
+.purple {
+  color: #512DA8;
+}
+
+.pink {
+  color: pink;
+}
+
+/* ========================== Background Colors ============================= */
+
+.background-black-deep {
+  background-color: #000;
+}
+
+.background-black {
+  background-color: #222;
+}
+
+.background-black-light {
+  background-color: #333;
+}
+
+.background-gray-deep {
+  /* TODO */
+}
+
+.background-gray {
+  background-color: #fafafa;
+}
+
+.background-gray-light {
+  /* TODO */
+}
+
+.background-white {
+  background-color: #fff;
+}
+
+.background-purple {
+  background-color: #512DA8;
+}
+
+.background-pink {
+  background-color: pink;
+}
+
+/* ========================== Transition Colors ============================= */
+
+.trans-purple:hover {
+  background-color: #512DA8;
+  transition: .2s;
+}
+
+/* =========================== Inputs ======================================== */
+
+.input {
+  height: 40px;
+
+  padding-left: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+
+  font-size: 20px;
+}
+
+.input::placeholder {
+  color: #ccc;
+}
+
+.input:focus {
+  border: 2px solid #888;
+  padding-left: 9px;
+}
+
+.input-error {
+  border: 2px solid pink;
+  padding-left: 9px;
+}
+
+.input-error::placeholder {
+  color: pink;
+}
+
+.input-error:focus {
+  border: 2px solid pink;
+}
+
+/* ============================== Others ================================== */
+
+.app-link {
+  font-size: 30px;
+}
+
+.error-message {
+  color: red;
+}

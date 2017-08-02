@@ -1,24 +1,24 @@
 <template>
   <div id="root-container">
-    <div id="top-container">
-      <a href="/">Cerberus</a>
+    <div id="top-container" class="background-white">
+      <a class="app-link" href="/">Cerberus</a>
     </div>
 
-    <div id="middle-container">
-      <form @submit.prevent="submit" id="register-form">
+    <div id="middle-container" class="background-gray">
+      <form @submit.prevent="submit" id="register-form" class="background-white">
         <h1>Sign up</h1>
         <p :class="isError()">{{ promptMessage }}</p>
 
-        <input v-model="username" id="username" :class="isError('username')" type="text" placeholder="username">
-        <input v-model="email" id="email" :class="isError('email')" type="email" placeholder="email">
-        <input v-model="password" id="password" :class="isError('password')" type="password" placeholder="password">
-        <input v-model="passwordRepeat" id="password-repeat" :class="isError('repeat')" type="password" placeholder="password again">
+        <input class="input" v-model="username" id="username" :class="isError('username')" type="text" placeholder="username">
+        <input class="input" v-model="email" id="email" :class="isError('email')" type="email" placeholder="email">
+        <input class="input" v-model="password" id="password" :class="isError('password')" type="password" placeholder="password">
+        <input class="input" v-model="passwordRepeat" id="password-repeat" :class="isError('repeat')" type="password" placeholder="password again">
 
-        <button type="submit">sign up</button>
+        <button class="background-black trans-purple" type="submit">sign up</button>
       </form>
     </div>
 
-    <div id="bottom-container">
+    <div id="bottom-container" class="background-black">
 
     </div>
   </div>
@@ -44,7 +44,7 @@ export default {
     isError(fieldName) {
       if (fieldName) {
         return {
-          'error-input': fieldName === this.errorType
+          'input-error': fieldName === this.errorType
         }
       } else {
         return {
@@ -119,10 +119,6 @@ export default {
 </script>
 
 <style>
-.error-message {
-  color: red;
-}
-
 #root-container {
   height: 100vh;
 
@@ -130,8 +126,6 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-
-  background-color: black;
 }
 
 #top-container {
@@ -142,8 +136,6 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-
-  background-color: white;
 }
 
 #middle-container {
@@ -154,15 +146,11 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  background-color: #fafafa;
 }
 
 #bottom-container {
   flex: 0 0 150px;
   width: 100%;
-
-  background-color: #222;
 }
 
 #register-form {
@@ -177,12 +165,6 @@ export default {
 
   border: 2px solid #eee;
   border-radius: 5px;
-
-  background-color: white;
-}
-
-#top-container a {
-  font-size: 30px;
 }
 
 #register-form h1 {
@@ -191,36 +173,7 @@ export default {
 }
 
 #register-form input {
-  height: 40px;
   width: 70%;
-
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding-left: 10px;
-
-  font-size: 20px;
-}
-
-#register-form input::placeholder {
-  color: #ccc;
-}
-
-#register-form input:focus {
-  border: 2px solid #888;
-  padding-left: 9px;
-}
-
-#register-form .error-input {
-  border: 2px solid pink;
-  padding-left: 9px;
-}
-
-#register-form .error-input::placeholder {
-  color: pink;
-}
-
-#register-form .error-input:focus {
-  border: 2px solid pink;
 }
 
 #username {
@@ -248,16 +201,8 @@ export default {
   border: none;
   border-radius: 5px;
 
-  /*background-color: #666;*/
-  background-color: #333;
   font-size: 20px;
   color: white;
-}
-
-#register-form button:hover {
-  /*background-color: #333;*/
-  background-color: #512da8;
-  transition: .2s;
 }
 
 @media all and (max-height: 650px) {
@@ -298,7 +243,6 @@ export default {
   #register-form {
     height: 525px;
     width: 100%;
-    /*background-color: black;*/
   }
 }
 </style>
