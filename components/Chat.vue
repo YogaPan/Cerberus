@@ -31,18 +31,19 @@
       </div>
       </div>
     </div>
-
     <div class="is-typing" v-if="typing">
-      <div class="loader"></div>
+        <div class="loader"></div>
     </div>
-    <button @click="fb">facebook</button>
-    <button @click="toggleEmojiMenu">Emoji</button>
-    <div class="user-input">
-      <form @submit.prevent="submit">
-        <input v-model="input" @click="read" placeholder="#chatroom">
-      </form>
+    <div class="typing-area">
+      <div class="emoji-menu emoji" v-if="showEmojiMenu">Emoji</div>
     </div>
-    <div class="emoji-menu emoji" v-if="showEmojiMenu">
+      <!--測試中，先不用<button @click="fb">facebook</button>-->
+      <button@click="toggleEmojiMenu">Toolbar</button>
+      <div class="user-input">
+        <form @submit.prevent="submit">
+          <input v-model="input" @click="read" placeholder="#chatroom">
+        </form>
+      </div>
   </div>
 </template>
 <!-- socket io-->
@@ -64,7 +65,8 @@ export default {
     return {
       input: '',
       userID: '',
-      roomID: ''
+      roomID: '',
+      showEmojiMenu
     }
   },
   computed: {
@@ -240,7 +242,11 @@ export default {
   font-size: 5px;
   line-height: 12px;
 }
+.typing-area {
+  position:relative;
+}
 .is-typing {
+  z-index: 5;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -335,23 +341,20 @@ p {
   }
 }
 .emoji {
-  z-index: 1;
-  position: absolute;
+  z-index: 10;
 
+  position: absolute;
   border-radius: 10px;
 
-  background-color: white;
+  background-color: #E6E6FA;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 .emoji-menu {
-  right: 100px;
-  top: 50px;
-
-  height: 400px;
-  min-width: 400px;
-  overflow-y: scroll;
-
-  display: flex;
+  top: -300px;
+  right: 15px;
+  min-height: 300px;
+  min-width: 300px;
+  display: inline-block;
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
