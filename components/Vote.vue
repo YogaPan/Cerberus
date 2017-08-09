@@ -2,37 +2,40 @@
   <div id="vote-container" class="pop-fullscreen" v-if="showVotePopUp">
     <div id="vote-inside-container">
 
-      <div class="vote-area">
+      <img id="cancel" src="/assets/cross.png" v-if="showResult" @click="cancel">
+
+      <div class="vote-area" v-if="!showResult">
 
         <div class="vote-area-top">
           <h1>Vote Title</h1>
         </div>
 
         <div class="vote-area-middle">
-          <div class="vote-item">
+          <div class="vote-item" @click="select">
             <p>Radio Button 1</p>
           </div>
-          <div class="vote-item">
+
+          <div class="vote-item" @click="select">
             <p>Radio Button 2</p>
           </div>
 
-          <div class="vote-item">
+          <div class="vote-item" @click="select">
             <p>Radio Button 3</p>
           </div>
         </div>
 
         <div class="vote-area-bottom">
-          <button class="button-trans" @click="vote">Confirm</button>
+          <button class="button-trans" @click="vote">Confirm -></button>
         </div>
       </div>
 
-      <div class="result-area">
+      <div class="result-area" v-else>
         <div class="result-area-top">
           <h1>Result</h1>
         </div>
 
         <div class="result-area-bottom">
-          <!-- TODO -->
+
         </div>
       </div>
 
@@ -44,7 +47,8 @@
 export default {
   data() {
     return {
-      showVotePopUp: true
+      showVotePopUp: true,
+      showResult: false
     }
   },
   mounted() {
@@ -52,6 +56,9 @@ export default {
   },
   methods: {
     vote() {
+      this.showResult = true
+    },
+    cancel() {
       this.showVotePopUp = false
     }
   },
@@ -73,7 +80,7 @@ export default {
   align-items: stretch;
   justify-content: space-between;
 
-  width: 1000px;
+  width: 800px;
   height: 600px;
 }
 
@@ -86,8 +93,6 @@ export default {
   flex-direction: column;
   align-items: stretch;
   justify-content: space-between;
-
-  padding-right: 40px;
 }
 
 .vote-area-top {
@@ -124,29 +129,6 @@ export default {
   bottom: 0;
 }
 
-
-/* ============================== Result Area =============================== */
-.result-area {
-  flex: 0 0 400px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: flex-start;
-}
-
-.result-area-top h1 {
-  font-size: 100px;
-  color: #ccc;
-}
-
-.result-area-bottom {
-  flex: 1 0 0;
-  background-color: #222;
-
-  border-radius: 10px;
-}
-
 /* ============================= Vote Item ================================= */
 
 .vote-item {
@@ -176,5 +158,43 @@ export default {
 .vote-item:hover p {
   color: black;
   font-size: 30px;
+}
+
+/* ============================== Result Area =============================== */
+.result-area {
+  flex: 1 0 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+
+  /*transition: 1s;*/
+}
+
+.result-area-top h1 {
+  font-size: 100px;
+  color: #ccc;
+}
+
+.result-area-bottom {
+  flex: 1 0 0;
+  background-color: #222;
+
+  border-radius: 10px;
+}
+
+/* ================================ Others ================================== */
+
+#cancel {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+  height: 50px;
+  width: 50px;
+
+  filter: invert(100%);
+  cursor: pointer;
 }
 </style>

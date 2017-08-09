@@ -1,6 +1,5 @@
 <template>
   <div id="whiteboard-container">
-    <!-- <h1>whiteboard here...</h1> -->
     <div class="colors">
       <div class="color black" v-bind:class="isSelected('black')" @click="changeColor('black')"></div>
       <div class="color red" v-bind:class="isSelected('red')" @click="changeColor('red')"></div>
