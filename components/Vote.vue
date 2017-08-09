@@ -133,10 +133,18 @@ export default {
   border-radius: 10px;
 }
 
+/* ============================= Vote Item ================================= */
+
 .vote-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
   height: 100px;
   border: 3px solid #aaa;
   border-radius: 10px;
+  transition: .1s;
 }
 
 .vote-item input[type="radio"] {
@@ -169,5 +177,19 @@ export default {
 .vote-item input[type="radio"] + label span,
 .vote-item input[type="radio"]:checked + label span {
   transition: background-color 0.1s linear;
+}
+
+/* ============================== Hover =================================== */
+.vote-item:hover {
+  background-color: #ccc;
+}
+
+.vote-item:hover input[type="radio"] + label {
+  color: black;
+  font-size: 30px;
+}
+
+.vote-item:hover input[type="radio"] + label span {
+     background-color: black;
 }
 </style>
