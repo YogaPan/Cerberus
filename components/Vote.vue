@@ -11,16 +11,8 @@
         </div>
 
         <div class="vote-area-middle">
-          <div class="vote-item" @click="select">
-            <p>Radio Button 1</p>
-          </div>
-
-          <div class="vote-item" @click="select">
-            <p>Radio Button 2</p>
-          </div>
-
-          <div class="vote-item" @click="select">
-            <p>Radio Button 3</p>
+          <div class="vote-item" v-for="option in options" :class="{'selected-vote-item': option.isSelected}" @click="select(option.id)">
+            <p>{{ option.content }}</p>
           </div>
         </div>
 
@@ -48,13 +40,22 @@ export default {
   data() {
     return {
       showVotePopUp: true,
-      showResult: false
+      showResult: false,
+      options: [
+        { id: 1, content: 'Option 1', isSelected: false },
+        { id: 2, content: 'Option 2', isSelected: false },
+        { id: 3, content: 'Option 3', isSelected: false }
+      ]
     }
   },
   mounted() {
     // TODO
   },
   methods: {
+    select(id) {
+      console.log(id)
+      this.options[id-1].isSelected = !this.options[id-1].isSelected
+    },
     vote() {
       this.showResult = true
     },
@@ -150,6 +151,14 @@ export default {
   font-size: 30px;
 }
 
+.selected-vote-item {
+  background-color: #ccc;
+}
+
+.selected-vote-item p {
+  color: black;
+}
+
 /* ============================== Hover =================================== */
 .vote-item:hover {
   background-color: #ccc;
@@ -191,10 +200,16 @@ export default {
   top: 20px;
   right: 20px;
 
-  height: 50px;
-  width: 50px;
+  height: 40px;
+  width: 40px;
 
+  transition: .2s;
   filter: invert(100%);
   cursor: pointer;
+}
+
+#cancel:hover {
+  height: 45px;
+  width: 45px;
 }
 </style>
