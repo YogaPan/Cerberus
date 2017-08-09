@@ -1,7 +1,21 @@
 <template>
   <div id="root-container">
-    <!-- <div id="vote" class="pop-fullscreen">
-      <h1>Pop Up Test!</h1>
+    <!-- <div id="vote-container" class="pop-fullscreen">
+      <div id="vote-inside-container">
+        <div class="vote-area">
+          <h1>Vote Title</h1>
+
+          <li>Option1</li>
+          <li>Option2</li>
+          <li>Option3</li>
+
+          <button class="button-trans">Confirm</button>
+        </div>
+
+        <div class="result-area">
+          <p>Result</p>
+        </div>
+      </div>
     </div> -->
 
     <div id="left-container">
@@ -105,7 +119,7 @@ export default {
   flex: 1 0 0px;
 
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
 
@@ -124,12 +138,33 @@ export default {
   width: 20px;
 }
 
-#vote {
-  /* TODO */
+#vote-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-#vote h1, #vote p {
+#vote-container h1, #vote-container p {
   font-size: 100px;
   color: white;
+}
+
+#vote-inside-container {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+
+  width: 1000px;
+  height: 600px;
+}
+
+.vote-area {
+  flex: 1 0 0;
+}
+
+.result-area {
+  flex: 0 0 300px;
 }
 </style>

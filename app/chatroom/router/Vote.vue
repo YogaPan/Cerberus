@@ -1,7 +1,7 @@
 <template>
-  <div id="vote-container">
-    <h1>vote here...</h1>
-  </div>
+  <!-- <div id="vote-container"> -->
+    <!-- <h1>vote here...</h1> -->
+  <!-- </div> -->
 </template>
 
 <script>
@@ -19,9 +19,9 @@ export default {
 </script>
 
 <style>
-#vote-container {
+/*#vote-container {
   flex: 1 0 0;
 
   background-color: #fff;
-}
+}*/
 </style>
