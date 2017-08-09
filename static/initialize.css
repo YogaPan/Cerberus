@@ -200,6 +200,7 @@ button {
 
   background-color: black;
   opacity: .9;
+  z-index: 99;  /* Always on top */
 }
 
 .pop-dropdown {

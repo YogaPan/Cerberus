@@ -155,7 +155,6 @@ export default {
     margin: -1px 4px 0 0;
     vertical-align: middle;
     cursor: pointer;
-    -moz-border-radius: 50%;
     border-radius: 50%;
 }
 
