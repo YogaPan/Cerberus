@@ -278,11 +278,6 @@ export default {
   outline: none;
   border: 2px solid #aaa;
 }
-p {
-  margin: 0px;
-  line-height: 16px;
-}
-
 .loader,
 .loader:before,
 .loader:after {
