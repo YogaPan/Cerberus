@@ -35,7 +35,17 @@
         <div class="loader"></div>
     </div>
     <div class="typing-area">
-      <div class="emoji-menu emoji" v-if="showEmojiMenu">Emoji</div>
+      <div class="emoji-menu emoji" v-if="showEmojiMenu">
+        <picker
+          :emoji-Size="24"
+          :perLine="8"
+          :exclude="['custom']"
+          set="apple"
+          title="pick one"
+          emoji="point_up"
+          >
+        </picker>
+      </div>
     </div>
       <!--測試中，先不用<button @click="fb">facebook</button>-->
       <button@click="toggleEmojiMenu">Toolbar</button>
@@ -59,6 +69,7 @@ var linkify = require('linkifyjs');
 var linkifyHtml = require('linkifyjs/html');
                   require('linkifyjs/plugins/hashtag')(linkify);
 import { mapGetters } from 'vuex'
+import { Picker, Emoji } from 'emoji-mart-vue'
 export default {
   data() {
     const showEmojiMenu = false;
@@ -68,6 +79,10 @@ export default {
       roomID: '',
       showEmojiMenu
     }
+  },
+  components: {
+    Picker,
+    Emoji
   },
   computed: {
     ...mapGetters({
@@ -93,7 +108,6 @@ export default {
         });
         FB.AppEvents.logPageView();   
       };
-
       (function(d, s, id){
          var js, fjs = d.getElementsByTagName(s)[0];
          if (d.getElementById(id)) {return;}
@@ -104,7 +118,6 @@ export default {
     //  Init, get leatest 20 messages
     //  Get Data from API
     //  Submit to State
-
   },
   mounted: function () {
     socket.on('new message', data => {
@@ -163,8 +176,6 @@ export default {
     }
   }
 }
-
-
 </script>
 
 <style>
@@ -337,18 +348,13 @@ export default {
 }
 .emoji {
   z-index: 10;
-
   position: absolute;
   border-radius: 10px;
-
   background-color: #E6E6FA;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 .emoji-menu {
-  top: -300px;
-  right: 15px;
-  min-height: 300px;
-  min-width: 300px;
+  top: -425px;
   display: inline-block;
   flex-direction: column;
   align-items: stretch;
