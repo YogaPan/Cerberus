@@ -39,14 +39,20 @@
         <picker
           :emoji-Size="24"
           :perLine="8"
+          color=""
           :exclude="['custom']"
-          set="apple"
+          set="twitter"
           title="pick one"
           emoji="point_up"
+          @click="addEmoji"
           >
         </picker>
       </div>
     </div>
+      <emoji
+        :emoji="`:${currentEmoji.id}:`"
+        :size="32">
+      </emoji>
       <!--測試中，先不用<button @click="fb">facebook</button>-->
       <button@click="toggleEmojiMenu">Toolbar</button>
       <div class="user-input">
@@ -77,7 +83,8 @@ export default {
       input: '',
       userID: '',
       roomID: '',
-      showEmojiMenu
+      showEmojiMenu,
+      currentEmoji: { id: '+1' },
     }
   },
   components: {
@@ -150,6 +157,10 @@ export default {
     toggleEmojiMenu(event) {
       this.showEmojiMenu = !this.showEmojiMenu
       event.stopPropagation()
+    },
+    addEmoji(emoji) {
+      this.currentEmoji = emoji
+      this.input += ":"+this.currentEmoji.id+":"
     },
     fb() {
       FB.getLoginStatus(function(response) {
