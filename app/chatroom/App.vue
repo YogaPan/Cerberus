@@ -1,7 +1,8 @@
 <template>
   <div id="root-container">
 
-    <app-vote v-if="this.$store.question"></app-vote>
+    <!-- <app-vote></app-vote> -->
+    <app-vote v-if="this.$store.state.question"></app-vote>
 
     <div id="left-container">
       <router-view></router-view>
@@ -44,6 +45,7 @@
 import { mapGetters } from 'vuex'
 import Chat from '../../components/Chat.vue'
 import Vote from '../../components/Vote.vue'
+var socket = require('socket.io-client')('http://140.136.150.75:8888')
 
 export default {
   data() {

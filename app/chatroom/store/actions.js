@@ -12,5 +12,8 @@ export default {
   },
   popVote({ commit }, vote) {
     commit('popVote', vote)
+  },
+  doneVote({ commit }) {
+    commit('doneVote')
   }
 }

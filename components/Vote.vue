@@ -1,5 +1,5 @@
 <template>
-  <div id="vote-pop-container" class="pop-fullscreen" v-if="showVotePopUp">
+  <div id="vote-pop-container" class="pop-fullscreen">
     <div id="vote-inside-container">
 
       <img id="cancel" src="/assets/cross.png" v-if="showResult" @click="cancel">
@@ -7,11 +7,11 @@
       <div class="vote-area" v-if="!showResult">
 
         <div class="vote-area-top">
-          <h1>Vote Title</h1>
+          <h1>{{ this.$store.state.question }}</h1>
         </div>
 
         <div class="vote-area-middle">
-          <div class="vote-item" v-for="option in options" :class="{'selected-vote-item': option.isSelected}" @click="select(option.id)">
+          <div class="vote-item" v-for="option in this.$store.state.options" :class="{'selected-vote-item': option.isSelected}" @click="select(option.id)">
             <p>{{ option.content }}</p>
           </div>
         </div>
@@ -39,13 +39,7 @@
 export default {
   data() {
     return {
-      showVotePopUp: true,
-      showResult: false,
-      options: [
-        { id: 1, content: 'Option 1', isSelected: false },
-        { id: 2, content: 'Option 2', isSelected: false },
-        { id: 3, content: 'Option 3', isSelected: false }
-      ]
+      showResult: false
     }
   },
   mounted() {
@@ -54,13 +48,13 @@ export default {
   methods: {
     select(id) {
       console.log(id)
-      this.options[id-1].isSelected = !this.options[id-1].isSelected
+      this.$store.state.options[id-1].isSelected = !this.$store.state.options[id-1].isSelected
     },
     vote() {
       this.showResult = true
     },
     cancel() {
-      this.showVotePopUp = false
+      this.$store.dispatch('doneVote')
     }
   },
 }
