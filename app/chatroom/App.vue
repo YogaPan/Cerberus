@@ -19,10 +19,6 @@
           <img class="item-image" src="/assets/brush.svg" alt="whiteboard">
           <p>Whiteboard</p>
         </router-link>
-        <router-link class="menu-item" tag="div" to="/vote">
-          <img class="item-image" src="/assets/megaphone.svg" alt="vote">
-          <p>Vote</p>
-        </router-link>
         <router-link class="menu-item" tag="div" to="/notes">
           <img class="item-image" src="/assets/list.svg" alt="notes">
           <p>Notes</p>
@@ -30,6 +26,10 @@
         <router-link class="menu-item" tag="div" to="/files">
           <img class="item-image" src="/assets/link.svg" alt="files">
           <p>Files</p>
+        </router-link>
+        <router-link class="menu-item" tag="div" to="/vote">
+          <img class="item-image" src="/assets/megaphone.svg" alt="vote">
+          <p>Vote</p>
         </router-link>
       </div>
     </div>
