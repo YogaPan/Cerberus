@@ -319,40 +319,40 @@ io.on('connection', function (socket) {
       message: data
     });
     var mid;
-    connection.query('SELECT mid, url FROM chatmessage WHERE url="'+socket.room+'" ORDER BY mid ASC LIMIT 1', function (error, results, fields) {
-      if(error) {console.log('1');throw error};
-      console.log(results[0].url);
-      console.log(results[0].mid);
-      if(results[0].mid==null) {
-        mid=1;
-        /*connection.query('INSERT INTO chatmessage(mid) VALUES('+mid+')', function(error, results, fields) {
-          if(error) throw error;
-        });*/
-        connection.query('INSERT INTO chatmessage(url, uid, message, mid) VALUES("'+socket.room+'", '+socket.handshake.session.uid
-            +', "'+data+'",'+mid+')', function (error, results, fields) {
-            if (error) {console.log('2');throw error};
-          });
-        console.log("hi1");
-        console.log(results[0].mid);
-        console.log(mid);
-      }
-      else {
-        connection.query('SELECT mid FROM chatmessage WHERE url="'+socket.room+'" ORDER BY mid DESC LIMIT 1', function (error, results, fields) {
-          if(error) throw error;
-          mid=results[0].mid;
-          mid++;
-          /*connection.query('INSERT INTO chatmessage(mid) VALUES('+mid+')', function(error, results, fields) {
+    var mid2;
+    var counter;
+    connection.query('INSERT INTO chatmessage(url, uid, message) VALUES("'+socket.room+'", '+socket.handshake.session.uid
+      +', "'+data+'")', function (error, results, fields) {
+      if (error) throw error;
+    });
+    connection.query('SELECT * FROM chatmessage WHERE url="'+socket.room+'" ORDER BY (id) DESC limit 1', function (error, results, fields ) {
+      console.log(results);
+      if(error) throw error;
+      connection.query('SELECT COUNT(*) FROM chatmessage WHERE url="'+socket.room+'" ORDER BY (id) DESC limit 1', function (error, results, fields ) {
+        //console.log(results);
+        //console.log(results[0]['COUNT(*)']);
+        counter=results[0]['COUNT(*)'];
+        if(results[0].mid==null&&counter==1) {
+          console.log("yoyo1");
+          mid=1;
+          connection.query('UPDATE chatmessage SET mid='+mid+' WHERE url="'+socket.room+'" ORDER BY (id) DESC limit 1', function (error, results, fields) {
             if(error) throw error;
-          });*/
-          connection.query('INSERT INTO chatmessage(url, uid, message, mid) VALUES("'+socket.room+'", '+socket.handshake.session.uid
-            +', "'+data+'",'+mid+')', function (error, results, fields) {
-            if (error) {console.log('3');throw error};
           });
-          console.log("hi2");
-          console.log(results[0].mid);
-          console.log(mid);
-        });
-      }
+        }
+        else if(results[0].mid==null&&counter>1) {
+          console.log("yoyo2");
+          connection.query('SELECT mid FROM chatmessage WHERE url="'+socket.room+'" ORDER BY mid DESC limit 0,1;' , function (error, results, fields ) {
+            console.log(results[0].mid);
+            mid2=results[0].mid;
+            mid2++;
+            connection.query('UPDATE chatmessage SET mid='+mid2+' WHERE url="'+socket.room+'" ORDER BY (id) DESC limit 1', function (error, results, fields) {
+              if(error) throw error;
+            });
+            if(error) throw error;
+          });
+        }
+        if(error) throw error;
+      });
     });
     console.log(socket.handshake.session.uid, socket.handshake.session.username, data);
   });
