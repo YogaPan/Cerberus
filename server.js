@@ -32,7 +32,9 @@ app.use('/dist', express.static('dist'));
 app.use('/assets', express.static('assets'));
 app.use('/static', express.static('static'));
 var port = 8888;
-server.listen(port);
+server.listen( 8888, function() {
+    console.log('Listenging on port 8888');
+});
 
 app.get('/test', function(req,res){ // test
   if(req.session.uid) {
@@ -198,8 +200,8 @@ app.post('/register', function(req,res){ // post 140.136.150.75:[port]/register
 
 app.post('/create-chatroom', function(req,res){ // client connect 140.136.150.75:[port]/create-chatroom
   if(req.session.uid){
-  	//console.log(req.body.name);
-  	
+    //console.log(req.body.name);
+    
     connection.query('INSERT INTO chatroom(name, manager) VALUES("'+ // insert new chatroom into database
     req.body.name+'", "'+req.session.uid+'")', function (error, results, fields) {
       if (error) throw error;
@@ -291,18 +293,18 @@ app.post('/board', function(req,res){ // client connect 140.136.150.75:[port]/bo
 });
 
 app.post('/invite', function(req,res){ // show invite notification
-	console.log("invite");
-	if(req.session.uid){
-		connection.query('UPDATE chatmember SET status = "'+req.body.accept+'" WHERE cid = '+req.body.id+' AND uid = '+req.session.uid, function (error, results, fields) {
-			if (error) throw error;
-			res.write('{"success": true}');
-			res.end();
-		});
-	}
-	else{
-		res.write("Please login.");
-		res.end();
-	}
+  console.log("invite");
+  if(req.session.uid){
+    connection.query('UPDATE chatmember SET status = "'+req.body.accept+'" WHERE cid = '+req.body.id+' AND uid = '+req.session.uid, function (error, results, fields) {
+      if (error) throw error;
+      res.write('{"success": true}');
+      res.end();
+    });
+  }
+  else{
+    res.write("Please login.");
+    res.end();
+  }
 });
 
 io.on('connection', function (socket) {
@@ -316,10 +318,49 @@ io.on('connection', function (socket) {
       username: socket.handshake.session.username,
       message: data
     });
-    connection.query('INSERT INTO chatmessage(url, uid, message) VALUES("'+socket.room+'", '+socket.handshake.session.uid
-      +', "'+data+'")', function (error, results, fields) {
-      if (error) throw error;
+    var mid;
+    connection.query('SELECT mid, url FROM chatmessage WHERE url="'+socket.room+'" ORDER BY mid ASC LIMIT 1', function (error, results, fields) {
+      if(error) {console.log('1');throw error};
+      console.log(results[0].url);
+      console.log(results[0].mid);
+      if(results[0].mid==null) {
+        mid=1;
+        /*connection.query('INSERT INTO chatmessage(mid) VALUES('+mid+')', function(error, results, fields) {
+          if(error) throw error;
+        });*/
+        connection.query('INSERT INTO chatmessage(url, uid, message, mid) VALUES("'+socket.room+'", '+socket.handshake.session.uid
+            +', "'+data+'",'+mid+')', function (error, results, fields) {
+            if (error) {console.log('2');throw error};
+          });
+        console.log("hi1");
+        console.log(results[0].mid);
+        console.log(mid);
+      }
+      else {
+        connection.query('SELECT mid FROM chatmessage WHERE url="'+socket.room+'" ORDER BY mid DESC LIMIT 1', function (error, results, fields) {
+          if(error) throw error;
+          mid=results[0].mid;
+          mid++;
+          /*connection.query('INSERT INTO chatmessage(mid) VALUES('+mid+')', function(error, results, fields) {
+            if(error) throw error;
+          });*/
+          connection.query('INSERT INTO chatmessage(url, uid, message, mid) VALUES("'+socket.room+'", '+socket.handshake.session.uid
+            +', "'+data+'",'+mid+')', function (error, results, fields) {
+            if (error) {console.log('3');throw error};
+          });
+          console.log("hi2");
+          console.log(results[0].mid);
+          console.log(mid);
+        });
+      }
     });
     console.log(socket.handshake.session.uid, socket.handshake.session.username, data);
   });
 });
+
+function onConnection(socket) {
+  socket.room = socket.handshake.session.joinroom;
+  socket.join(socket.room);
+  socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
+}
+io.on('connection', onConnection);
