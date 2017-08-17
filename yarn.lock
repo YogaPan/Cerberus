@@ -1514,6 +1514,10 @@ elliptic@^6.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
+emoji-mart-vue@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/emoji-mart-vue/-/emoji-mart-vue-1.0.2.tgz#efb293dab59945c94f1a5ed7a5fbde50d0cc41db"
+
 emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
