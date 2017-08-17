@@ -5,19 +5,19 @@
 
       <div class="question-title">
         <!-- <p>Vote Title</p> -->
-        <input v-model="title" class="input-big" type="text" placeholder="Question Title" />
+        <input v-model="question" class="input-big" type="text" placeholder="Your Question" />
       </div>
 
-      <div class="question" v-for="question in questions">
-        <p>Question {{ question.id }}</p>
-        <input v-model="question.content" class="input" type="text" />
+      <div class="option" v-for="option in options">
+        <p>Option {{ option.id }}</p>
+        <input v-model="option.content" class="input" type="text" />
       </div>
 
-      <div class="new-question" @click="addNewQuestion">
+      <div class="new-option" @click="addNewQuestion">
         <img src="/assets/plus-sign.svg" alt="add">
       </div>
 
-      <button @click="sendQuestion" id="question-button" class="button-trans">Ask</button>
+      <button @click="sendQuestion" id="ask-button" class="button-trans">Ask</button>
 
     </div>
   </div>
@@ -29,8 +29,8 @@ var socket = require('socket.io-client')('http://140.136.150.75:8888');
 export default {
   data() {
     return {
-      title: '',
-      questions: [
+      question: '',
+      options: [
         { id: 1, content: '' },
         { id: 2, content: '' }
       ]
@@ -41,19 +41,19 @@ export default {
   },
   methods: {
     addNewQuestion() {
-      this.questions.push({
-        id: this.questions.length+1,
+      this.options.push({
+        id: this.options.length+1,
         content: ''
       })
     },
     sendQuestion() {
       socket.emit('ask', {
-        title: this.title,
-        questions: this.questions
+        question: this.question,
+        options: this.options
       })
 
-      this.title = ''
-      this.questions = [
+      this.question = ''
+      this.options = [
         { id: 1, content: '' },
         { id: 2, content: '' }
       ]
@@ -95,16 +95,16 @@ export default {
   width: 100%;
 }
 
-.question {
+.option {
   margin-bottom: 30px;
 }
 
-.question p {
+.option p {
   margin-bottom: 5px;
 
 }
 
-.new-question {
+.new-option {
   height: 75px;
   width: 75px;
 
@@ -117,17 +117,19 @@ export default {
   border-radius: 10px;
 }
 
-.new-question img {
+.new-option img {
   height: 50px;
   width: 50px;
+
+  filter: invert(30%);
 }
 
-.new-question:hover {
+.new-option:hover {
   cursor: pointer;
   /*filter: invert(100%);*/
 }
 
-#question-button {
+#ask-button {
   position: absolute;
 
   bottom: 20px;
