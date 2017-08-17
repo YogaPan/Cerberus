@@ -326,23 +326,20 @@ io.on('connection', function (socket) {
       if (error) throw error;
     });
     connection.query('SELECT * FROM chatmessage WHERE url="'+socket.room+'" ORDER BY (id) DESC limit 1', function (error, results, fields ) {
-      console.log(results);
+      //console.log(results);
       if(error) throw error;
       connection.query('SELECT COUNT(*) FROM chatmessage WHERE url="'+socket.room+'" ORDER BY (id) DESC limit 1', function (error, results, fields ) {
         //console.log(results);
         //console.log(results[0]['COUNT(*)']);
         counter=results[0]['COUNT(*)'];
         if(results[0].mid==null&&counter==1) {
-          console.log("yoyo1");
           mid=1;
           connection.query('UPDATE chatmessage SET mid='+mid+' WHERE url="'+socket.room+'" ORDER BY (id) DESC limit 1', function (error, results, fields) {
             if(error) throw error;
           });
         }
         else if(results[0].mid==null&&counter>1) {
-          console.log("yoyo2");
           connection.query('SELECT mid FROM chatmessage WHERE url="'+socket.room+'" ORDER BY mid DESC limit 0,1;' , function (error, results, fields ) {
-            console.log(results[0].mid);
             mid2=results[0].mid;
             mid2++;
             connection.query('UPDATE chatmessage SET mid='+mid2+' WHERE url="'+socket.room+'" ORDER BY (id) DESC limit 1', function (error, results, fields) {
