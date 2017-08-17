@@ -1,7 +1,7 @@
 <template>
   <div id="root-container">
 
-    <app-vote></app-vote>
+    <!-- <app-vote></app-vote> -->
 
     <div id="left-container">
       <router-view></router-view>

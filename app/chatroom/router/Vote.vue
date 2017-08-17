@@ -5,28 +5,31 @@
 
       <div class="question-title">
         <!-- <p>Vote Title</p> -->
-        <input class="input-big" type="text" placeholder="Question Title" />
+        <input v-model="title" class="input-big" type="text" placeholder="Question Title" />
       </div>
 
       <div class="question" v-for="question in questions">
         <p>Question {{ question.id }}</p>
-        <input class="input" type="text" />
+        <input v-model="question.content" class="input" type="text" />
       </div>
 
       <div class="new-question" @click="addNewQuestion">
         <img src="/assets/plus-sign.svg" alt="add">
       </div>
 
-      <button id="question-button" class="button-trans">Emit vote event</button>
+      <button @click="sendQuestion" id="question-button" class="button-trans">Emit vote event</button>
 
     </div>
   </div>
 </template>
 
 <script>
+var socket = require('socket.io-client')('http://140.136.150.75:8888');
+
 export default {
   data() {
     return {
+      title: '',
       questions: [
         { id: 1, content: '' },
         { id: 2, content: '' }
@@ -42,6 +45,18 @@ export default {
         id: this.questions.length+1,
         content: ''
       })
+    },
+    sendQuestion() {
+      socket.emit('ask', {
+        title: this.title,
+        questions: this.questions
+      })
+
+      this.title = ''
+      this.questions = [
+        { id: 1, content: '' },
+        { id: 2, content: '' }
+      ]
     }
   }
 }
