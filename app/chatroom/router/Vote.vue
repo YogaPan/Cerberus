@@ -126,7 +126,6 @@ export default {
 
 .new-option:hover {
   cursor: pointer;
-  /*filter: invert(100%);*/
 }
 
 #ask-button {

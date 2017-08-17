@@ -27,4 +27,8 @@ export default {
     })
   //  splice(index, count_to_remove, addelement1, addelement2, ...)
   },
+  popVote(state, vote) {
+    state.question = vote.question
+    state.options = vote.options
+  }
 }

@@ -1,7 +1,7 @@
 <template>
   <div id="root-container">
 
-    <!-- <app-vote></app-vote> -->
+    <app-vote v-if="this.$store.question"></app-vote>
 
     <div id="left-container">
       <router-view></router-view>
@@ -52,7 +52,9 @@ export default {
     }
   },
   mounted() {
-    // TODO
+    socket.on('ask', (vote) => {
+      this.$store.dispatch('popVote', vote)
+    })
   },
   methods: {
     // TODO

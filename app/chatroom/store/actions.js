@@ -10,4 +10,7 @@ export default {
   insert({ commit }, messageContent) {
     commit('insert', messageContent)
   },
+  popVote({ commit }, vote) {
+    commit('popVote', vote)
+  }
 }
