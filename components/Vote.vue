@@ -1,5 +1,5 @@
 <template>
-  <div id="vote-container" class="pop-fullscreen" v-if="showVotePopUp">
+  <div id="vote-pop-container" class="pop-fullscreen" v-if="showVotePopUp">
     <div id="vote-inside-container">
 
       <img id="cancel" src="/assets/cross.png" v-if="showResult" @click="cancel">
@@ -68,7 +68,7 @@ export default {
 
 <style>
 
-#vote-container {
+#vote-pop-container {
   display: flex;
   flex-direction: column;
   align-items: center;
