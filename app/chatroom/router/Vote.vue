@@ -17,7 +17,7 @@
         <img src="/assets/plus-sign.svg" alt="add">
       </div>
 
-      <button @click="sendQuestion" id="question-button" class="button-trans">Emit vote event</button>
+      <button @click="sendQuestion" id="question-button" class="button-trans">Ask</button>
 
     </div>
   </div>
@@ -129,7 +129,9 @@ export default {
 
 #question-button {
   position: absolute;
-  left: 20px;
+
   bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>
