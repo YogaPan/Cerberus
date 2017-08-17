@@ -14,7 +14,7 @@
       </div>
 
       <div class="new-question" @click="addNewQuestion">
-
+        <img src="/assets/plus-sign.svg" alt="add">
       </div>
 
       <button id="question-button" class="button-trans">Emit vote event</button>
@@ -90,16 +90,26 @@ export default {
 }
 
 .new-question {
-  height: 100px;
-  width: 100px;
+  height: 75px;
+  width: 75px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 
   border: 3px solid #ddd;
   border-radius: 10px;
-  /*background-color: red;*/
+}
+
+.new-question img {
+  height: 50px;
+  width: 50px;
 }
 
 .new-question:hover {
   cursor: pointer;
+  /*filter: invert(100%);*/
 }
 
 #question-button {
