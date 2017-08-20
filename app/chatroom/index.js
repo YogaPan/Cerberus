@@ -16,7 +16,7 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   // mode: 'history',
   routes: [
-    { path: '', name: 'root', redirect: '/camera' },
+    { path: '', name: 'root', redirect: '/whiteboard' },
     { path: '/camera', name: 'camera', component: Camera },
     { path: '/screen', name: 'screen', component: Screen },
     { path: '/whiteboard', name: 'whiteboard', component: Whiteboard },
