@@ -11,11 +11,11 @@
         <!-- <router-link class="menu-item" tag="div" to="/camera">
           <img class="item-image" src="/assets/cross.png" alt="snake">
           <p>Video</p>
-        </router-link>
-        <router-link class="menu-item" tag="div" to="/screen">
-          <img class="item-image" src="/assets/cross.png" alt="snake">
-          <p>Screen</p>
         </router-link> -->
+        <router-link class="menu-item" tag="div" to="/screen">
+          <img class="item-image" src="/assets/video.png" alt="snake">
+          <p>Screen</p>
+        </router-link>
         <router-link class="menu-item" tag="div" to="/whiteboard">
           <img class="item-image" src="/assets/brush.svg" alt="whiteboard">
           <p>Whiteboard</p>
@@ -127,6 +127,7 @@ export default {
 
   p {
     font-size: 12px;
+    margin-left: 5px;
   }
 
   img {

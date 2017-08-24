@@ -21,6 +21,7 @@
     "less-loader": "^4.0.5",
     "linkifyjs": "^2.1.4",
     "mysql": "^2.13.0",
+    "simplewebrtc": "^3.0.1",
     "socket.io": "^2.0.1",
     "socket.io-client": "^1.7.3",
     "vue": "^2.2.1",
