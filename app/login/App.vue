@@ -104,7 +104,8 @@ export default {
 
 </script>
 
-<style>
+<style lang="less">
+@import "~styles/init.less";
 
 #root-container {
   height: 100vh;
