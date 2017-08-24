@@ -11,9 +11,9 @@
           </div>
 
           <div class="message-area">
-            <div class="message" v-html="$options.filters.tolink(message.content)">
-            </div>
-
+            <!--<div class="message" v-html="$options.filters.toEmoji(message.content)"></div>-->
+            <div class="message">{{message.content | toEmoji}}</div>
+            <div class="message">{{message.content}}</div>
             <div class="msg-status">
               <div class="msg-status-read" v-if="message.read">
                 read
@@ -40,6 +40,7 @@
           :emoji-Size="24"
           :perLine="8"
           color=""
+          :native="true"	
           :exclude="['custom']"
           set="twitter"
           title="pick one"
@@ -49,10 +50,7 @@
         </picker>
       </div>
     </div>
-      <emoji
-        :emoji="`:${currentEmoji.id}:`"
-        :size="32">
-      </emoji>
+
       <!--測試中，先不用<button @click="fb">facebook</button>-->
       <button@click="toggleEmojiMenu">Toolbar</button>
       <div class="user-input">
@@ -75,7 +73,7 @@ var linkify = require('linkifyjs');
 var linkifyHtml = require('linkifyjs/html');
                   require('linkifyjs/plugins/hashtag')(linkify);
 import { mapGetters } from 'vuex'
-import { Picker, Emoji } from 'emoji-mart-vue'
+import { Picker, Emoji, emojiIndex } from 'emoji-mart-vue'
 export default {
   data() {
     const showEmojiMenu = false;
@@ -160,7 +158,7 @@ export default {
     },
     addEmoji(emoji) {
       this.currentEmoji = emoji
-      this.input += ":"+this.currentEmoji.id+":"
+      this.input += this.currentEmoji.colons
     },
     fb() {
       FB.getLoginStatus(function(response) {
@@ -184,6 +182,21 @@ export default {
   filters: {
     tolink: function (value) {
       return linkifyHtml(value,{defaultProtocol: 'https'});
+    },
+    toEmoji: function (value) {
+      let string = value
+      let colonsRegex = new RegExp('(^|\\s)(\:[a-zA-Z0-9-_+]+\:(\:skin-tone-[2-6]\:)?)', 'g')
+      let match
+      while (match = colonsRegex.exec(string)) {
+        let colons = match[2]
+        let colonsA = colons.replace(/:/g, "")
+        let emojis = emojiIndex.search(colonsA)
+        if (emojis.length > 0) {
+          return emojis[0].native
+        } else {
+          return colons
+        }
+      }
     }
   }
 }
