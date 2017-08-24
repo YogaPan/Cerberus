@@ -1,10 +1,10 @@
 <template>
   <div id="root-container">
-    <div id="top-container" class="background-white">
+    <div id="top-container">
       <a class="app-link" href="/">Cerberus</a>
     </div>
 
-    <div id="middle-container" class="background-gray">
+    <div id="middle-container">
       <form @submit.prevent="submit" id="register-form" class="background-white">
         <h1>Sign up</h1>
         <p class="purple" :class="isError()">{{ promptMessage }}</p>
@@ -18,7 +18,7 @@
       </form>
     </div>
 
-    <div id="bottom-container" class="background-black">
+    <div id="bottom-container">
 
     </div>
   </div>
@@ -139,6 +139,15 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+
+  @media all and (max-height: 650px) {
+    height: 650px;
+  }
+
+  @media all and (max-width: 650px) {
+    display: block;
+    height: 1000px;
+  }
 }
 
 #top-container {
@@ -149,6 +158,18 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+
+  background-color: @white;
+
+  @media all and (max-width: 650px) {
+    position: fixed;
+    top: 0;
+
+    display: flex;
+    height: 60px;
+
+    border-bottom: 3px solid @dark-white;
+  }
 }
 
 #middle-container {
@@ -159,11 +180,27 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  background-color: @dark-white;
+
+  @media all and (max-width: 650px) {
+    display: block;
+    margin-top: 60px;
+
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
 }
 
 #bottom-container {
   flex: 0 0 150px;
   width: 100%;
+  background-color: @black;
+
+  @media all and (max-width: 650px) {
+    display: block;
+    height: 450px;
+  }
 }
 
 #register-form {
@@ -178,15 +215,20 @@ export default {
 
   border: 2px solid #eee;
   border-radius: 5px;
-}
 
-#register-form h1 {
-  font-size: 40px;
-  /*margin-top: 10px;*/
-}
+  background-color: @white;
 
-#register-form input {
-  width: 70%;
+  h1 { font-size: 40px; }
+  input { width: 70%; }
+  button {
+   width: 200px;
+   margin-top: 30px;
+  }
+
+  @media all and (max-width: 650px) {
+    height: 525px;
+    width: 100%;
+  }
 }
 
 #username {
@@ -205,49 +247,4 @@ export default {
   margin-top: 8px;
 }
 
-#register-form button {
-  width: 200px;
-  margin-top: 30px;
-}
-
-@media all and (max-height: 650px) {
-  #root-container {
-    height: 650px;
-  }
-}
-
-@media all and (max-width: 650px) {
-  #root-container {
-    display: block;
-    height: 1000px;
-  }
-
-  #top-container {
-    position: fixed;
-    top: 0;
-
-    display: flex;
-    height: 60px;
-
-    border-bottom: 3px solid #fafafa;
-  }
-
-  #middle-container {
-    display: block;
-    margin-top: 60px;
-
-    padding-top: 30px;
-    padding-bottom: 30px;
-  }
-
-  #bottom-container {
-    display: block;
-    height: 450px;
-  }
-
-  #register-form {
-    height: 525px;
-    width: 100%;
-  }
-}
 </style>

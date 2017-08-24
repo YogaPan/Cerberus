@@ -60,7 +60,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+
+@import "~styles/init.less";
 
 #vote-pop-container {
   display: flex;
@@ -88,15 +90,20 @@ export default {
   flex-direction: column;
   align-items: stretch;
   justify-content: space-between;
+
+  button {
+    position: absolute;
+    bottom: 0;
+  }
 }
 
 .vote-area-top {
   flex: 0 0 100px;
-}
 
-.vote-area-top h1 {
-  font-size: 100px;
-  color: #ccc;
+  h1 {
+    font-size: 100px;
+    color: @gray;
+  }
 }
 
 .vote-area-middle {
@@ -119,11 +126,6 @@ export default {
   position: relative;
 }
 
-.vote-area button {
-  position: absolute;
-  bottom: 0;
-}
-
 /* ============================= Vote Item ================================= */
 
 .vote-item {
@@ -138,32 +140,28 @@ export default {
 
   transition: .1s;
   cursor: pointer;
-}
 
-.vote-item p {
-  color: #ccc;
-  font-size: 30px;
+  p {
+    color: #ccc;
+    font-size: 30px;
+  }
+
+  &:hover {
+    background-color: #ccc;
+
+    p {
+      color: black;
+      font-size: 30px;
+    }
+  }
 }
 
 .selected-vote-item {
   background-color: #ccc;
+
+  p { color: black; }
 }
 
-.selected-vote-item p {
-  color: black;
-}
-
-/* ============================== Hover =================================== */
-.vote-item:hover {
-  background-color: #ccc;
-}
-
-.vote-item:hover p {
-  color: black;
-  font-size: 30px;
-}
-
-/* ============================== Result Area =============================== */
 .result-area {
   flex: 1 0 0;
 
@@ -175,19 +173,12 @@ export default {
   /*transition: 1s;*/
 }
 
-.result-area-top h1 {
-  font-size: 100px;
-  color: #ccc;
-}
-
 .result-area-bottom {
   flex: 1 0 0;
   background-color: #222;
 
   border-radius: 10px;
 }
-
-/* ================================ Others ================================== */
 
 #cancel {
   position: absolute;
@@ -200,10 +191,11 @@ export default {
   transition: .2s;
   filter: invert(100%);
   cursor: pointer;
+
+  &:hover {
+    height: 45px;
+    width: 45px;
+  }
 }
 
-#cancel:hover {
-  height: 45px;
-  width: 45px;
-}
 </style>

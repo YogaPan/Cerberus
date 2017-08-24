@@ -10,7 +10,7 @@ export const store = new Vuex.Store({
     username: '',
     nickname: '',
     invites: [],
-    rooms: []
+    rooms: [],
 
     // frontend debug variables
     // username: 'yogapan8532',

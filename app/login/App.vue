@@ -1,11 +1,11 @@
 <template>
   <div id="root-container">
-    <div id="top-container" class="background-white">
+    <div id="top-container">
       <a class="app-link" href="/">Cerberus</a>
     </div>
 
-    <div id="middle-container" class="background-gray">
-      <form @submit.prevent="submit" id="login-form" class="background-white">
+    <div id="middle-container">
+      <form @submit.prevent="submit" id="login-form">
         <h1>Sign in</h1>
         <p class="purple" :class="isError()">{{ this.promptMessage }}</p>
 
@@ -19,7 +19,7 @@
       </form>
     </div>
 
-    <div id="bottom-container" class="background-black">
+    <div id="bottom-container">
 
     </div>
   </div>
@@ -105,6 +105,7 @@ export default {
 </script>
 
 <style lang="less">
+
 @import "~styles/init.less";
 
 #root-container {
@@ -114,6 +115,15 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  
+  @media all and (max-height: 650px) {
+    height: 650px;
+  }
+
+  @media all and (max-width: 650px) {
+    display: block;
+    height: 1000px;
+  }
 }
 
 #top-container {
@@ -124,6 +134,18 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+
+  background-color: @white;
+
+  @media all and (max-width: 650px) {
+    position: fixed;
+    top: 0;
+
+    display: flex;
+    height: 60px;
+
+    border-bottom: 3px solid @dark-white;
+  }
 }
 
 #middle-container {
@@ -134,11 +156,29 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  background-color: @dark-white;
+
+  
+  @media all and (max-width: 650px) {
+    display: block;
+    margin-top: 60px;
+
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
 }
 
 #bottom-container {
   flex: 0 0 150px;
   width: 100%;
+
+  background-color: @black;
+
+  @media all and (max-width: 650px) {
+    display: block;
+    height: 450px;
+  }
 }
 
 #login-form {
@@ -150,8 +190,14 @@ export default {
   align-items: center;
   justify-content: center;
 
-  border: 2px solid #eee;
+  border: 1px solid @light-gray;
   border-radius: 5px;
+  background-color: @white;
+
+  @media all and (max-width: 650px) {
+    height: 525px;
+    width: 100%;
+  }
 }
 
 #button-container {
@@ -161,67 +207,19 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-}
 
-#login-form h1 {
-  font-size: 40px;
-}
-
-#login-form input {
-  width: 70%;
-}
-
-#username {
-  margin-top: 30px;
-}
-
-#password {
-  margin-top: 10px;
-}
-
-#button-container button {
-  flex: 0 0 47%;
-  margin-top: 30px;
-}
-
-@media all and (max-height: 650px) {
-  #root-container {
-    height: 650px;
+  button {
+    flex: 0 0 47%;
+    margin-top: 30px;
   }
 }
 
-@media all and (max-width: 650px) {
-  #root-container {
-    display: block;
-    height: 1000px;
-  }
-
-  #top-container {
-    position: fixed;
-    top: 0;
-
-    display: flex;
-    height: 60px;
-
-    border-bottom: 3px solid #fafafa;
-  }
-
-  #middle-container {
-    display: block;
-    margin-top: 60px;
-
-    padding-top: 30px;
-    padding-bottom: 30px;
-  }
-
-  #bottom-container {
-    display: block;
-    height: 450px;
-  }
-
-  #login-form {
-    height: 525px;
-    width: 100%;
-  }
+#login-form {
+  h1 { font-size: 40px; }
+  input { width: 70%; }
 }
+
+#username { margin-top: 30px; }
+#password { margin-top: 10px; }
+
 </style>

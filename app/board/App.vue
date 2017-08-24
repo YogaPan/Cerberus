@@ -244,12 +244,21 @@ export default {
   align-items: center;
   justify-content: flex-start;
 
-  border-top: 2px solid #f8f8f8;
+  border-top: 2px solid @dark-white;
   padding-top: 25px;
   padding-left: 20px;
   padding-right: 15px;
 
-  background-color: white;
+  background-color: @white;
+
+  @media all and (max-width: 700px) {
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 60px;
+
+    width: 200px;
+  }
 }
 
 #right-container {
@@ -260,7 +269,7 @@ export default {
   align-items: center;
   justify-content: flex-start;
 
-  background-color: #f8f8f8;
+  background-color: @dark-white;
 }
 
 #menu {
@@ -270,14 +279,14 @@ export default {
   top: 50%;
   transform: translateY(-50%);
 
-  color: #999;
+  color: @dark-gray;
   font-size: 20px;
-  background-color: white;
+  background-color: @white;
   cursor: pointer;
-}
 
-#menu:focus {
-  outline: none;
+  &:focus {
+    outline: none;
+  }
 }
 
 #notification-button {
@@ -311,6 +320,8 @@ export default {
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
+
+  background-color: @white;
 }
 
 #dropdown-self {
@@ -321,7 +332,7 @@ export default {
 
   height: 75px;
 
-  background-color: #eee;
+  background-color: @light-gray;
 }
 
 #dropdown-self-left {
@@ -344,38 +355,39 @@ export default {
   font-size: 20px;
 }
 
-.list-item a {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
+.list-item {
+  a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
 
-  height: 30px;
-  border-radius: 5px;
-  padding: 5px 15px;
+    height: 30px;
+    border-radius: 5px;
+    padding: 5px 15px;
 
-  font-size: 20px;
-  font-weight: 400;
-  font-family: 'helvetica', sans-serif;
-  color: #222;
-}
+    font-size: 20px;
+    font-weight: 400;
+    font-family: 'helvetica', sans-serif;
+    color: @dark-black;
+  }
 
-.list-item:hover a {
-  background-color: #444;
-  color: white;
-}
+  img {
+    height: 25px;
+    width: 25px;
+    margin-right: 10px;
 
-.list-item:hover img {
-  filter: invert(1.0);
-}
+    filter: invert(.5);
+  }
 
-.list-item img {
-  height: 25px;
-  width: 25px;
+  &:hover {
+    a {
+      background-color: @purple;
+      color: white;
+    }
 
-  margin-right: 10px;
-
-  filter: invert(.5);
+    img { filter: invert(1.0); }
+  }
 }
 
 #notification-dropdown {
@@ -390,10 +402,11 @@ export default {
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
+
+  background-color: @white;
 }
 
 .invite-item {
-  /*font-size: 100px;*/
   flex: 0 0 100px;
 
   display: flex;
@@ -401,11 +414,11 @@ export default {
   align-items: stretch;
   justify-content: flex-start;
 
-  border-bottom: 1px solid #eee;
-}
+  border-bottom: 1px solid @dark-white;
 
-.invite-item:hover {
-  background-color: #f8f8f8;
+  &:hover {
+    background-color: @dark-white;
+  }
 }
 
 .invite-item-left {
@@ -424,10 +437,8 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-}
 
-.invite-item-middle p {
-  padding-right: 15px;
+  p { padding-right: 15px; }
 }
 
 .invite-item-right {
@@ -442,7 +453,8 @@ export default {
   /* TODO */
 }
 
-.accept-button, .reject-button {
+.accept-button,
+.reject-button {
   height: 25px;
 }
 
@@ -452,6 +464,12 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+
+  &:hover {
+    transition: .2s;
+    background-color: @green;
+    cursor: pointer;
+  }
 }
 
 .reject-area {
@@ -460,54 +478,27 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+
+  &:hover {
+    transition: .2s;
+    background-color: @red;
+    cursor: pointer;
+  }
 }
 
-.accept-area:hover {
-  transition: .2s;
-  background-color: #00D62B;
-  cursor: pointer;
-}
+.active {
+  a {
+    background-color: @purple;
+    color: @white;
+  }
 
-.reject-area:hover {
-  transition: .2s;
-  background-color: #EF0035;
-  cursor: pointer;
-}
+  img { filter: invert(1.0); }
 
-.active a {
-  background-color: #512DA8;
-  color: white;
-}
-
-.active:hover a {
-  background-color: #512DA8;
-  color: white;
-}
-
-.active img {
-  filter: invert(1.0);
-}
-
-@media all and (max-height: 625px) {
-  /* TODO */
-}
-
-@media all and (max-width: 1225px) {
-  /* TODO */
-}
-
-@media all and (max-width: 975px) {
-  /* TODO */
-}
-
-@media all and (max-width: 700px) {
-  #left-container {
-    display: block;
-    position: fixed;
-    left: 0;
-    top: 60px;
-
-    width: 200px;
+  &:hover {
+    a {
+      background-color: @purple;
+      color: @white;
+    }
   }
 }
 

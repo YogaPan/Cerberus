@@ -62,7 +62,10 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+
+@import "~styles/init.less";
+
 #question-container {
   flex: 1 0 0;
 
@@ -89,19 +92,14 @@ export default {
 
 .question-title {
   margin-bottom: 30px;
-}
 
-.question-title .input-big {
-  width: 100%;
+  .input-big { width: 100%; }
 }
 
 .option {
   margin-bottom: 30px;
-}
 
-.option p {
-  margin-bottom: 5px;
-
+  p { margin-bottom: 5px; }
 }
 
 .new-option {
@@ -115,17 +113,17 @@ export default {
 
   border: 3px solid #ddd;
   border-radius: 10px;
-}
 
-.new-option img {
-  height: 50px;
-  width: 50px;
+  img {
+    height: 50px;
+    width: 50px;
 
-  filter: invert(30%);
-}
+    filter: invert(30%);
+  }
 
-.new-option:hover {
-  cursor: pointer;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 #ask-button {

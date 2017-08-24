@@ -9,7 +9,7 @@
 
     </div>
 
-    <div id="right-container" class="background-black">
+    <div id="right-container">
     </div>
   </div>
 </template>
@@ -44,6 +44,15 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+
+  @media all and (max-height: 450px) {
+    height: 450px;
+  }
+
+  @media all and (max-width: 770px) {
+    flex-wrap: wrap;
+    /*height: 1400px;*/
+  }
 }
 
 #left-container {
@@ -55,11 +64,37 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+
+  @media all and (max-width: 1250px) {
+    flex: 1 0 100px;
+    /*background-color: pink;*/
+  }
+
+  @media all and (max-width: 770px) {
+    flex: 0 0 100%;
+    height: 600px;
+    /*background-color: purple;*/
+  }
 }
 
 #right-container {
   flex: 1 0 auto;
   height: 100%;
+
+  background-color: @black;
+
+  @media all and (max-width: 1250px) {
+    flex: 1 0 100px;
+  }
+
+  @media all and (max-width: 975px) {
+    flex: 1 0 auto;
+  }
+
+  @media all and (max-width: 770px) {
+    height: 500px;
+    flex: 0 0 100%;
+  }
 }
 
 #app-name {
@@ -75,53 +110,10 @@ export default {
   padding-left: 10px;
 }
 
-@media all and (max-height: 450px) {
-  #root-container {
-    height: 450px;
-  }
-}
-
-@media all and (max-width: 1250px) {
-  #left-container {
-    flex: 1 0 100px;
-    /*background-color: pink;*/
-  }
-
-  #right-container {
-    flex: 1 0 100px;
-  }
-}
-
-@media all and (max-width: 975px) {
-  #left-container {
-    flex: 0 0 485px;
-    /*background-color: red;*/
-  }
-
-  #right-container {
-    flex: 1 0 auto;
-  }
-}
-
-@media all and (max-width: 770px) {
-  #root-container {
-    flex-wrap: wrap;
-    /*height: 1400px;*/
-  }
-
-  #left-container {
-    flex: 0 0 100%;
-    height: 600px;
-    /*background-color: purple;*/
-  }
-
-  #right-container {
-    height: 500px;
-    flex: 0 0 100%;
-  }
-
-  #register-form {
+#register-form {
+  @media all and (max-width: 770px) {
     width: 65%;
   }
 }
+
 </style>

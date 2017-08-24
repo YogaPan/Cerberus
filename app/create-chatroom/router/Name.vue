@@ -48,7 +48,9 @@ export default {
 
 </script>
 
-<style>
+<style lang="less">
+
+@import "~styles/init.less";
 
 #tutorial-container {
   height: 100%;
@@ -71,6 +73,13 @@ export default {
 
 #register-form {
   width: 80%;
+
+  h1 { font-weight: 100; }
+  input {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .error-message {  margin-top: 15px; }
 }
 
 #next {
@@ -81,19 +90,6 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-}
-
-#register-form h1 {
-  font-weight: 100;
-}
-
-#register-form .error-message {
-  margin-top: 15px;
-}
-
-#register-form input {
-  width: 100%;
-  margin-top: 10px;
 }
 
 #next-button {

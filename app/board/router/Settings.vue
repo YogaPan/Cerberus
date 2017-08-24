@@ -40,7 +40,10 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+
+@import "~styles/init.less";
+
 #settings-container {
   flex: 1 0 0;
   width: 800px;
@@ -49,10 +52,19 @@ export default {
   padding-right: 50px;
 
   margin-top: 10px;
-  border: 1px solid #eee;
+  border: 1px solid @dark-white;
   border-radius: 10px;
 
-  background-color: white;
+  background-color: @white;
+
+  @media all and (max-width: 1225px) {
+    width: 80%;
+  }
+
+  @media all and (max-width: 975px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 
 #settings-content {
@@ -75,6 +87,16 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+
+  @media all and (max-width: 700px) {
+    flex: 0 0 450px;
+
+    display: flex;
+    flex-direction: column;
+    /*flex-wrap: wrap;*/
+    justify-content: flex-start;
+    align-items: center;
+  }
 }
 
 #profile-left {
@@ -85,6 +107,15 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  @media all and (max-width: 700px) {
+    flex: 0 0 250px;
+    width: 100%;
+  }
+
+  @media all and (max-width: 550px) {
+    flex: 0 0 250px;
+  }
 }
 
 #profile-right {
@@ -98,16 +129,33 @@ export default {
 
   padding-top: 30px;
   padding-left: 10%;
+
+  h2 {
+    font-weight: 100;
+  }
+
+  input {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  @media all and (max-width: 700px) {
+    flex: 0 0 200px;
+    width: 100%;
+
+    padding-left: 0;
+    padding-top: 0;
+  }
 }
 
 #head-image {
   width: 90%;
   border-radius: 50%;
-  background-color: #eee;
-}
+  background-color: @light-gray;
 
-#profile-right h2 {
-  font-weight: 100;
+  @media all and (max-width: 700px) {
+    width: 50%;
+  }
 }
 
 #username {
@@ -118,18 +166,13 @@ export default {
   margin-top: 25px;
 }
 
-#profile-right input {
-  width: 100%;
-  margin-top: 10px;
-}
-
 .center {
   align-self: center;
 }
 
 .line {
   display: block;
-  border: 1px solid #eee;
+  border: 1px solid @dark-white;
   width: 100%;
   margin-top: 15px;
   margin-bottom: 20px;
@@ -148,87 +191,6 @@ export default {
 
 #save-button {
   width: 200px;
-}
-
-@media all and (max-height: 625px) {
-  /* TODO */
-}
-
-@media all and (max-width: 1225px) {
-  #settings-container {
-    width: 80%;
-  }
-
-  #profile-right {
-    /* TODO */
-  }
-}
-
-@media all and (max-width: 975px) {
-  #settings-container {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
-  #username {
-    font-size: 20px;
-  }
-
-  #nickname {
-    font-size: 20px;
-  }
-
-  #profile-left {
-
-  }
-
-  #profile-right {
-
-  }
-}
-
-@media all and (max-width: 700px) {
-  #profile {
-    flex: 0 0 450px;
-
-    display: flex;
-    flex-direction: column;
-    /*flex-wrap: wrap;*/
-    justify-content: flex-start;
-    align-items: center;
-  }
-
-  #profile-left {
-    flex: 0 0 250px;
-    width: 100%;
-  }
-
-  #profile-right {
-    flex: 0 0 200px;
-    width: 100%;
-
-    padding-left: 0;
-    padding-top: 0;
-  }
-
-  #head-image {
-    width: 50%;
-  }
-
-  /*
-  #left-container {
-    display: block;
-    position: fixed;
-    left: 0;
-    top: 60px;
-
-    width: 200px;
-  }*/
-}
-@media all and (max-width: 550px) {
-  #profile-left {
-    flex: 0 0 250px;
-  }
 }
 
 </style>

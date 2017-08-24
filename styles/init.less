@@ -1,5 +1,21 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
 
+@dark-black: #000;
+@black: #222;
+@light-black: #333;
+
+@dark-gray: #888;
+@gray: #ccc;
+@light-gray: #ddd;
+
+@dark-white: #fafafa;
+@white: #fff;
+
+@purple: #512DA8;
+@pink: pink;
+@red: #ED2643;
+@green: #00D62B;
+
 html,
 body,
 div,
@@ -18,7 +34,7 @@ button,
 input {
   margin: 0;
   padding: 0;
-  color: #333;
+  color: @light-black;
   font-family: 'Roboto Condensed', 'helvetica', sans-serif, serif;
 }
 
@@ -26,8 +42,8 @@ div,
 input,
 button {
   -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 a {
@@ -50,27 +66,22 @@ button {
 
 /* ============================= Font Colors ================================ */
 
-@dark-black: #000;
 .black-deep {
   color: #000;
 }
 
-@black: #222;
 .black {
   color: #222;
 }
 
-@light-black: #333;
 .black-light {
   color: #333;
 }
 
-@gray: #fafafa;
 .gray {
   color: #fafafa;
 }
 
-@white: #fff;
 .white {
   color: #fff;
 }
@@ -129,8 +140,8 @@ button {
 
 /* ========================== Transition Colors ============================= */
 
-.trans-purple:hover {
-  background-color: #512DA8;
+.trans-purple {
+  background-color: @purple;
   transition: .2s;
 }
 
@@ -141,55 +152,55 @@ button {
   height: 40px;
   width: 80%;
   padding-left: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid @light-gray;
   border-radius: 5px;
   font-size: 20px;
-}
 
-.input::placeholder {
-  color: #ccc;
-}
+  &:focus {
+    border: 2px solid @dark-gray;
+    padding-left: 9px;
+  }
 
-.input:focus {
-  border: 2px solid #888;
-  padding-left: 9px;
+  &::placeholder {
+    color: @gray;
+  }
 }
 
 .input-big {
   height: 50px;
-  border: 2px solid #ddd;
+  border: 2px solid @light-gray;
   border-radius: 5px;
   font-size: 20px;
   font-weight: 300;
-  color: #444;
+  color: @light-black;
   padding-left: 10px;
   transition: .2s;
-}
 
-.input-big::placeholder {
-  color: #ccc;
-}
+  &:focus {
+    border-color: @dark-gray;
+  }
 
-.input-big:focus {
-  border-color: #888;
-}
+  &::placeholder {
+    color: @gray;
+  }
 
-.input-big:focus::placeholder {
-  color: #ddd;
+  &:focus::placeholder {
+    color: @light-gray;
+  }
 }
 
 .input-error {
-  color: #ED2643;
-  border: 2px solid #ED2643;
+  color: @red;
+  border: 2px solid @red;
   padding-left: 9px;
-}
 
-.input-error::placeholder {
-  color: pink;
-}
+  &:focus {
+    border: 2px solid @red;
+  }
 
-.input-error:focus {
-  border: 2px solid #ED2643;
+  &::placeholder {
+    color: @pink;
+  }
 }
 
 
@@ -200,16 +211,14 @@ button {
   width: 200px;
   border: none;
   border-radius: 5px;
-  background-color: #333;
+  background-color: @light-black;
   font-size: 20px;
-  color: white;
-}
+  color: @white;
 
-.button-trans:hover {
-  background-color: #512DA8;
-  transition: .2s;
+  &:hover {
+    .trans-purple;
+  }
 }
-
 
 /* ============================= Pop Ups ================================== */
 
@@ -217,7 +226,7 @@ button {
   height: 100%;
   width: 100%;
   position: fixed;
-  background-color: black;
+  background-color: @dark-black;
   opacity: .9;
   z-index: 99;
   /* Always on top */
@@ -227,7 +236,7 @@ button {
   position: absolute;
   min-width: 300px;
   border-radius: 10px;
-  background-color: white;
+  // background-color: white;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
@@ -265,7 +274,7 @@ button {
 }
 
 .error-message {
-  color: #ED2643;
+  color: @red;
 }
 
 .shadow {
@@ -285,3 +294,6 @@ button {
   height: 100%;
   width: 100%;
 }
+
+/* 水平置中 */
+// TODO

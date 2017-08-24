@@ -97,7 +97,9 @@ export default {
 
 </script>
 
-<style>
+<style lang="less">
+
+@import "~styles/init.less";
 
 #members-container {
   height: 100%;
@@ -110,15 +112,13 @@ export default {
 
 #invite-form {
   width: 80%;
-}
 
-#invite-form h1 {
-  font-weight: 100;
-}
-
-#invite-form input {
-  width: 100%;
-  margin-top: 10px;
+  h1 { font-weight: 100; }
+  input {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .error-message { margin-top: 15px; }
 }
 
 .dropdown {
@@ -134,28 +134,24 @@ export default {
   background-color: white;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
-}
 
-.dropdown-content li {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
+  li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
 
-  padding: 12px 16px;
-  border-top: 1px solid #f8f8f8;
+    padding: 12px 16px;
+    border-top: 1px solid #f8f8f8;
 
-  font-size: 20px;
-  color: black;
-  cursor: pointer;
-}
+    font-size: 20px;
+    color: black;
+    cursor: pointer;
 
-.dropdown-content li:hover {
-  background-color: #f1f1f1
-}
+    p { padding-left: 15px; }
 
-.dropdown-content li p {
-  padding-left: 15px;
+    &:hover { background-color: @dark-white; }
+  }
 }
 
 #members {
@@ -170,6 +166,10 @@ export default {
   margin-top: 15px;
 
   overflow: scroll;
+
+  @media all and (max-width: 770px) {
+    flex: 0 0 275px;
+  }
 }
 
 .member {
@@ -185,6 +185,11 @@ export default {
   border: 1px solid #ddd;
   border-radius: 5px;
   padding-left: 15px;
+
+  p {
+    font-size: 20px;
+    margin-left: 10px;
+  }
 }
 
 .cancel {
@@ -195,16 +200,11 @@ export default {
 
   width: 20px;
   height: 20px;
-}
 
-.cancel:hover {
-  transition: .2s;
-  cursor: pointer;
-}
-
-.member p {
-  font-size: 20px;
-  margin-left: 10px;
+  &:hover {
+    transition: .2s;
+    cursor: pointer;
+  }
 }
 
 #btn-area {
@@ -218,25 +218,15 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+
+  @media all and (max-width: 770px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 
 #create-button {
   width: 130px;
-}
-
-#invite-form .error-message {
-  margin-top: 15px;
-}
-
-@media all and (max-width: 770px) {
-  #members {
-    flex: 0 0 275px;
-  }
-
-  #btn-area {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
 }
 
 </style>

@@ -124,31 +124,27 @@ export default {
   background-color: #eee;
 
   cursor: pointer;
-}
 
-.menu-item p {
-  font-size: 12px;
-}
+  p {
+    font-size: 12px;
+  }
 
-.menu-item img {
-  height: 20px;
-  width: 20px;
-}
+  img {
+    height: 20px;
+    width: 20px;
+  }
 
-/* =========================== menu-item:hover ============================= */
+  &:hover {
+    background-color: #333;
+    transition: .2s;
 
-.menu-item:hover {
-  background-color: #333;
-  transition: .2s;
-}
-
-.menu-item:hover p {
-  color: white;
-  transition: .2s;
-}
-
-.menu-item:hover img {
-  filter: invert(100%);
+    p {
+      color: white;
+      transition: .2s;
+    }
+    
+    img { filter: invert(100%); }
+  }
 }
 
 </style>

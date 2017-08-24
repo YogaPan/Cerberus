@@ -136,7 +136,10 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+
+@import "~styles/init.less";
+
 #whiteboard-container {
   flex: 1 0 0;
   min-height: 0;  /* flexbox overflow */
@@ -174,24 +177,19 @@ export default {
   box-shadow: 0px 0px 16px 10px rgba(0,0,0,0.2);
 }
 
-.colors:hover {
-  /*background-color: #ddd;*/
-  /*transition: .5s;*/
-}
-
 .color {
   flex: 0 1 50px;
   width: 50px;
 
   border-radius: 100%;
-}
 
-.color:hover {
-  flex: 0 1 60px;
-  width: 60px;
+  &:hover {
+    flex: 0 1 60px;
+    width: 60px;
 
-  transition: .2s;
-  cursor: pointer;
+    transition: .2s;
+    cursor: pointer;
+  }
 }
 
 .color.black {
@@ -218,11 +216,11 @@ export default {
   flex: 0 1 65px;
   width: 65px;
   transition: .2s;
-}
 
-.selected:hover {
-  flex: 0 1 65px;
-  width: 65px;
+  &:hover {
+    flex: 0 1 65px;
+    width: 65px;
+  }
 }
 
 .edit-area {
@@ -244,12 +242,12 @@ export default {
   flex: 0 1 50px;
   width: 50px;
   filter : invert(0.5);
-}
 
-.edit:hover {
-  filter : invert(0);
-  transition: .2s;
-  cursor: pointer;
+  &:hover {
+    filter : invert(0);
+    transition: .2s;
+    cursor: pointer;
+  }
 }
 
 #save {

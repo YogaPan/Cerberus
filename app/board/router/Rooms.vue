@@ -42,7 +42,10 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+
+@import "~styles/init.less";
+
 #room-container {
   flex: 1 0 0;
   width: 100%;
@@ -59,7 +62,7 @@ export default {
 #room-add {
   width: 200px;
   height: 200px;
-  border: 1px solid #ccc;
+  border: 1px solid @gray;
   border-radius: 10px;
   background-color: white;
 
@@ -67,15 +70,15 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
 
-#room-add:hover {
-  cursor: pointer;
-}
+  img {
+    width: 100px;
+    height: 100px;
+  }
 
-#room-add img {
-  width: 100px;
-  height: 100px;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .room {
@@ -87,7 +90,13 @@ export default {
   flex-direction: column;
   align-items: center;
 
-  /*background-color: #f8f8f8;*/
+  @media all and (max-width: 1225px) {
+    width: calc(100% / 3);
+  }
+
+  @media all and (max-width: 975px) {
+    width: calc(100% / 2);
+  }
 }
 
 .room-content {
@@ -98,13 +107,13 @@ export default {
 
   width: 200px;
   height: 200px;
-  border: 1px solid #ccc;
+  border: 1px solid @gray;
   border-radius: 10px;
   background-color: white;
-}
 
-.room-content:hover {
-  cursor: pointer;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .room-description {
@@ -118,16 +127,13 @@ export default {
   padding-top: 15px;
   padding-left: 15px;
   padding-right: 15px;
-}
 
-.room-description h1 {
-  font-weight: 100;
-}
-
-.room-description p {
-  font-family: 'helvetica';
-  color: #666;
-  margin-top: 10px;
+  h1 { font-weight: 100; }
+  p {
+    font-family: 'helvetica';
+    color: #666;
+    margin-top: 10px;
+  }
 }
 
 .room-people {
@@ -141,11 +147,11 @@ export default {
   padding-left: 5px;
   padding-right: 5px;
 
-  border-top: 1px solid #eee;
+  border-top: 1px solid @dark-white;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 
-  background-color: #222;
+  background-color: @black;
 }
 
 .person {
@@ -153,25 +159,10 @@ export default {
   width: 30px;
 
   border-radius: 100%;
-  background-color: #eee;
+  background-color: @dark-white;
 
   margin-left: 5px;
   margin-right: 5px;
 }
 
-@media all and (max-height: 625px) {
-  /* TODO */
-}
-
-@media all and (max-width: 1225px) {
-  .room {
-    width: calc(100% / 3);
-  }
-}
-
-@media all and (max-width: 975px) {
-  .room {
-    width: calc(100% / 2);
-  }
-}
 </style>
