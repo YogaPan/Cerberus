@@ -1,10 +1,6 @@
 <template>
   <div id="files-container">
-    <h1>Files here...</h1>
-    <form action="/test" method="post" enctype="multipart/form-data">
-      <input type="file" accept="" name="filetoupload">
-      <input type="submit">
-    </form>
+    <button id="start-dropping-button">Drop</button>
   </div>
 </template>
 
@@ -22,10 +18,35 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+
+@import "~styles/init.less";
+
 #files-container {
   flex: 1 0 0;
 
-  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  background-color: @dark-black;
+}
+
+#start-dropping-button {
+  height: 400px;
+  width: 400px;
+
+  border-radius: 50%;
+  background-color: @red;
+  color: white;
+
+  font-size: 75px;
+
+  &:hover {
+    height: 500px;
+    width: 500px;
+    transition: .1s;
+  }
 }
 </style>
