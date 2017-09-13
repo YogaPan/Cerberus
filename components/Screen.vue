@@ -1,14 +1,14 @@
 <template>
-  <div id="screen-container">
+  <div id="screen-container" ref="screen-container" v-bind:class="{ hide: isHide }">
 
-    <div id="have-video" v-if="streaming">
-      <video id="localVideo"></video>
+    <div id="have-video" v-if="this.$store.state.streaming">
+      <video id="localVideo" ref="localVideo"></video>
 
       <div id="remote-video-bar">
         <div id="remoteVideos"></div>
       </div>
 
-      <div id="button-bar" v-if="streaming">
+      <div id="button-bar">
         <button class="circle-button" @click="mute">mute</button>
         <button id="stop-streaming-button" class="circle-button" @click="stopStreaming">stop</button>
         <button class="circle-button" @click="pauseVideo">pause</button>
@@ -31,24 +31,18 @@ export default {
       'streaming': false
     }
   },
-  // mounted() {
-  //   const webrtc = new SimpleWebRTC({
-  //     // the id/element dom element that will hold "our" video
-  //     localVideoEl: 'localVideo',
-  //     // the id/element dom element that will hold remote videos
-  //     remoteVideosEl: 'remoteVideos',
-  //     // immediately ask for camera access
-  //     // autoRequestMedia: true,
-  //     // url: 'http://localhost:8888'
-  //   })
-
-  //   webrtc.on('readyToCall', function () {
-  //     // you can name it anything
-  //     webrtc.joinRoom('your awesome room name')
-  //   })
-
-  //   this.webrtc = webrtc
-  // },
+  mounted() {
+    // TODO
+  },
+  computed: {
+    isHide() {
+      if (this.$route.path === '/') {
+        return false
+      } else {
+        return true
+      }
+    }
+  },
   methods: {
     startStreaming() {
       const webrtc = new SimpleWebRTC({
@@ -59,9 +53,9 @@ export default {
         // immediately ask for camera access
         autoRequestMedia: true,
         // url: 'http://localhost:8888',
-        localVideo: {
-          muted: false
-        }
+        // localVideo: {
+          // muted: false
+        // }
       })
 
       webrtc.on('readyToCall', function () {
@@ -69,25 +63,27 @@ export default {
         webrtc.joinRoom('your awesome room name')
       })
 
-      this.webrtc = webrtc
-      this.streaming = true
+      this.$store.state.webrtc = webrtc
+      this.$store.state.streaming = true
+      this.$store.state.playLocalVideo = false
     },
     
     stopStreaming() {
-      this.webrtc.stopLocalVideo()
-      this.streaming = false
+      this.$store.state.webrtc.stopLocalVideo()
+      this.$store.state.streaming = false
+      this.$store.state.playLocalVideo = false
     },
 
     mute() {
-      this.webrtc.mute()
+      this.$store.state.webrtc.mute()
     },
 
     unmute() {
-      this.webrtc.unmute()
+      this.$store.state.webrtc.unmute()
     },
 
     pauseVideo() {
-      this.webrtc.pauseVideo()
+      this.$store.state.webrtc.pauseVideo()
     },
 
     resumeVideo() {
@@ -151,9 +147,17 @@ export default {
   width: 65px;
 
   border-radius: 50%;
-  background-color: gray;
+  background-color: @dark-black;
   opacity: 0.7;
   cursor: pointer;
+
+  color: @white;
+
+  &:hover {
+    height: 70px;
+    width: 70px;
+    transition: .2s;
+  }
 }
 
 #start-streaming-button {
@@ -216,5 +220,9 @@ export default {
 .title {
   color: white;
   font-size: 20px;
+}
+
+.hide {
+  display: none;
 }
 </style>
