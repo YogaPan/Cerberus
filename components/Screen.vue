@@ -139,7 +139,17 @@ export default {
 }
 
 #remoteVideos {
+  video {
+    position: absolute;
+    left: 10px;
 
+    width: 125px;
+    height: 125px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .circle-button {

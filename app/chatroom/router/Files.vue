@@ -38,7 +38,7 @@ export default {
   width: 400px;
 
   border-radius: 50%;
-  background-color: @red;
+  background-color: @light-black;
   color: white;
 
   font-size: 75px;
