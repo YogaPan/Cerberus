@@ -1,19 +1,48 @@
 <template>
   <div id="files-container">
-    <button id="start-dropping-button">Drop</button>
+    <div v-if="!image" class="dropzone-area" drag-over="handleDragOver">
+        <div class="dropzone-text">
+          <span>Drop</span>
+        </div>
+      <input type="file" @change="onFileChange">
+    </div>
+
+    <div v-else class="dropzone-preview">
+      <img :src="image" />
+      <button @click="removeImage" v-if="image">Remove</button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   data() {
-    return {}
+    return {
+      image: ''
+    }
   },
   mounted() {
     // TODO
   },
   methods: {
-    // TODO
+    onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+        this.createImage(files[0]);
+    },
+    createImage(file) {
+      var image = new Image();
+      var reader = new FileReader();
+      var vm = this;
+
+      reader.onload = (e) => {
+        vm.image = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    },
+    removeImage: function (e) {
+      this.image = '';
+    }
   }
 }
 </script>
@@ -33,7 +62,8 @@ export default {
   background-color: @dark-black;
 }
 
-#start-dropping-button {
+.dropzone-area {
+  position: relative;
   height: 400px;
   width: 400px;
 
@@ -48,5 +78,47 @@ export default {
     width: 500px;
     transition: .1s;
   }
+}
+
+.dropzone-area input {
+  position: absolute;
+  top: 0px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  cursor: pointer;
+  opacity: 0;
+}
+
+.dropzone-text {
+  position: absolute;
+  top: 50%;
+  text-align: center;
+  transform: translate(0, -50%);
+  width: 100%;
+
+  span {
+    display: block;
+    font-family: Arial, Helvetica;
+    line-height: 1.9;
+    color: white;
+  }
+}
+
+.dropzone-preview {
+  width: 80%;
+  position: relative;
+  &:hover .dropzone-button {
+    display: block;
+  }
+
+  img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+  }   
 }
 </style>
