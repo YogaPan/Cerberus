@@ -1,9 +1,9 @@
 <template>
   <div id="files-container">
     <div v-if="!image" class="dropzone-area" drag-over="handleDragOver">
-        <div class="dropzone-text">
-          <span>Drop</span>
-        </div>
+      <div class="dropzone-text">
+        <span>Drop</span>
+      </div>
       <input type="file" @change="onFileChange">
     </div>
 
@@ -15,33 +15,91 @@
 </template>
 
 <script>
+import SimpleWebRTC from 'simplewebrtc'
+import FileSaver from 'file-saver'
+
 export default {
   data() {
     return {
-      image: ''
+      image: '',
+      webrtc: null,
+      peer: null
     }
   },
   mounted() {
-    // TODO
+    const webrtc = new SimpleWebRTC({
+      localVideoEl: '',
+      remoteVideosEl: '',
+      autoRequestMedia: false,
+      receiveMedia: {
+        offerToReceiveAudio: 0,
+        offerToReceiveVideo: 0
+      }
+    })
+
+    webrtc.joinRoom('your awesome room name')
+
+    webrtc.on('createdPeer', function(peer) {
+      console.log('createdPeer', peer)
+
+      // receiving an incoming filetransfer
+      peer.on('fileTransfer', function(metadata, receiver) {
+        console.log('incoming filetransfer', metadata.name, metadata)
+        receiver.on('progress', function(bytesReceived) {
+          console.log('receive progress', bytesReceived, 'out of', metadata.size)
+        })
+        // get notified when file is done
+        receiver.on('receivedFile', function(file, metadata) {
+          console.log('received file', metadata.name, metadata.size)
+
+          // this.files = item
+
+          // close the channel
+          receiver.channel.close()
+        })
+
+        // filelist.appendChild(item)
+      })
+
+      const sender = peer.sendFile(file);
+
+      sender.on('progress', () => {
+        // TODO
+      })
+
+      sender.on('sentFile', () => {
+        // TODO
+      })
+
+      sender.complete('complete', () => {
+        // TODO
+      })
+
+    })
+
+    this.webrtc = webrtc
+
+    const blob = new Blob(['Hello, world!'], { type: 'text/plain;charset=utf-8' })
+    FileSaver.saveAs(blob, 'hello world.txt')
   },
   methods: {
     onFileChange(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
-        this.createImage(files[0]);
+      var files = e.target.files || e.dataTransfer.files
+      if (!files.length) return
+        this.createImage(files[0])
     },
     createImage(file) {
-      var image = new Image();
-      var reader = new FileReader();
-      var vm = this;
+      var image = new Image()
+      var reader = new FileReader()
+      var vm = this
 
       reader.onload = (e) => {
-        vm.image = e.target.result;
-      };
-      reader.readAsDataURL(file);
+        vm.image = e.target.result
+      }
+      reader.readAsDataURL(file)
     },
     removeImage: function (e) {
-      this.image = '';
+      this.image = ''
     }
   }
 }

@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import SimpleWebRTC from 'simplewebrtc';
+import SimpleWebRTC from 'simplewebrtc'
 
 export default {
   data() {
