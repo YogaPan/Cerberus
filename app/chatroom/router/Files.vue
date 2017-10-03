@@ -39,67 +39,55 @@ export default {
 
     webrtc.joinRoom('your awesome room name')
 
-    webrtc.on('createdPeer', function(peer) {
+    webrtc.on('createdPeer', peer => {
       console.log('createdPeer', peer)
 
       // receiving an incoming filetransfer
-      peer.on('fileTransfer', function(metadata, receiver) {
+      peer.on('fileTransfer', (metadata, receiver) => {
         console.log('incoming filetransfer', metadata.name, metadata)
-        receiver.on('progress', function(bytesReceived) {
+
+        receiver.on('progress', bytesReceived => {
           console.log('receive progress', bytesReceived, 'out of', metadata.size)
         })
-        // get notified when file is done
-        receiver.on('receivedFile', function(file, metadata) {
-          console.log('received file', metadata.name, metadata.size)
 
-          // this.files = item
+        // get notified when file is done
+        receiver.on('receivedFile', (file, metadata) => {
+          // console.log('received file', metadata.name, metadata.size)
+
+          FileSaver.saveAs(file, metadata.name)
 
           // close the channel
           receiver.channel.close()
         })
 
-        // filelist.appendChild(item)
       })
 
-      const sender = peer.sendFile(file);
-
-      sender.on('progress', () => {
-        // TODO
-      })
-
-      sender.on('sentFile', () => {
-        // TODO
-      })
-
-      sender.complete('complete', () => {
-        // TODO
-      })
-
+      this.peer = peer
     })
 
     this.webrtc = webrtc
-
-    const blob = new Blob(['Hello, world!'], { type: 'text/plain;charset=utf-8' })
-    FileSaver.saveAs(blob, 'hello world.txt')
   },
   methods: {
     onFileChange(e) {
       var files = e.target.files || e.dataTransfer.files
       if (!files.length) return
-        this.createImage(files[0])
+        this.sendFile(files[0])
     },
-    createImage(file) {
-      var image = new Image()
-      var reader = new FileReader()
-      var vm = this
 
-      reader.onload = (e) => {
-        vm.image = e.target.result
-      }
-      reader.readAsDataURL(file)
-    },
-    removeImage: function (e) {
-      this.image = ''
+    sendFile(file) {
+      const sender = this.peer.sendFile(file);
+
+      sender.on('progress', () => {
+        // console.log('send process...')
+      })
+
+      sender.on('sentFile', () => {
+        // console.log('send file...')
+      })
+
+      sender.on('complete', () => {
+        console.log('send complete...')
+      })
     }
   }
 }
