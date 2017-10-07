@@ -406,9 +406,5 @@ function onConnection(socket) {
   socket.room = socket.handshake.session.joinroom;
   socket.join(socket.room);
   socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
-  /*socket.on('drawing', function(data) {
-  	io.sockets.in(socket.room).emit('drawing', data);
-  });*/
-  //io.sockets.in(socket.room).on('drawing', (data) => socket.broadcast.emit('drawing', data));
 }
 io.on('connection', onConnection);
