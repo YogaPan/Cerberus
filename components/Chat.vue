@@ -1,5 +1,10 @@
 <template>
   <div id="app-chat">
+    <div class="online-list">
+      <p v-for="onlinelist in onlinelists" style="height:35px;">
+        <img class="online-user" src="/assets/hskico.jpg">
+      </p>
+    </div>
     <div class="message-container">
       <div v-for="message in messages">
       <div class="single-message">
@@ -7,7 +12,7 @@
 
         <div class="text-area">
           <div class="user">
-            <p>{{ message.username}}</p>
+            <p>{{message.username}}</p>
           </div>
 
           <div class="message-area">
@@ -83,6 +88,7 @@ export default {
       roomID: '',
       showEmojiMenu,
       currentEmoji: { id: '+1' },
+      onlinelists: ['hu', 'yo', 'ya','ga'],
     }
   },
   components: {
@@ -203,6 +209,23 @@ export default {
 </script>
 
 <style>
+.online-list {
+  height: 50px;
+  background-color: rgba(0,0,0,0.7);
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  align-items: center;
+}
+.online-user {
+  height: 35px;
+  width: 35px;
+  background-color: white;
+  border-radius:50%;
+  align-items:stretch;
+  justify-content: center;
+  margin-left: 10px;
+}
 #app-chat {
   display: flex;
   flex-direction: column;
