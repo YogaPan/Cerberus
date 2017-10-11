@@ -5,6 +5,9 @@
     <app-vote v-if="this.$store.state.question"></app-vote>
 
     <div id="left-container">
+
+      <app-screen></app-screen>
+      
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
@@ -14,7 +17,7 @@
           <img class="item-image" src="/assets/cross.png" alt="snake">
           <p>Video</p>
         </router-link> -->
-        <router-link class="menu-item" tag="div" to="/screen">
+        <router-link class="menu-item" tag="div" to="/">
           <img class="item-image" src="/assets/video.png" alt="snake">
           <p>Screen</p>
         </router-link>
@@ -33,7 +36,7 @@
           <img class="item-image" src="/assets/link.svg" alt="files">
           <p>Files</p>
         </router-link>
-        
+
         <router-link class="menu-item" tag="div" to="/vote">
           <img class="item-image" src="/assets/megaphone.svg" alt="vote">
           <p>Vote</p>
@@ -51,6 +54,7 @@
 import { mapGetters } from 'vuex'
 import Chat from '../../components/Chat.vue'
 import Vote from '../../components/Vote.vue'
+import Screen from '../../components/Screen.vue'
 var socket = require('socket.io-client')('http://140.136.150.75:8888')
 
 export default {
@@ -69,7 +73,8 @@ export default {
   },
   components: {
     'app-chat': Chat,
-    'app-vote': Vote
+    'app-vote': Vote,
+    'app-screen': Screen
   }
 }
 </script>

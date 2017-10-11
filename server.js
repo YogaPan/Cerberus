@@ -1,9 +1,14 @@
 var http = require('http');
+const https = require('https');
 var express = require('express');
 var app = express();
-var server = http.createServer(app);
+const fs = require('fs');
+const options = {
+  key: fs.readFileSync('ssl/private.key'),
+  cert: fs.readFileSync('ssl/certificate.crt')
+};
+var server = https.createServer(options,app).listen(8888);
 var io = require('socket.io')(server);
-var fs = require('fs');
 var crypto = require("crypto");
 var bodyParser = require('body-parser'); // for json
 app.use(bodyParser.json());
@@ -21,7 +26,9 @@ var session = require('express-session')({
   saveUninitialized: true,
   cookie: { maxAge: 600 * 1000 }
 });
-io.use(sharedsession(session)); 
+io.use(sharedsession(session, {
+    autoSave:true
+}));
 app.use(session);
 var loginhtml = fs.readFileSync('./pages/login.html');
 var boardhtml = fs.readFileSync('./pages/board.html');
@@ -30,9 +37,9 @@ var chatroomhtml = fs.readFileSync('./pages/chatroom.html');
 var createchatroomhtml = fs.readFileSync('./pages/create-chatroom.html');
 app.use('/dist', express.static('dist'));
 app.use('/assets', express.static('assets'));
-app.use('/static', express.static('static'));
+app.use('/', express.static('static'));
 var port = 8888;
-server.listen( 8888, function() {
+server.listen(8888, function() {
     console.log('Listenging on port 8888');
 });
 
@@ -49,6 +56,14 @@ app.get('/test', function(req,res){ // test
     res.write("Welcome!");
     res.end();
   }
+});
+
+app.get('/error', function(req, res) {  //yanweitest
+  res.send('Test error page');
+  console.log(req.headers.host);
+  console.log(req.url);
+  console.log(req.secure);
+  res.end();
 });
 
 app.get('/', function(req,res){ // client connect 140.136.150.75:[port]/
@@ -308,27 +323,43 @@ app.post('/invite', function(req,res){ // show invite notification
 });
 
 io.on('connection', function (socket) {
-  console.log(socket.handshake.session.uid, socket.id, "io.on");
-  //console.log(socket.handshake.session.joinroom);
+  //console.log(socket.handshake.session.uid, socket.id, "io.on");
+  //console.log(socket.htmlandshake.session.joinroom);
   socket.room = socket.handshake.session.joinroom;
   socket.join(socket.room);
+  if(socket.handshake.session.uid!=undefined) {
+    connection.query('UPDATE chatmember SET exist = 1 WHERE cid=(SELECT id FROM chatroom WHERE url="'+socket.room+'") AND uid='+socket.handshake.session.uid+'', function (error, results, fields) {
+      if (error) throw error;
+    });
+  }
+  var roomtmp = socket.room;
+  var uidtmp = socket.handshake.session.uid;
+  socket.on('disconnect', function () {
+    console.log('fuckyou byebye');
+    connection.query('UPDATE chatmember SET exist = 0 WHERE cid=(SELECT id FROM chatroom WHERE url="'+roomtmp+'") AND uid='+uidtmp+'', function (error, results, fields) {
+      if (error) throw error;
+    });
+  });
+
   socket.on('new message', function (data) { // when the client emits 'new message', this listens and executes
     
     io.sockets.in(socket.room).emit('new message', {
       username: socket.handshake.session.username,
       message: data
     });
-    var mid;
-    var mid2;
-    var counter;
-    connection.query('INSERT INTO chatmessage(url, uid, message) VALUES("'+socket.room+'", '+socket.handshake.session.uid
+    var mid; // MessageID for the first message for the room
+    var mid2; // MessageID for the message for the room
+    var counter; // Count the message in the room is 1 or >1
+
+    connection.query('INSERT INTO chatmessage(url, uid, message) VALUES("'+socket.room+'", '+socket.handshake.session.uid // Insert the message into database
       +', "'+data+'")', function (error, results, fields) {
       if (error) throw error;
     });
-    connection.query('SELECT * FROM chatmessage WHERE url="'+socket.room+'" ORDER BY (id) DESC limit 1', function (error, results, fields ) {
+
+    connection.query('SELECT * FROM chatmessage WHERE url="'+socket.room+'" ORDER BY (id) DESC limit 1', function (error, results, fields) {
       //console.log(results);
       if(error) throw error;
-      connection.query('SELECT COUNT(*) FROM chatmessage WHERE url="'+socket.room+'" ORDER BY (id) DESC limit 1', function (error, results, fields ) {
+      connection.query('SELECT COUNT(*) FROM chatmessage WHERE url="'+socket.room+'" ORDER BY (id) DESC limit 1', function (error, results, fields) {
         //console.log(results);
         //console.log(results[0]['COUNT(*)']);
         counter=results[0]['COUNT(*)'];
@@ -337,14 +368,30 @@ io.on('connection', function (socket) {
           connection.query('UPDATE chatmessage SET mid='+mid+' WHERE url="'+socket.room+'" ORDER BY (id) DESC limit 1', function (error, results, fields) {
             if(error) throw error;
           });
+          if(socket.handshake.session.uid!=undefined) {
+            connection.query('UPDATE chatmember SET readid='+mid+' WHERE cid=(SELECT id FROM chatroom WHERE url="'+socket.room+'") AND uid='+socket.handshake.session.uid+'', function (error, results, fields) {
+              if (error) throw error;
+            });
+          }
+          else {
+            console.log('Please login');
+          }
         }
         else if(results[0].mid==null&&counter>1) {
-          connection.query('SELECT mid FROM chatmessage WHERE url="'+socket.room+'" ORDER BY mid DESC limit 0,1;' , function (error, results, fields ) {
+          connection.query('SELECT mid FROM chatmessage WHERE url="'+socket.room+'" ORDER BY mid DESC limit 0,1;' , function (error, results, fields) {
             mid2=results[0].mid;
             mid2++;
             connection.query('UPDATE chatmessage SET mid='+mid2+' WHERE url="'+socket.room+'" ORDER BY (id) DESC limit 1', function (error, results, fields) {
               if(error) throw error;
             });
+            if(socket.handshake.session.uid!=undefined) {
+              connection.query('UPDATE chatmember SET readid='+mid2+' WHERE cid=(SELECT id FROM chatroom WHERE url="'+socket.room+'") AND uid='+socket.handshake.session.uid+'', function (error, results, fields) {
+                if (error) throw error;
+              });
+            }
+            else {
+              console.log('Please login');
+            }
             if(error) throw error;
           });
         }

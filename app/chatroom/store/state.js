@@ -10,5 +10,9 @@ export const state = {
     // { id: 1, content: '一本道', isSelected: false },
     // { id: 2, content: '東京熱', isSelected: false },
     // { id: 3, content: 'JAV', isSelected: false }
-  ]
+  ],
+
+  webrtc: null,
+  streaming: false,
+  playLocalVideo: false
 }
