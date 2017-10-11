@@ -31,6 +31,7 @@ export default {
       localVideoEl: '',
       remoteVideosEl: '',
       autoRequestMedia: false,
+      url: 'http://localhost:8888',
       receiveMedia: {
         offerToReceiveAudio: 0,
         offerToReceiveVideo: 0
