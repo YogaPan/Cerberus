@@ -64,6 +64,16 @@ export default {
     }
   },
   mounted() {
+    // window.addEventListener("dragover", e => {
+    //   e = e || event;
+    //   e.preventDefault();
+    // }, false)
+
+    // window.addEventListener("drop", e => {
+    //   e = e || event;
+    //   e.preventDefault();
+    // }, false)
+
     socket.on('ask', (vote) => {
       this.$store.dispatch('popVote', vote)
     })

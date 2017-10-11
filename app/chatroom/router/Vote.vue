@@ -24,7 +24,7 @@
 </template>
 
 <script>
-var socket = require('socket.io-client')('http://140.136.150.75:8888');
+var socket = require('socket.io-client')('http://140.136.150.75:8888')
 
 export default {
   data() {

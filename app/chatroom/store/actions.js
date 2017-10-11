@@ -15,5 +15,5 @@ export default {
   },
   doneVote({ commit }) {
     commit('doneVote')
-  }
+  },
 }

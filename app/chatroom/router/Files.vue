@@ -23,7 +23,7 @@ export default {
     return {
       image: '',
       webrtc: null,
-      peer: null
+      peers: []
     }
   },
   mounted() {
@@ -58,37 +58,45 @@ export default {
           FileSaver.saveAs(file, metadata.name)
 
           // close the channel
-          receiver.channel.close()
+          // receiver.channel.close()
         })
 
       })
 
-      this.peer = peer
+      this.peers.push(peer)
+    })
+
+    webrtc.on('leftRoom', (peer) => {
+      console.log(peer)
+      console.log('leftroom')
     })
 
     this.webrtc = webrtc
   },
   methods: {
     onFileChange(e) {
-      var files = e.target.files || e.dataTransfer.files
+      const files = e.target.files || e.dataTransfer.files
       if (!files.length) return
         this.sendFile(files[0])
     },
 
     sendFile(file) {
-      const sender = this.peer.sendFile(file);
-
-      sender.on('progress', () => {
-        // console.log('send process...')
+      this.peers.forEach(peer => {
+        const sender = peer.sendFile(file)
+        console.log('send')
       })
 
-      sender.on('sentFile', () => {
-        // console.log('send file...')
-      })
+      // sender.on('progress', () => {
+      //   console.log('send process...')
+      // })
 
-      sender.on('complete', () => {
-        console.log('send complete...')
-      })
+      // sender.on('sentFile', () => {
+      //   console.log('send file...')
+      // })
+
+      // sender.on('complete', () => {
+      //   console.log('send complete...')
+      // })
     }
   }
 }
