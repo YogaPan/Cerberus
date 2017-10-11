@@ -68,7 +68,7 @@
 <script src="linkify.min.js"></script>
 <script src="linkify-jquery.min.js"></script>
 <script>
-var socket = require('socket.io-client')('http://140.136.150.75:8888');
+var socket = require('socket.io-client')('http://cerberus.csie.fju.edu.tw:8888');
 var linkify = require('linkifyjs');
 var linkifyHtml = require('linkifyjs/html');
                   require('linkifyjs/plugins/hashtag')(linkify);
