@@ -36,6 +36,8 @@
 </template>
 
 <script>
+var socket = require('socket.io-client')('http://140.136.150.75:8888')
+
 export default {
   data() {
     return {
@@ -43,7 +45,9 @@ export default {
     }
   },
   mounted() {
-    // TODO
+    socket.on('ask', content => {
+      this.$store.dispatch("popVote", content)
+    })
   },
   methods: {
     select(id) {
