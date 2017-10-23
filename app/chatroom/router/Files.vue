@@ -58,7 +58,7 @@ export default {
           FileSaver.saveAs(file, metadata.name)
 
           // close the channel
-          // receiver.channel.close()
+          receiver.channel.close()
         })
 
       })
