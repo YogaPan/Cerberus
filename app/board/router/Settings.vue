@@ -8,7 +8,7 @@
 
         <div id="profile-left">
           <input type="file" style="display: none;" @change="changeImage($event)" ref="avatarInput">
-          <img id="avatar" :src="avatar" @click="setAvatar"></img>
+          <div id="avatar" v-bind:style="{ backgroundImage: 'url(' + avatar + ')' }" @click="setAvatar"></div>
         </div>
 
         <div id="profile-right">
@@ -162,9 +162,13 @@ export default {
 
 #avatar {
   width: 90%;
+  padding-top: 90%;  /* height is same as width */
+
   border-radius: 50%;
-  overflow: hidden;
+
   background-color: @light-gray;
+  background-size: cover;
+  background-position: center;
 
   &:hover {
     cursor: pointer;
@@ -172,6 +176,7 @@ export default {
 
   @media all and (max-width: 700px) {
     width: 50%;
+    padding-top: 50%;
   }
 }
 
