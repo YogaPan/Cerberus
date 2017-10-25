@@ -30,7 +30,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+@import "~styles/init.less";
+
 #notes-container {
   flex: 1 0 0;
 
@@ -42,6 +44,8 @@ export default {
   padding-top: 30px;
 
   background-color: #fafafa;
+
+  animation: fadein .5s;
 }
 
 #doc {
@@ -57,4 +61,5 @@ export default {
   font-size: 25px;
   font-weight: 300;
 }
+
 </style>

@@ -115,6 +115,8 @@ export default {
   align-items: center;
 
   background-color: @dark-black;
+
+  animation: fadein .5s;
 }
 
 .dropzone-area {
