@@ -38,10 +38,10 @@ var createchatroomhtml = fs.readFileSync('./pages/create-chatroom.html');
 app.use('/dist', express.static('dist'));
 app.use('/assets', express.static('assets'));
 app.use('/', express.static('static'));
-var port = 8888;
 server.listen(8888, function() {
     console.log('Listenging on port 8888');
 });
+
 
 app.get('/test', function(req,res){ // test
   if(req.session.uid) {
@@ -63,6 +63,13 @@ app.get('/error', function(req, res) {  //yanweitest
   console.log(req.headers.host);
   console.log(req.url);
   console.log(req.secure);
+  if(req.session.uid) {
+    console.log("GG error");
+  }
+  else {
+    res.write("Please login.");
+    res.end();
+  }
   res.end();
 });
 
@@ -305,6 +312,30 @@ app.post('/board', function(req,res){ // client connect 140.136.150.75:[port]/bo
     res.write("Please login.");
     res.end();
   }
+});
+
+app.post('/chatroom/*', function(req,res) {
+  console.log("Enter fucking chatroom");
+  /*if(req.session.uid) {
+    console.log("hihi");
+    connection.query('SELECT id, message, time FROM chatmessage', function(error, results, fields) {
+      console.log(results);
+      if (error) throw error;
+      res.write('{"message":[');
+      for(var i in results) {
+        if(i == 0)
+          res.write('{"id":'+results[i].id+',"name":"'+results[i].message+'","url":"'+results[i].time+'"}');
+        else
+          res.write(',{"id":'+results[i].id+',"name":"'+results[i].message+'","url":"'+results[i].time+'"}');
+      }
+      res.write("]}");
+      res.end();
+    });
+  }
+  else {
+    res.write("Please login.");
+    res.end();
+  }*/
 });
 
 app.post('/invite', function(req,res){ // show invite notification
