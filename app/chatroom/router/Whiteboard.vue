@@ -144,6 +144,8 @@ export default {
   flex: 1 0 0;
   min-height: 0;  /* flexbox overflow */
   position: relative;
+
+  animation: fadein .5s;
 }
 
 #zoomer {

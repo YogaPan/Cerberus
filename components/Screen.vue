@@ -103,6 +103,7 @@ export default {
 
   /* background-color: black; */
   /* z-index: -2; */
+  animation: fadein .5s;
 }
 
 #localVideo {
