@@ -1,27 +1,65 @@
 <template>
   <div id="notes-container">
-    <h1>Notes here...</h1>
+    <textarea id="doc" v-model="doc"></textarea>
   </div>
 </template>
 
 <script>
+const socket = require('socket.io-client')('http://140.136.150.75:8888')
+
 export default {
   data() {
-    return {}
+    return {
+      doc: ''
+    }
   },
   mounted() {
-    // TODO
+    socket.on('doc', val => {
+      this.doc = val
+    })
   },
   methods: {
     // TODO
+  },
+  watch: {
+    doc: function(val) {
+      console.log(val)
+      socket.emit('doc', val)
+    }
   }
 }
 </script>
 
-<style>
+<style lang="less">
+@import "~styles/init.less";
+
 #notes-container {
   flex: 1 0 0;
 
-  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding-top: 30px;
+
+  background-color: #fafafa;
+
+  animation: fadein .5s;
 }
+
+#doc {
+  width: 80%;
+  height: 1000px;
+
+  border: 1px solid #eee;
+  border-radius: 10px;
+
+  padding: 30px;
+
+  background-color: white;
+  font-size: 25px;
+  font-weight: 300;
+}
+
 </style>

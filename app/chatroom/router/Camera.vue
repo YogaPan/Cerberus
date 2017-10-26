@@ -37,11 +37,16 @@ export default {
 
 </script>
 
-<style>
+<style lang="less">
+
+@import "~styles/init.less";
+
 #camera-container {
   width: 100%;
 
   flex: 1 0 0;
+
+  animation: fadein .5s;
 }
 
 #camera {

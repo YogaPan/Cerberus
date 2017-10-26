@@ -58,7 +58,7 @@ export default {
           FileSaver.saveAs(file, metadata.name)
 
           // close the channel
-          // receiver.channel.close()
+          receiver.channel.close()
         })
 
       })
@@ -115,6 +115,8 @@ export default {
   align-items: center;
 
   background-color: @dark-black;
+
+  animation: fadein .5s;
 }
 
 .dropzone-area {

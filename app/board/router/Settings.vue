@@ -7,7 +7,8 @@
       <div id="profile">
 
         <div id="profile-left">
-          <img id="head-image" src="/assets/snake.jpg"></img>
+          <input type="file" style="display: none;" @change="changeImage($event)" ref="avatarInput">
+          <div id="avatar" v-bind:style="{ backgroundImage: 'url(' + avatar + ')' }" @click="setAvatar"></div>
         </div>
 
         <div id="profile-right">
@@ -30,11 +31,22 @@
 <script>
 export default {
   data() {
-    return {}
+    return {
+      avatar: this.$store.state.avatar
+    }
   },
   methods: {
-    update() {
-      /* TODO */
+    setAvatar() {
+      this.$refs.avatarInput.click()
+    },
+    changeImage(e) {
+      var file = e.target.files[0]
+      var reader = new FileReader()
+      var that = this
+      reader.readAsDataURL(file)
+      reader.onload = function(e) {
+        that.avatar = this.result
+      }
     }
   }
 }
@@ -148,13 +160,23 @@ export default {
   }
 }
 
-#head-image {
+#avatar {
   width: 90%;
+  padding-top: 90%;  /* height is same as width */
+
   border-radius: 50%;
+
   background-color: @light-gray;
+  background-size: cover;
+  background-position: center;
+
+  &:hover {
+    cursor: pointer;
+  }
 
   @media all and (max-width: 700px) {
     width: 50%;
+    padding-top: 50%;
   }
 }
 

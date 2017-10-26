@@ -40,6 +40,7 @@ input {
 
 div,
 input,
+textarea,
 button {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
@@ -56,6 +57,14 @@ li {
 
 input:focus {
   outline: none;
+}
+
+textarea {
+  resize : none;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 button {
@@ -232,3 +241,8 @@ button {
 
 /* 水平置中 */
 // TODO
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

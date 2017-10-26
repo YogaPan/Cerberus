@@ -78,6 +78,8 @@ export default {
   padding-top: 50px;
 
   background-color: #fafafa;
+
+  animation: fadein .5s;
 }
 
 .inside-container {
