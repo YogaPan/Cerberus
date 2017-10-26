@@ -6,7 +6,7 @@
       </p>
     </div>
     <div class="message-container">
-      <div v-for="message in messages">
+      <div v-for="message in sortedMessages">
       <div class="single-message">
         <img class="user-img" src="/assets/hskico.jpg">
 
@@ -106,6 +106,11 @@ export default {
         }, 50)
       return (this.input === '') ? false : true
     },
+    sortedMessages(state) {
+      return state.messages.sort(function (a, b) {
+      return a.id - b.id;
+      });
+    }
   },
   created: function () {
     //  init FB API
