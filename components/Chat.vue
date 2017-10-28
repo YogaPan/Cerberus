@@ -58,6 +58,7 @@
 
       <!--測試中，先不用<button @click="fb">facebook</button>-->
       <button@click="toggleEmojiMenu">Toolbar</button>
+      <button@click="oldMessages">測試歷史訊息的按鍵</button>
       <div class="user-input">
         <form @submit.prevent="submit">
           <input v-model="input" @click="read" placeholder="#chatroom">
@@ -161,7 +162,15 @@ export default {
       }
     },
     oldMessages() {
-        this.$store.dispatch('submit', data)
+        axios.get('/chatroom')
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        //  this.$store.dispatch('submit', data)
+        //  把得到的資料傳入
     },
     toggleEmojiMenu(event) {
       this.showEmojiMenu = !this.showEmojiMenu
