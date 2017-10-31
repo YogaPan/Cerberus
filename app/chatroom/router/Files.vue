@@ -31,7 +31,7 @@ export default {
       localVideoEl: '',
       remoteVideosEl: '',
       autoRequestMedia: false,
-      url: 'http://localhost:8888',
+      //url: 'http://localhost:8888',
       receiveMedia: {
         offerToReceiveAudio: 0,
         offerToReceiveVideo: 0
@@ -58,7 +58,7 @@ export default {
           FileSaver.saveAs(file, metadata.name)
 
           // close the channel
-          receiver.channel.close()
+          //receiver.channel.close()
         })
 
       })
