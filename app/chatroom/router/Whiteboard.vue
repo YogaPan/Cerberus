@@ -23,7 +23,7 @@
 </template>
 
 <script>
-const socket = require('socket.io-client')('https://140.136.150.75:8888')
+const socket = require('socket.io-client')('https://cerberus.csie.fju.edu.tw:8888')
 
 export default {
   data() {

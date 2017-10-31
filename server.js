@@ -314,9 +314,9 @@ app.post('/board', function(req,res){ // client connect 140.136.150.75:[port]/bo
   }
 });
 
-app.post('/chatroom/*', function(req,res) {
+/*app.post('/chatroom/*', function(req,res) {
   console.log("Enter fucking chatroom");
-  /*if(req.session.uid) {
+  if(req.session.uid) {
     console.log("hihi");
     connection.query('SELECT id, message, time FROM chatmessage', function(error, results, fields) {
       console.log(results);
@@ -335,8 +335,8 @@ app.post('/chatroom/*', function(req,res) {
   else {
     res.write("Please login.");
     res.end();
-  }*/
-});
+  }
+});*/
 
 app.post('/invite', function(req,res){ // show invite notification
   console.log("invite");
@@ -433,9 +433,21 @@ io.on('connection', function (socket) {
   });
 });
 
-function onConnection(socket) {
+/*function onConnection(socket) {
   socket.room = socket.handshake.session.joinroom;
   socket.join(socket.room);
   socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
 }
-io.on('connection', onConnection);
+io.on('connection', onConnection);*/
+
+io.on('connection', function (socket) {
+  console.log(socket.handshake.session.uid, socket.id, "io.on");
+  console.log(socket.handshake.session.joinroom);
+  socket.room = socket.handshake.session.joinroom;
+  socket.join(socket.room);
+  /*socket.on('drawing', function(data) {
+    console.log('drawing now');
+    io.in(socket.room).emit(data);
+  }); //=> socket.broadcast.emit('drawing', data));*/
+  socket.on('drawing', (data) => io.in(socket.room).emit('drawing', data));
+});
