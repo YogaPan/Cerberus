@@ -6,7 +6,7 @@
       </p>
     </div>
     <div class="message-container">
-      <div v-for="message in messages">
+      <div v-for="message in sortedMessages">
       <div class="single-message">
         <img class="user-img" src="/assets/hskico.jpg">
 
@@ -58,6 +58,7 @@
 
       <!--測試中，先不用<button @click="fb">facebook</button>-->
       <button@click="toggleEmojiMenu">Toolbar</button>
+      <button@click="oldMessages">測試歷史訊息的按鍵</button>
       <div class="user-input">
         <form @submit.prevent="submit">
           <input v-model="input" @click="read" placeholder="#chatroom">
@@ -65,10 +66,10 @@
       </div>
   </div>
 </template>
-<!-- socket io-->
+<!-- socket io -->
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
-<!-- linkify-->
+<!-- linkify -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="linkify.min.js"></script>
 <script src="linkify-jquery.min.js"></script>
@@ -79,6 +80,7 @@ var linkifyHtml = require('linkifyjs/html');
                   require('linkifyjs/plugins/hashtag')(linkify);
 import { mapGetters } from 'vuex'
 import { Picker, Emoji, emojiIndex } from 'emoji-mart-vue'
+import axios from 'axios'
 export default {
   data() {
     const showEmojiMenu = false;
@@ -106,6 +108,11 @@ export default {
         }, 50)
       return (this.input === '') ? false : true
     },
+    sortedMessages(state) {
+      return state.messages.sort(function (a, b) {
+      return a.id - b.id;
+      });
+    }
   },
   created: function () {
     //  init FB API
@@ -156,7 +163,15 @@ export default {
       }
     },
     oldMessages() {
-        this.$store.dispatch('submit', data)
+        axios.get('/chatroom')
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        //  this.$store.dispatch('submit', data)
+        //  把得到的資料傳入
     },
     toggleEmojiMenu(event) {
       this.showEmojiMenu = !this.showEmojiMenu
