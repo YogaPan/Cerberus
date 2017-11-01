@@ -55,7 +55,7 @@ import { mapGetters } from 'vuex'
 import Chat from '../../components/Chat.vue'
 import Vote from '../../components/Vote.vue'
 import Screen from '../../components/Screen.vue'
-var socket = require('socket.io-client')('http://140.136.150.75:8888')
+var socket = require('socket.io-client')('https://cerberus.csie.fju.edu.tw:8888')
 
 export default {
   data() {
