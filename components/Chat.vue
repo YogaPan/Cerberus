@@ -164,7 +164,7 @@ export default {
       }
     },
     oldMessages() {
-        axios.get('/chatroom/*')
+        axios.get('/oldMessages')
           .then(function (response) {
             console.log(response);
           })
