@@ -135,13 +135,7 @@ export default {
        }(document, 'script', 'facebook-jssdk'));
     //  Init, get leatest 20 messages
     //  Get Data from API
-    axios.get('/chatroom')
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+    this.oldMessages();
     //  Submit to State
   },
   mounted: function () {
@@ -170,7 +164,7 @@ export default {
       }
     },
     oldMessages() {
-        axios.get('/chatroom')
+        axios.get('/chatroom/*')
           .then(function (response) {
             console.log(response);
           })
