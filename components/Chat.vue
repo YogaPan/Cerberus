@@ -45,7 +45,7 @@
           :emoji-Size="24"
           :perLine="8"
           color=""
-          :native="true"	
+          :native="true"  
           :exclude="['custom']"
           set="twitter"
           title="pick one"
@@ -58,7 +58,7 @@
 
       <!--測試中，先不用<button @click="fb">facebook</button>-->
       <button@click="toggleEmojiMenu">Toolbar</button>
-      <button@click="oldMessages">測試歷史訊息的按鍵</button>
+      <!--<button@click="oldMessages">測試歷史訊息的按鍵</button>-->
       <div class="user-input">
         <form @submit.prevent="submit">
           <input v-model="input" @click="read" placeholder="#chatroom">
@@ -135,6 +135,7 @@ export default {
        }(document, 'script', 'facebook-jssdk'));
     //  Init, get leatest 20 messages
     //  Get Data from API
+    this.oldMessages();
     //  Submit to State
   },
   mounted: function () {
@@ -163,7 +164,7 @@ export default {
       }
     },
     oldMessages() {
-        axios.get('/chatroom')
+        axios.get('/chatroom/*')
           .then(function (response) {
             console.log(response);
           })

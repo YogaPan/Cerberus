@@ -55,8 +55,7 @@ import { mapGetters } from 'vuex'
 import Chat from '../../components/Chat.vue'
 import Vote from '../../components/Vote.vue'
 import Screen from '../../components/Screen.vue'
-var socket = require('socket.io-client')('http://140.136.150.75:8888')
-
+var socket = require('socket.io-client')('https://cerberus.csie.fju.edu.tw:8888')
 export default {
   data() {
     return {
@@ -68,12 +67,10 @@ export default {
     //   e = e || event;
     //   e.preventDefault();
     // }, false)
-
     // window.addEventListener("drop", e => {
     //   e = e || event;
     //   e.preventDefault();
     // }, false)
-
     socket.on('ask', (vote) => {
       this.$store.dispatch('popVote', vote)
     })
@@ -90,76 +87,59 @@ export default {
 </script>
 
 <style lang="less">
-
 @import "~styles/init.less";
-
 #root-container {
   display: flex;
   flex-direction: row;
   align-items: stretch;
   justify-content: flex-start;
-
   height: 100vh;
   width: 100vw;
   /*background-color: blue;*/
 }
-
 #left-container {
   flex: 1 0 0;
   min-width: 0;  /* flexbox overflow */
-
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
 }
-
 #right-container {
   flex: 0 0 350px;
   height: 100%;
 }
-
 /* ================================= menu =================================== */
-
 #menubar-container {
   flex: 0 0 50px;
   background-color: white;
-
   display: flex;
   flex-direction: row;
   align-items: stretch;
   justify-content: space-around;
 }
-
 .menu-item {
   /* flex: 0 0 75px; */
   flex: 1 0 0px;
-
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-
   /*border: 1px solid #ddd;*/
   /*border-radius: 100px;*/
   background-color: #eee;
-
   cursor: pointer;
-
   p {
     font-size: 12px;
     margin-left: 5px;
   }
-
   img {
     height: 20px;
     width: 20px;
   }
-
   &:hover {
     background-color: #333;
     transition: .2s;
-
     p {
       color: white;
       transition: .2s;
@@ -168,5 +148,4 @@ export default {
     img { filter: invert(100%); }
   }
 }
-
 </style>
