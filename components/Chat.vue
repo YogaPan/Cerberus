@@ -164,7 +164,9 @@ export default {
       }
     },
     oldMessages() {
-        axios.get('/oldMessages')
+      var pathname = window.location.pathname.substring(window.location.pathname.lastIndexOf('/')+1);
+      console.log(pathname);
+        axios.post('/oldMessages',{url:pathname})
           .then(function (response) {
             console.log(response);
           })

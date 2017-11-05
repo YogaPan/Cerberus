@@ -314,14 +314,17 @@ app.post('/board', function(req,res){ // client connect 140.136.150.75:[port]/bo
   }
 });
 
-/*app.post('/chatroom/*', function(req,res) {
-  console.log("Enter fucking chatroom");
+app.get('/chatroom/*', function(req,res) {
+  //console.log("Enter fucking chatroom");
+  console.log(req.session.uid);
+  console.log(req.session.username);
+  console.log(req.session.path);
+  console.log(req.url);
   if(req.session.uid) {
-    console.log("hihi");
     connection.query('SELECT id, message, time FROM chatmessage', function(error, results, fields) {
-      console.log(results);
+      //console.log(results);
       if (error) throw error;
-      res.write('{"message":[');
+      /*res.write('{"message":[');
       for(var i in results) {
         if(i == 0)
           res.write('{"id":'+results[i].id+',"name":"'+results[i].message+'","url":"'+results[i].time+'"}');
@@ -329,14 +332,14 @@ app.post('/board', function(req,res){ // client connect 140.136.150.75:[port]/bo
           res.write(',{"id":'+results[i].id+',"name":"'+results[i].message+'","url":"'+results[i].time+'"}');
       }
       res.write("]}");
-      res.end();
+      res.end();*/
     });
   }
   else {
     res.write("Please login.");
     res.end();
   }
-});*/
+});
 
 app.post('/invite', function(req,res){ // show invite notification
   console.log("invite");
@@ -433,21 +436,10 @@ io.on('connection', function (socket) {
   });
 });
 
-/*function onConnection(socket) {
-  socket.room = socket.handshake.session.joinroom;
-  socket.join(socket.room);
-  socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
-}
-io.on('connection', onConnection);*/
-
 io.on('connection', function (socket) {
-  console.log(socket.handshake.session.uid, socket.id, "io.on");
-  console.log(socket.handshake.session.joinroom);
+  //console.log(socket.handshake.session.uid, socket.id, "io.on");
+  //console.log(socket.handshake.session.joinroom);
   socket.room = socket.handshake.session.joinroom;
   socket.join(socket.room);
-  /*socket.on('drawing', function(data) {
-    console.log('drawing now');
-    io.in(socket.room).emit(data);
-  }); //=> socket.broadcast.emit('drawing', data));*/
   socket.on('drawing', (data) => io.in(socket.room).emit('drawing', data));
 });
