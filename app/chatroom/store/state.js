@@ -1,7 +1,7 @@
 export const state = {
   count: 3,
   messages: [
-      { id: '2', content: '呵呵哈哈笑三小😄', time: '00:00', read: true },
+      { id: '2', content: '呵呵哈哈笑三小😄 https://www.youtube.com/watch?v=fAGlaNUBMTM', time: '00:00', read: true },
      // { id: '1', content: 'second second second', time: '00:01', read: true },
      // { id: '0', content: 'third third third', time: '00:13', read: false },
   ],

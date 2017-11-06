@@ -19,7 +19,7 @@
             <!--<div class="message" v-html="$options.filters.toEmoji(message.content)"></div>
             <div class="message">{{message.content | toEmoji}}</div>
             <div class="message">{{message.content}}</div>-->
-            <div class="message"v-html="$options.filters.emoji(message.content)"></div>
+            <div class="message"v-html="tolink($options.filters.emoji(message.content))"></div>
             <div class="msg-status">
               <div class="msg-status-read" v-if="message.read">
                 read
@@ -188,6 +188,9 @@ export default {
       this.currentEmoji = emoji
       this.input += this.currentEmoji.native
     },
+    tolink(value) {
+      return linkifyHtml(value,{defaultProtocol: 'https'});
+    },
     fb() {
       FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
@@ -208,9 +211,6 @@ export default {
     },
   },
   filters: {
-    tolink: function (value) {
-      return linkifyHtml(value,{defaultProtocol: 'https'});
-    },
     toEmoji: function (value) {
       let string = value
       let colonsRegex = new RegExp('(^|\\s)(\:[a-zA-Z0-9-_+]+\:(\:skin-tone-[2-6]\:)?)', 'g')
