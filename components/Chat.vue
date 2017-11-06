@@ -16,9 +16,10 @@
           </div>
 
           <div class="message-area">
-            <!--<div class="message" v-html="$options.filters.toEmoji(message.content)"></div>-->
+            <!--<div class="message" v-html="$options.filters.toEmoji(message.content)"></div>
             <div class="message">{{message.content | toEmoji}}</div>
-            <div class="message">{{message.content}}</div>
+            <div class="message">{{message.content}}</div>-->
+            <div class="message"v-html="$options.filters.emoji(message.content)"></div>
             <div class="msg-status">
               <div class="msg-status-read" v-if="message.read">
                 read
@@ -55,7 +56,6 @@
         </picker>
       </div>
     </div>
-
       <!--測試中，先不用<button @click="fb">facebook</button>-->
       <button@click="toggleEmojiMenu">Toolbar</button>
       <!--<button@click="oldMessages">測試歷史訊息的按鍵</button>-->
@@ -81,6 +81,9 @@ var linkifyHtml = require('linkifyjs/html');
 import { mapGetters } from 'vuex'
 import { Picker, Emoji, emojiIndex } from 'emoji-mart-vue'
 import axios from 'axios'
+import VueEmoji from 'vue-emoji'
+import Vue from 'vue'
+Vue.use(VueEmoji, { path: '/assets/emoji/' })
 export default {
   data() {
     const showEmojiMenu = false;
@@ -91,6 +94,7 @@ export default {
       showEmojiMenu,
       currentEmoji: { id: '+1' },
       onlinelists: ['hu', 'yo', 'ya','ga'],
+      msg: '',
     }
   },
   components: {
@@ -182,7 +186,7 @@ export default {
     },
     addEmoji(emoji) {
       this.currentEmoji = emoji
-      this.input += this.currentEmoji.colons
+      this.input += this.currentEmoji.native
     },
     fb() {
       FB.getLoginStatus(function(response) {
@@ -288,8 +292,13 @@ export default {
   flex-direction:row;
   align-items:flex-end;
 }
+.emotion {
+  vertical-align:bottom;
+  width: 20px;
+  height: 20px;
+}
 .message {
-  font-size: 14px;
+  font-size: 15px;
   color: black;
   font-family: sans-serif;
   background: #ffffff;
@@ -298,6 +307,7 @@ export default {
   padding:8px;
   max-width:220px;
   word-break: break-all;
+  vertical-align:top;
 }
 .linkified {
   color: #4169E1;
