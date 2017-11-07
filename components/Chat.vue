@@ -170,14 +170,15 @@ export default {
     },
     oldMessages() {
       var pathname = window.location.pathname.substring(window.location.pathname.lastIndexOf('/')+1);
+      var that = this
       console.log(pathname);
         axios.post('/oldMessages',{url:pathname})
           .then(function (response) {
             console.log(response);
-            for(var i in response)
-            {
-              this.$store.dispatch('insert', response[i]);
-            }
+            response.data.message.forEach(element => {
+              console.log(element);
+              that.$store.dispatch('insert', element);
+            });
           })
           .catch(function (error) {
             console.log(error);

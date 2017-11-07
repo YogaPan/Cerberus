@@ -18,10 +18,11 @@ export default {
     })
   },
   insert(state, messageContent) {
+    new Date();
     state.messages.push({
       id: messageContent.id,
       content: messageContent.content,
-      time: messageContent.time,
+      time: Date.parse(messageContent.time).getHours() + ':' + Date.parse(messageContent.time.getMinutes()),
       read: false,
       username: messageContent.username
     })

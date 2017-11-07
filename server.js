@@ -320,7 +320,7 @@ app.post('/oldMessages', function(req,res) {
   //console.log(req.session.username);
   console.log(req.body.url);
   if(req.session.uid) {
-    connection.query('SELECT mid, message, time, username FROM chatmessage WHERE url="'+ req.body.url + '" Order by mid DESC limit 20', function(error, results, fields) {
+    connection.query('SELECT mid, message, SUBSTRING(time,12,5) as time, username FROM chatmessage WHERE url="'+ req.body.url + '" Order by mid DESC limit 20', function(error, results, fields) {
       if (error) throw error;
       //console.log(results);
       if(results==0) {
@@ -456,6 +456,7 @@ io.on('connection', function (socket) {
 io.on('connection', function(socket) {
   //console.log(socket.handshake.session.joinroom);
   socket.room = socket.handshake.session.joinroom;
+  socket.join(socket.room);
   if(socket.handshake.session.uid!=undefined) {
     io.in(socket.room).emit('{"username": "'+socket.handshake.session.username+'" , "online" : "1" }');
   }
@@ -465,3 +466,9 @@ io.on('connection', function(socket) {
     io.in(socket.room).emit('{"username": "'+tmp+'" , "online" : "0" }');
   });
 });
+
+/*io.on('connection', function(socket) {
+  socket.room = socket.handshake.session.joinroom;
+  socket.join(socket.room);
+  socket.on('?', (?) => io.in(socket.room).emit('?', data));
+});*/
