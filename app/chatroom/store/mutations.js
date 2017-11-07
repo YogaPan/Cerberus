@@ -18,10 +18,10 @@ export default {
     })
   },
   insert(state, messageContent) {
-    state.messages.splice(0,0,{
-      id: state.count,
-      content: messageContent.message,
-      time: getTimeString(),
+    state.messages.push({
+      id: messageContent.id,
+      content: messageContent.content,
+      time: messageContent.time,
       read: false,
       username: messageContent.username
     })

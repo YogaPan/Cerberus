@@ -174,7 +174,10 @@ export default {
         axios.post('/oldMessages',{url:pathname})
           .then(function (response) {
             console.log(response);
-            this.$store.dispatch('submit', response);
+            for(var i in response)
+            {
+              this.$store.dispatch('insert', response[i]);
+            }
           })
           .catch(function (error) {
             console.log(error);
