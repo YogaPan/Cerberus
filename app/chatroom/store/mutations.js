@@ -22,7 +22,7 @@ export default {
     state.messages.push({
       id: messageContent.id,
       content: messageContent.content,
-      time: Date.parse(messageContent.time).getHours() + ':' + Date.parse(messageContent.time.getMinutes()),
+      time: messageContent.time,
       read: false,
       username: messageContent.username
     })
