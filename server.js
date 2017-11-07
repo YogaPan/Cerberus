@@ -326,7 +326,7 @@ app.post('/oldMessages', function(req,res) {
       if(results==0) {
         //console.log("no results");
         res.write('{"message":[');
-        res.write('{"id":"[]","name":"[]","url":"[]","username":"[]"}');
+        res.write('{"id":,"content":"","time":"","username":""}');
         res.write("]}");
         res.end();
       }
@@ -334,9 +334,9 @@ app.post('/oldMessages', function(req,res) {
         res.write('{"message":[');
         for(var i in results) {
           if(i == 0)
-            res.write('{"id":'+results[i].id+',"name":"'+results[i].message+'","url":"'+results[i].time+'","username":"'+results[i].username+'"}');
+            res.write('{"id":'+results[i].mid+',"content":"'+results[i].message+'","time":"'+results[i].time+'","username":"'+results[i].username+'"}');
           else
-            res.write(',{"id":'+results[i].id+',"name":"'+results[i].message+'","url":"'+results[i].time+'","username":"'+results[i].username+'"}');
+            res.write(',{"id":'+results[i].mid+',"content":"'+results[i].message+'","time":"'+results[i].time+'","username":"'+results[i].username+'"}');
         }
         res.write("]}");
         res.end();
