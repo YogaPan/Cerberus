@@ -4856,6 +4856,10 @@ vue-chartjs@^2.8.2:
   dependencies:
     lodash.merge "^4.6.0"
 
+vue-emoji@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/vue-emoji/-/vue-emoji-0.0.2.tgz#ecfd3ec20d1e12605ed6697708b6759e8032a76a"
+
 vue-hot-reload-api@^2.0.11:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.2.0.tgz#9a21b35ced3634434a43ee80efb7350ea8fb206d"

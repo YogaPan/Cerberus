@@ -314,25 +314,33 @@ app.post('/board', function(req,res){ // client connect 140.136.150.75:[port]/bo
   }
 });
 
-app.get('/chatroom/*', function(req,res) {
+app.post('/oldMessages', function(req,res) {
   //console.log("Enter fucking chatroom");
-  console.log(req.session.uid);
-  console.log(req.session.username);
-  console.log(req.session.path);
-  console.log(req.url);
+  //console.log(req.session.uid);
+  //console.log(req.session.username);
+  console.log(req.body.url);
   if(req.session.uid) {
-    connection.query('SELECT id, message, time FROM chatmessage', function(error, results, fields) {
-      //console.log(results);
+    connection.query('SELECT mid, message, time, username FROM chatmessage WHERE url="'+ req.body.url + '" Order by mid DESC limit 20', function(error, results, fields) {
       if (error) throw error;
-      /*res.write('{"message":[');
-      for(var i in results) {
-        if(i == 0)
-          res.write('{"id":'+results[i].id+',"name":"'+results[i].message+'","url":"'+results[i].time+'"}');
-        else
-          res.write(',{"id":'+results[i].id+',"name":"'+results[i].message+'","url":"'+results[i].time+'"}');
+      //console.log(results);
+      if(results==0) {
+        //console.log("no results");
+        res.write('{"message":[');
+        res.write('{"id":"[]","name":"[]","url":"[]","username":"[]"}');
+        res.write("]}");
+        res.end();
       }
-      res.write("]}");
-      res.end();*/
+      else {
+        res.write('{"message":[');
+        for(var i in results) {
+          if(i == 0)
+            res.write('{"id":'+results[i].id+',"name":"'+results[i].message+'","url":"'+results[i].time+'","username":"'+results[i].username+'"}');
+          else
+            res.write(',{"id":'+results[i].id+',"name":"'+results[i].message+'","url":"'+results[i].time+'","username":"'+results[i].username+'"}');
+        }
+        res.write("]}");
+        res.end();
+      }
     });
   }
   else {
@@ -359,6 +367,7 @@ app.post('/invite', function(req,res){ // show invite notification
 io.on('connection', function (socket) {
   //console.log(socket.handshake.session.uid, socket.id, "io.on");
   //console.log(socket.htmlandshake.session.joinroom);
+  console.log(socket.handshake.session.username);
   socket.room = socket.handshake.session.joinroom;
   socket.join(socket.room);
   if(socket.handshake.session.uid!=undefined) {
@@ -385,7 +394,7 @@ io.on('connection', function (socket) {
     var mid2; // MessageID for the message for the room
     var counter; // Count the message in the room is 1 or >1
 
-    connection.query('INSERT INTO chatmessage(url, uid, message) VALUES("'+socket.room+'", '+socket.handshake.session.uid // Insert the message into database
+    connection.query('INSERT INTO chatmessage(url, username, uid, message) VALUES("'+socket.room+'", "'+socket.handshake.session.username+'" , '+socket.handshake.session.uid // Insert the message into database
       +', "'+data+'")', function (error, results, fields) {
       if (error) throw error;
     });
@@ -442,4 +451,17 @@ io.on('connection', function (socket) {
   socket.room = socket.handshake.session.joinroom;
   socket.join(socket.room);
   socket.on('drawing', (data) => io.in(socket.room).emit('drawing', data));
+});
+
+io.on('connection', function(socket) {
+  //console.log(socket.handshake.session.joinroom);
+  socket.room = socket.handshake.session.joinroom;
+  if(socket.handshake.session.uid!=undefined) {
+    io.in(socket.room).emit('{"username": "'+socket.handshake.session.username+'" , "online" : "1" }');
+  }
+  var tmp = socket.handshake.session.username;
+  socket.on('disconnect', function () {
+    console.log('fuckyou byebye haha');
+    io.in(socket.room).emit('{"username": "'+tmp+'" , "online" : "0" }');
+  });
 });
