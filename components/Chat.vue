@@ -57,11 +57,12 @@
       </div>
     </div>
       <!--測試中，先不用<button @click="fb">facebook</button>-->
-      <button@click="toggleEmojiMenu">Toolbar</button>
+      
       <!--<button@click="oldMessages">測試歷史訊息的按鍵</button>-->
       <div class="user-input">
         <form @submit.prevent="submit">
-          <input v-model="input" @click="read" placeholder="#chatroom">
+          <input v-model="input" @click="read" type="text">
+          <input @click="toggleEmojiMenu" type="button">
         </form>
       </div>
   </div>
@@ -329,7 +330,8 @@ export default {
   line-height: 12px;
 }
 .typing-area {
-  position:relative;
+  position: relative;
+  flex-direction: row;
 }
 .is-typing {
   z-index: 5;
@@ -340,27 +342,50 @@ export default {
   background-color:#f2f1f4;
   align-self: stretch;
 }
-.user-input {
-  flex: 0 0 35px;
+input[type=button]{
+  background-color: rgba(0,0,0,0);
+  background-image:url(/assets/smileIcon.png);
+  width:8%;
+  height:26px;
+  background-size:cover;
+  align-items:flex-end;
+  border: none;
+  outline:none;
 }
-.user-input input {
+form {
+  display: inline-flex;
+  width: 100%;
+  justify-content:flex-end;
+  align-items:center;
+}
+.user-input {
+  padding-right: 3px;
+
+  margin: 5px;
+  display: flex;
+  flex: 0 0 45px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+}
+.user-input input[type=text] {
   /* box model */
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
   /* border and shape */
-  height: 35px;
-  width: 100%;
+  height: 45px;
+  width: 92%;
   border: 2px solid #ddd;
   border-radius: 5px;
   /* font and padding */
-  padding-left: 8px;
+  margin-right: 3px;
   font-size: 15px;
   color: #444;
   font-family: sans-serif;
+  display: inline-flex;
 }
 /* when user click this input */
-.user-input input:focus {
+.user-input input[type=text]:focus, user-input:focus {
   outline: none;
   border: 2px solid #aaa;
 }
