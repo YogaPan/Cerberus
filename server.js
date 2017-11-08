@@ -467,8 +467,8 @@ io.on('connection', function(socket) {
   });
 });
 
-/*io.on('connection', function(socket) {
+io.on('connection', function(socket) {
   socket.room = socket.handshake.session.joinroom;
   socket.join(socket.room);
-  socket.on('?', (?) => io.in(socket.room).emit('?', data));
-});*/
+  socket.on('doc', (val) => io.in(socket.room).emit('doc', val));
+});
