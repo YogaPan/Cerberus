@@ -7,7 +7,7 @@
       <div id="profile">
 
         <div id="profile-left">
-          <input type="file" style="display: none;" @change="changeImage($event)" ref="avatarInput">
+          <input type="file" accept="image/gif,image/jpeg,image/jpg,image/png" style="display: none;" @change="changeImage($event)" ref="avatarInput">
           <div id="avatar" v-bind:style="{ backgroundImage: 'url(' + avatar + ')' }" @click="setAvatar"></div>
         </div>
 
@@ -21,7 +21,7 @@
       </div>
 
       <div id="button-container">
-        <button id="save-button" class="button-trans">Save Change</button>
+        <button id="save-button" class="button-trans" @click="saveAvatar">Save Change</button>
       </div>
 
     </div>
@@ -29,24 +29,48 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
       avatar: this.$store.state.avatar
     }
   },
+  mounted() {
+    axios.get('/avatar')
+      .then(response => {
+        this.$store.state.avatar = response.data.avatar
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  },
   methods: {
     setAvatar() {
       this.$refs.avatarInput.click()
     },
     changeImage(e) {
-      var file = e.target.files[0]
-      var reader = new FileReader()
-      var that = this
+      const file = e.target.files[0]
+      const reader = new FileReader()
+      const that = this
+
       reader.readAsDataURL(file)
       reader.onload = function(e) {
         that.avatar = this.result
       }
+    },
+    saveAvatar() {
+      if (this.$refs.avatarInput.files.length !== 0) {
+        const image = new FormData()
+
+        image.append('avatar', this.$refs.avatarInput.files[0])
+        axios.post('/avatar', image, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+      } 
     }
   }
 }
