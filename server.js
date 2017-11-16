@@ -1,6 +1,8 @@
 var http = require('http');
 const https = require('https');
+var config = require('getconfig')
 var express = require('express');
+var sockets = require('./sockets')
 var app = express();
 const fs = require('fs');
 const options = {
@@ -41,7 +43,8 @@ app.use('/', express.static('static'));
 server.listen(8888, function() {
     console.log('Listenging on port 8888');
 });
-
+sockets(server, config)
+console.log('Signal master is running at: https://cerberus.csie.fju.edu.tw:8888');
 
 app.get('/test', function(req,res){ // test
   if(req.session.uid) {
