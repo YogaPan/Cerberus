@@ -93,6 +93,8 @@ export default {
 
   background-color: @white;
 
+  animation: fadein .5s;
+
   @media all and (max-width: 1225px) {
     width: 80%;
   }

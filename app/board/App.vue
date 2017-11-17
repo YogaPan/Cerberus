@@ -145,17 +145,19 @@ export default {
       })
     },
     logout() {
-      axios.get('/logout').then(response => {
-        const body = response.data
+      axios.get('/logout')
+        .then(response => {
+          const body = response.data
 
-        if (body.success) {
-          document.location.href = '/login'
-        } else {
-          console.error(body)
-        }
-      }).catch(error => {
-        console.error(error)
-      })
+          if (body.success) {
+            document.location.href = '/login'
+          } else {
+            console.error(body)
+          }
+        })
+        .catch(error => {
+          console.error(error)
+        })
     }
   }
 }
