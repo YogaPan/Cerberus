@@ -3,6 +3,8 @@ const https = require('https');
 var config = require('getconfig')
 var express = require('express');
 var sockets = require('./sockets')
+var path = require('path');
+var formidable = require('formidable');
 var app = express();
 const fs = require('fs');
 const options = {
@@ -381,10 +383,30 @@ app.post('/avatar', function (req, res) { // upload avatar
       let writeStream = fs.createWriteStream(newUrl);
       readStream.pipe(writeStream);
       readStream.on('end', function(){ // save file name into database
-      
+        connection.query('UPDATE user SET avatar = "'+avatarName+'" WHERE id = '+req.session.uid, function (error, results, fields) {
+          if (error) throw error;
+          res.write('{"success": true}');
+          res.end();
+        });
       })
     })
+  }
+  else{
+    res.write("Please login.");
     res.end();
+  }
+})
+
+app.get('/avatar', function (req, res) { // get avatar
+  if(req.session.uid){
+    connection.query('SELECT avatar FROM user WHERE id = ' + req.session.uid, function (error, results, fields) {
+      if (error) throw error;
+      fs.readFile('./upload/' + results[0].avatar, function(err, data) {
+        if (err) throw err;
+        res.writeHead(200, {'Content-Type': 'image/'+path.extname(results[0].avatar).substring(1)});
+        res.end(data);
+      });
+    });
   }
   else{
     res.write("Please login.");
