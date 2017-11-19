@@ -367,6 +367,31 @@ app.post('/invite', function(req,res){ // show invite notification
   }
 });
 
+app.post('/avatar', function (req, res) { // upload avatar
+  if(req.session.uid){
+    let form = new formidable.IncomingForm();
+    form.parse(req, function(err, fields, files) {
+      if (err) {
+        console.log(err)
+      }
+      let oldUrl = files.avatar.path;
+      let newUrl = './upload/avatar_' + req.session.uid + files.avatar.name;
+      let avatarName = 'avatar_' + req.session.uid + files.avatar.name;
+      let readStream = fs.createReadStream(oldUrl);
+      let writeStream = fs.createWriteStream(newUrl);
+      readStream.pipe(writeStream);
+      readStream.on('end', function(){ // save file name into database
+      
+      })
+    })
+    res.end();
+  }
+  else{
+    res.write("Please login.");
+    res.end();
+  }
+})
+
 io.on('connection', function (socket) {
   //console.log(socket.handshake.session.uid, socket.id, "io.on");
   //console.log(socket.htmlandshake.session.joinroom);
