@@ -38,13 +38,7 @@ export default {
     }
   },
   mounted() {
-    axios.get('/avatar')
-      .then(response => {
-        this.$store.state.avatar = response.data.avatar
-      })
-      .catch(error => {
-        console.error(error)
-      })
+    // TODO
   },
   methods: {
     setAvatar() {

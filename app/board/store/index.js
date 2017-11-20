@@ -12,7 +12,7 @@ export const store = new Vuex.Store({
     invites: [],
     rooms: [],
 
-    avatar: '/assets/snake.jpg'
+    avatar: '/avatar'
 
     // frontend debug variables
     // username: 'yogapan8532',

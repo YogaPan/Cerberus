@@ -6,7 +6,8 @@
 
       <button></button>
 
-      <img id="head-button" class="circle-image" src="/assets/snake.jpg" alt="head" @click="toggleHeadDropdown">
+      <!-- <img id="head-button" class="circle-image" src="/assets/snake.jpg" alt="head" @click="toggleHeadDropdown"> -->
+      <img id="head-button" class="circle-image" src="/avatar" alt="head" @click="toggleHeadDropdown">
       <div id="head-dropdown" class="pop-dropdown" v-if="showHeadDropdown">
         <div id="dropdown-self">
           <div id="dropdown-self-left">
