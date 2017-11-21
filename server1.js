@@ -3,15 +3,14 @@ const https = require('https');
 var express = require('express');
 var config = require('getconfig');
 var sockets = require('./sockets');
-var path = require('path');
-var formidable = require('formidable');
 var app = express();
 const fs = require('fs');
 const options = {
   key: fs.readFileSync('ssl/private.key'),
   cert: fs.readFileSync('ssl/certificate.crt')
 };
-//var server = https.createServer(options,app).listen(8888);
+var server = https.createServer(options,app).listen(8888);
+var io = require('socket.io')(server);
 var crypto = require("crypto");
 var bodyParser = require('body-parser'); // for json
 app.use(bodyParser.json());
@@ -29,6 +28,9 @@ var session = require('express-session')({
   saveUninitialized: true,
   cookie: { maxAge: 600 * 1000 }
 });
+io.use(sharedsession(session, {
+    autoSave:true
+}));
 app.use(session);
 var loginhtml = fs.readFileSync('./pages/login.html');
 var boardhtml = fs.readFileSync('./pages/board.html');
@@ -38,33 +40,19 @@ var createchatroomhtml = fs.readFileSync('./pages/create-chatroom.html');
 app.use('/dist', express.static('dist'));
 app.use('/assets', express.static('assets'));
 app.use('/', express.static('static'));
-/*server.listen(8888, function() {
+server.listen(8888, function() {
     console.log('Listenging on port 8888');
-});*/
-var server = null;
-var port = parseInt(process.env.PORT || config.server.port, 10);
-if (config.server.secure) {
-    server = https.createServer({
-      key: fs.readFileSync(config.server.key),
-      cert: fs.readFileSync(config.server.cert),
-      passphrase: config.server.password
-    },app);
-} else {
-    server = http.creatServer(app);
-}
-var io = require('socket.io')(server);
-io.use(sharedsession(session, {
-    autoSave:true
-}));
-server.listen(port);
+});
 sockets(server, config);
 var httpUrl;
+var port = parseInt(process.env.PORT || config.server.port, 10)
 if (config.server.secure) {
-    httpUrl = "https://cerberus.csie.fju.edu.tw:"+port;
+    httpUrl = "https://cerberus.csie.fju.edu.tw:8888";
 } else {
-    httpUrl = "http://cerberus.csie.fju.edu.tw:"+port;
+    httpUrl = "http://cerberus.csie.fju.edu.tw:8888";
 }
-console.log('Signal master is running at: ' + httpUrl);
+console.log('signal master is running at: ' + httpUrl);
+console.log(port);
 
 
 app.get('/test', function(req,res){ // test
@@ -402,13 +390,10 @@ app.post('/avatar', function (req, res) { // upload avatar
       let writeStream = fs.createWriteStream(newUrl);
       readStream.pipe(writeStream);
       readStream.on('end', function(){ // save file name into database
-        connection.query('UPDATE user SET avatar = "'+avatarName+'" WHERE id = '+req.session.uid, function (error, results, fields) {
-          if (error) throw error;
-          res.write('{"success": true}');
-          res.end();
-        });
+      
       })
     })
+    res.end();
   }
   else{
     res.write("Please login.");
@@ -418,13 +403,10 @@ app.post('/avatar', function (req, res) { // upload avatar
 
 app.get('/avatar', function (req, res) { // get avatar
   if(req.session.uid){
-    connection.query('SELECT avatar FROM user WHERE id = ' + req.session.uid, function (error, results, fields) {
-      if (error) throw error;
-      fs.readFile('./upload/' + results[0].avatar, function(err, data) {
-        if (err) throw err;
-        res.writeHead(200, {'Content-Type': 'image/'+path.extname(results[0].avatar).substring(1)});
-        res.end(data);
-      });
+    fs.readFile('./upload/avatar.png', function(err, data) {
+      if (err) throw err;
+      res.writeHead(200, {'Content-Type': 'image/png'});
+      res.end(data);
     });
   }
   else{
