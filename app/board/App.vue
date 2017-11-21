@@ -2,13 +2,12 @@
   <div id="root-container">
 
     <div id="top-container">
-      <button id="menu" href="#menu" @click="toggleLeftBar">&#9776;</button>
       <a class="app-link" href="/">Cerberus</a>
 
-      <button>
+      <button></button>
 
-      </button>
-      <img id="head-button" class="circle-image" src="/assets/snake.jpg" alt="head" @click="toggleHeadDropdown">
+      <!-- <img id="head-button" class="circle-image" src="/assets/snake.jpg" alt="head" @click="toggleHeadDropdown"> -->
+      <img id="head-button" class="circle-image" src="/avatar" alt="head" @click="toggleHeadDropdown">
       <div id="head-dropdown" class="pop-dropdown" v-if="showHeadDropdown">
         <div id="dropdown-self">
           <div id="dropdown-self-left">
@@ -68,38 +67,9 @@
     </div>
 
     <div id="middle-container">
-
-      <div id="left-container" v-if="showLeftBar">
-        <div id="list-container">
-
-          <ul>
-            <li :class="['list-item', isActive('rooms')]">
-              <router-link to="/rooms">
-                <img src="/assets/chat-2.png" alt="chat">
-                <span>Rooms</span>
-              </router-link>
-            </li>
-            <li :class="['list-item', isActive('settings')]">
-              <router-link to="/settings">
-                <img src="/assets/settings-2.png" alt="gear">
-                <span>Settings</span>
-              </router-link>
-            </li>
-            <li class="list-item" @click="logout">
-              <a href="#">
-                <img src="/assets/logout-2.png" alt="logout">
-                <span>Logout</span>
-              </a>
-             </li>
-          </ul>
-
-        </div>
-      </div>
-
       <div id="right-container">
         <router-view></router-view>
       </div>
-
     </div>
   </div>
 </template>
@@ -110,13 +80,10 @@ import axios from 'axios'
 
 export default {
   data() {
-    // const showLeftBar = (window.innerWidth > 700 ? true : false)
-    const showLeftBar = false
     const showHeadDropdown = false
     const showNotificationDropdown = false;
 
     return {
-      showLeftBar,
       showHeadDropdown,
       showNotificationDropdown,
     }
@@ -133,9 +100,6 @@ export default {
       return {
         'active': item === this.$route.name
       }
-    },
-    toggleLeftBar() {
-      this.showLeftBar = !this.showLeftBar
     },
     toggleHeadDropdown(event) {
       this.showHeadDropdown = !this.showHeadDropdown
@@ -182,17 +146,19 @@ export default {
       })
     },
     logout() {
-      axios.get('/logout').then(response => {
-        const body = response.data
+      axios.get('/logout')
+        .then(response => {
+          const body = response.data
 
-        if (body.success) {
-          document.location.href = '/login'
-        } else {
-          console.error(body)
-        }
-      }).catch(error => {
-        console.error(error)
-      })
+          if (body.success) {
+            document.location.href = '/login'
+          } else {
+            console.error(body)
+          }
+        })
+        .catch(error => {
+          console.error(error)
+        })
     }
   }
 }
@@ -270,23 +236,6 @@ export default {
   justify-content: flex-start;
 
   background-color: @dark-white;
-}
-
-#menu {
-  position: absolute;
-  left: 30px;
-
-  top: 50%;
-  transform: translateY(-50%);
-
-  color: @dark-gray;
-  font-size: 20px;
-  background-color: @white;
-  cursor: pointer;
-
-  &:focus {
-    outline: none;
-  }
 }
 
 #notification-button {

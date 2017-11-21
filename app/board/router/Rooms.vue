@@ -57,6 +57,8 @@ export default {
   justify-content: flex-start;
 
   padding: 30px;
+
+  animation: fadein .5s;
 }
 
 #room-add {

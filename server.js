@@ -365,7 +365,7 @@ app.post('/invite', function(req,res){ // show invite notification
   }
 });
 
-app.post('/avatar', function (req, res) { // upload avatar
+app.post('/uploadavatar', function (req, res) { // upload avatar
   if(req.session.uid){
     let form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
@@ -373,8 +373,8 @@ app.post('/avatar', function (req, res) { // upload avatar
         console.log(err)
       }
       let oldUrl = files.avatar.path;
-      let newUrl = './upload/avatar_' + req.session.uid + files.avatar.name;
-      let avatarName = 'avatar_' + req.session.uid + files.avatar.name;
+      let newUrl = './upload/avatar_' + req.session.uid + path.extname(files.avatar.name);
+      let avatarName = 'avatar_' + req.session.uid + path.extname(files.avatar.name);
       let readStream = fs.createReadStream(oldUrl);
       let writeStream = fs.createWriteStream(newUrl);
       readStream.pipe(writeStream);
@@ -382,7 +382,7 @@ app.post('/avatar', function (req, res) { // upload avatar
         connection.query('UPDATE user SET avatar = "'+avatarName+'" WHERE id = '+req.session.uid, function (error, results, fields) {
           if (error) throw error;
           res.write('{"success": true}');
-          res.end();
+          res.end();    
         });
       })
     })
@@ -393,15 +393,38 @@ app.post('/avatar', function (req, res) { // upload avatar
   }
 })
 
-app.get('/avatar', function (req, res) { // get avatar
+app.post('/getavatar', function (req, res) { // get avatar
   if(req.session.uid){
-    connection.query('SELECT avatar FROM user WHERE id = ' + req.session.uid, function (error, results, fields) {
+    connection.query('SELECT avatar FROM user WHERE id = ' + req.body.id, function (error, results, fields) {
       if (error) throw error;
       fs.readFile('./upload/' + results[0].avatar, function(err, data) {
         if (err) throw err;
         res.writeHead(200, {'Content-Type': 'image/'+path.extname(results[0].avatar).substring(1)});
         res.end(data);
       });
+    });
+  }
+  else{
+    res.write("Please login.");
+    res.end();
+  }
+})
+
+app.post('/rename', function (req, res) { // get avatar
+  if(req.session.uid){
+    connection.query('SELECT username FROM user WHERE username = "' + req.body.name + '"', function (error, results, fields) {
+      if (error) throw error;
+      if(results[0] > 0){
+        res.write('{ "success": false, "message" : "username has already been taken" }');
+        res.end();
+      }
+      else{
+        connection.query('UPDATE user SET username = "'+ req.body.name + '" WHERE id = ' + req.session.uid, function (error, results, fields) {
+          if (error) throw error;
+          res.write('{"success": true}');
+          res.end();        
+        });
+      }
     });
   }
   else{
