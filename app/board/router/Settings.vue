@@ -13,9 +13,9 @@
 
         <div id="profile-right">
           <h2 id="username">Username</h2>
-          <input class="input" type="text" v-bind:value="this.$store.state.username">
+          <input class="input" type="text" v-model="username">
           <h2 id="nickname">Nick Name</h2>
-          <input class="input" type="text" v-bind:value="this.$store.state.nickname">
+          <input class="input" type="text" v-model="nickname">
         </div>
 
       </div>
@@ -34,7 +34,9 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      avatar: this.$store.state.avatar
+      avatar: this.$store.state.avatar,
+      username: '',
+      nickname: ''
     }
   },
   mounted() {
@@ -54,15 +56,33 @@ export default {
         that.avatar = this.result
       }
     },
+    save() {
+      axios.post('/edit', {
+        username: this.username,
+        nickname: this.nickname
+      }).then(response => {
+        if (response.data.success)
+          location.reload()
+        else
+          console.error('error!!!!')
+      }).catch(e => {
+        console.error(e)
+      })
+    },
     saveAvatar() {
       if (this.$refs.avatarInput.files.length !== 0) {
         const image = new FormData()
 
         image.append('avatar', this.$refs.avatarInput.files[0])
         axios.post('/avatar', image, {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
+          headers: { "Content-Type": "multipart/form-data" }
+        }).then(response => {
+          if (response.data.success)
+            location.reload()
+          else
+            console.error('error!!!!')
+        }).catch(e => {
+          console.error(e)
         })
       } 
     }
