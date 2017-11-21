@@ -454,11 +454,7 @@ io.on('connection', function (socket) {
   });
 
   socket.on('new message', function (data) { // when the client emits 'new message', this listens and executes
-    
-    io.sockets.in(socket.room).emit('new message', {
-      username: socket.handshake.session.username,
-      message: data
-    });
+
     var mid; // MessageID for the first message for the room
     var mid2; // MessageID for the message for the room
     var counter; // Count the message in the room is 1 or >1
@@ -488,6 +484,11 @@ io.on('connection', function (socket) {
           else {
             console.log('Please login');
           }
+          io.sockets.in(socket.room).emit('new message', {
+            username: socket.handshake.session.username,
+            message: data,
+            id: mid
+          });
         }
         else if(results[0].mid==null&&counter>1) {
           connection.query('SELECT mid FROM chatmessage WHERE url="'+socket.room+'" ORDER BY mid DESC limit 0,1;' , function (error, results, fields) {
@@ -505,6 +506,11 @@ io.on('connection', function (socket) {
               console.log('Please login');
             }
             if(error) throw error;
+          });
+          io.sockets.in(socket.room).emit('new message', {
+            username: socket.handshake.session.username,
+            message: data,
+            id: mid2
           });
         }
         if(error) throw error;
@@ -527,12 +533,18 @@ io.on('connection', function(socket) {
   socket.room = socket.handshake.session.joinroom;
   socket.join(socket.room);
   if(socket.handshake.session.uid!=undefined) {
-    io.in(socket.room).emit('{"username": "'+socket.handshake.session.username+'" , "online" : "1" }');
+    io.in(socket.room).emit('online', {
+      username: socket.handshake.session.username,
+      online: 1,
+    });
   }
   var tmp = socket.handshake.session.username;
   socket.on('disconnect', function () {
-    console.log('fuckyou byebye haha');
-    io.in(socket.room).emit('{"username": "'+tmp+'" , "online" : "0" }');
+    //console.log('fuckyou byebye haha');
+    io.in(socket.room).emit('online', {
+      username: tmp,
+      online: 0,
+    });
   });
 });
 
