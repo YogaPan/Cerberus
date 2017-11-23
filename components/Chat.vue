@@ -2,7 +2,7 @@
   <div id="app-chat">
     <div class="online-list">
       <p v-for="onlinelist in onlinelists" style="height:35px;">
-        <img class="user-img"  v-bind:src="'/assets/' + onlinelist+ '.jpg'">
+        <img class="online-user"  v-bind:src="'/assets/' + onlinelist+ '.jpg'">
       </p>
     </div>
     <div class="message-container">
@@ -94,7 +94,7 @@ export default {
       roomID: '',
       showEmojiMenu,
       currentEmoji: { id: '+1' },
-      onlinelists: ['huskylin', 'yogapan85321', 'yanwei841112','garylai00000'],
+      onlinelists: ['huskylin', 'yogapan85321yoga', 'yanwei841112','garylai00000'],
       msg: '',
     }
   },
