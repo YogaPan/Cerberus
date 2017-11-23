@@ -395,14 +395,26 @@ app.post('/uploadavatar', function (req, res) { // upload avatar
 
 app.post('/getavatar', function (req, res) { // get avatar
   if(req.session.uid){
-    connection.query('SELECT avatar FROM user WHERE id = ' + req.body.id, function (error, results, fields) {
-      if (error) throw error;
-      fs.readFile('./upload/' + results[0].avatar, function(err, data) {
-        if (err) throw err;
-        res.writeHead(200, {'Content-Type': 'image/'+path.extname(results[0].avatar).substring(1)});
-        res.end(data);
+    if(req.body.id == -1){
+      connection.query('SELECT avatar FROM user WHERE id = ' + req.session.uid, function (error, results, fields) {
+        if (error) throw error;
+        fs.readFile('./upload/' + results[0].avatar, function(err, data) {
+          if (err) throw err;
+          res.writeHead(200, {'Content-Type': 'image/'+path.extname(results[0].avatar).substring(1)});
+          res.end(data);
+        });
       });
-    });
+    }
+    else{
+      connection.query('SELECT avatar FROM user WHERE id = ' + req.body.id, function (error, results, fields) {
+        if (error) throw error;
+        fs.readFile('./upload/' + results[0].avatar, function(err, data) {
+          if (err) throw err;
+          res.writeHead(200, {'Content-Type': 'image/'+path.extname(results[0].avatar).substring(1)});
+          res.end(data);
+        });
+      });
+    }
   }
   else{
     res.write("Please login.");
