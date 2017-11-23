@@ -18,7 +18,6 @@ export default {
     })
   },
   insert(state, messageContent) {
-    new Date();
     state.messages.push({
       id: messageContent.id,
       content: messageContent.content,
@@ -26,6 +25,8 @@ export default {
       read: false,
       username: messageContent.username
     })
+
+    state.count++
   //  splice(index, count_to_remove, addelement1, addelement2, ...)
   },
   popVote(state, vote) {
