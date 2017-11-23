@@ -35,8 +35,8 @@ export default {
   data() {
     return {
       avatar: this.$store.state.avatar,
-      username: '',
-      nickname: ''
+      username: this.$store.state.username,
+      nickname: this.$store.state.nickname
     }
   },
   mounted() {
