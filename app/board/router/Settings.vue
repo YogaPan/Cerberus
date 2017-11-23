@@ -21,7 +21,7 @@
       </div>
 
       <div id="button-container">
-        <button id="save-button" class="button-trans" @click="saveAvatar">Save Change</button>
+        <button id="save-button" class="button-trans" @click="saveChange">Save Change</button>
       </div>
 
     </div>
@@ -56,34 +56,38 @@ export default {
         that.avatar = this.result
       }
     },
-    save() {
-      axios.post('/edit', {
-        username: this.username,
-        nickname: this.nickname
-      }).then(response => {
-        if (response.data.success)
-          location.reload()
-        else
-          console.error('error!!!!')
-      }).catch(e => {
-        console.error(e)
-      })
-    },
-    saveAvatar() {
-      if (this.$refs.avatarInput.files.length !== 0) {
-        const image = new FormData()
+    async saveChange() {
+      // Change username
+      if (this.username !== this.$store.state.username) {
+        try {
+          const response = await axios.post('rename', { username: this.username })
 
-        image.append('avatar', this.$refs.avatarInput.files[0])
-        axios.post('/avatar', image, {
-          headers: { "Content-Type": "multipart/form-data" }
-        }).then(response => {
           if (response.data.success)
             location.reload()
           else
-            console.error('error!!!!')
-        }).catch(e => {
+            console.error(response.data.message)
+        } catch(e) {
           console.error(e)
-        })
+        }
+      }
+
+      // Chnage avatar
+      if (this.$refs.avatarInput.files.length !== 0) {
+        const image = new FormData()
+        image.append('avatar', this.$refs.avatarInput.files[0])
+
+        try {
+          const response = await axios.post('/uploadavatar', image, {
+            headers: { "Content-Type": "multipart/form-data" }
+          })
+
+          if (response.data.success)
+            location.reload()
+          else
+            console.error(response.data.message)
+        } catch (e) {
+          console.error(e)
+        }
       } 
     }
   }
