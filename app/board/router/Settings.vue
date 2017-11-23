@@ -60,7 +60,7 @@ export default {
       // Change username
       if (this.username !== this.$store.state.username) {
         try {
-          const response = await axios.post('rename', { username: this.username })
+          const response = await axios.post('rename', { name: this.username })
 
           if (response.data.success)
             location.reload()
