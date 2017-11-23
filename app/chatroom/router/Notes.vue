@@ -1,6 +1,6 @@
 <template>
   <div id="notes-container">
-    <textarea id="doc" v-model="doc"></textarea>
+    <textarea id="doc" v-model="doc" @keyup="send" ref="doc"></textarea>
   </div>
 </template>
 
@@ -9,22 +9,16 @@ const socket = require('socket.io-client')('https://cerberus.csie.fju.edu.tw:888
 
 export default {
   data() {
-    return {
-      doc: ''
-    }
+    return {}
   },
   mounted() {
     socket.on('doc', val => {
-      this.doc = val
+      this.$refs.doc.value = val
     })
   },
   methods: {
-    // TODO
-  },
-  watch: {
-    doc: function(val) {
-      console.log(val)
-      socket.emit('doc', val)
+    send() {
+      socket.emit('doc', this.$refs.doc.value)
     }
   }
 }

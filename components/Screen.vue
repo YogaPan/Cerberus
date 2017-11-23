@@ -52,7 +52,7 @@ export default {
         remoteVideosEl: 'remoteVideos',
         // immediately ask for camera access
         autoRequestMedia: true,
-        // url: 'http://localhost:8888',
+        url: 'https://cerberus.csie.fju.edu.tw:8887',
         // localVideo: {
           // muted: false
         // }

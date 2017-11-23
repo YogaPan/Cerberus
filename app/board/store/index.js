@@ -12,7 +12,7 @@ export const store = new Vuex.Store({
     invites: [],
     rooms: [],
 
-    avatar: '/avatar'
+    avatar: '/getavatar/-1',
 
     // frontend debug variables
     // username: 'yogapan8532',
