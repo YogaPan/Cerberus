@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+require('babel-polyfill');
 
 module.exports = {
   entry: {
@@ -7,7 +8,7 @@ module.exports = {
     login: './app/login/index.js',
     register: './app/register/index.js',
     chatroom: './app/chatroom/index.js',
-    board: './app/board/index.js'
+    board: ['babel-polyfill', './app/board/index.js']
   },
   output: {
     path: path.resolve(__dirname, './dist'),
