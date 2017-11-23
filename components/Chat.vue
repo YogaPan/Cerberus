@@ -2,13 +2,13 @@
   <div id="app-chat">
     <div class="online-list">
       <p v-for="onlinelist in onlinelists" style="height:35px;">
-        <img class="online-user" src="/assets/hskico.jpg">
+        <img class="user-img"  v-bind:src="'/assets/' + onlinelist+ '.jpg'">
       </p>
     </div>
     <div class="message-container">
       <div v-for="message in sortedMessages">
       <div class="single-message">
-        <img class="user-img" src="/assets/hskico.jpg">
+        <img class="user-img"  v-bind:src="'/assets/' + message.username + '.jpg'">
 
         <div class="text-area">
           <div class="user">
@@ -94,7 +94,7 @@ export default {
       roomID: '',
       showEmojiMenu,
       currentEmoji: { id: '+1' },
-      onlinelists: ['hu', 'yo', 'ya','ga'],
+      onlinelists: ['huskylin', 'yogapan85321', 'yanwei841112','garylai00000'],
       msg: '',
     }
   },
@@ -214,6 +214,19 @@ export default {
           }
         );   
         } ); 
+    },
+    getAvatar(userID) {
+      axios.get('/avatar', {
+        params: {
+          "id" : [userID]
+        }
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     },
   },
   filters: {
