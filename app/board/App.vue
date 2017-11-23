@@ -11,7 +11,7 @@
       <div id="head-dropdown" class="pop-dropdown" v-if="showHeadDropdown">
         <div id="dropdown-self">
           <div id="dropdown-self-left">
-            <img class="circle-image" src="/assets/snake.jpg" alt="head">
+            <img class="circle-image" src="/getavatar/-1" alt="head">
           </div>
           <div id="dropdown-self-right">
             <p>{{ this.$store.state.username }}</p>
