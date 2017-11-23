@@ -10,7 +10,10 @@
    </div>
 
    <div id="next">
-     <button id="next-button" class="button-trans" @click="nextStep">Next -></button>
+     <!-- <button id="next-button" class="button-trans" @click="nextStep">Next -></button> -->
+     <router-link id="next-button" class="button-trans" tag="button" to="/members">
+      Next ->
+     </router-link>
    </div>
 
  </div>
