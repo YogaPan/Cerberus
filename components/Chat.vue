@@ -94,7 +94,7 @@ export default {
       roomID: '',
       showEmojiMenu,
       currentEmoji: { id: '+1' },
-      onlinelists: ['huskylin', 'yogapan85321yoga', 'yanwei841112','garylai00000'],
+      onlinelists: ['huskylin', 'yogapan85321', 'yanwei841112','garylai00000'],
       msg: '',
     }
   },
