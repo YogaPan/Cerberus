@@ -393,9 +393,10 @@ app.post('/uploadavatar', function (req, res) { // upload avatar
   }
 })
 
-app.post('/getavatar', function (req, res) { // get avatar
+app.get('/getavatar/*', function (req, res) { // get avatar
   if(req.session.uid){
-    if(req.body.id == -1){
+    let id = req.url.substring(11);
+    if(id == -1){
       connection.query('SELECT avatar FROM user WHERE id = ' + req.session.uid, function (error, results, fields) {
         if (error) throw error;
         fs.readFile('./upload/' + results[0].avatar, function(err, data) {
@@ -406,7 +407,7 @@ app.post('/getavatar', function (req, res) { // get avatar
       });
     }
     else{
-      connection.query('SELECT avatar FROM user WHERE id = ' + req.body.id, function (error, results, fields) {
+      connection.query('SELECT avatar FROM user WHERE id = ' + id, function (error, results, fields) {
         if (error) throw error;
         fs.readFile('./upload/' + results[0].avatar, function(err, data) {
           if (err) throw err;
