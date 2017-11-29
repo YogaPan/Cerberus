@@ -53,6 +53,8 @@ export default {
         // immediately ask for camera access
         autoRequestMedia: true,
         url: 'https://cerberus.csie.fju.edu.tw:7777',
+        // url: 'http://localhost:8888',
+
         // localVideo: {
           // muted: false
         // }

@@ -52,10 +52,13 @@ export default {
         options: this.options
       })
 
+      // console.log(this.question)
+      // console.log(this.options)
+
       this.question = ''
       this.options = [
         { id: 1, content: '' },
-        { id: 2, content: '' }
+        { id: 2, content: '' } 
       ]
     }
   }

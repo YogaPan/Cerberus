@@ -7,11 +7,11 @@
       <div class="vote-area" v-if="!showResult">
 
         <div class="vote-area-top">
-          <h1>{{ this.$store.state.question }}</h1>
+          <h1>{{ question }}</h1>
         </div>
 
         <div class="vote-area-middle">
-          <div class="vote-item" v-for="option in this.$store.state.options" :class="{'selected-vote-item': option.isSelected}" @click="select(option.id)">
+          <div class="vote-item" v-for="(option, index) in options" :key="index" v-bind:class="{'selected-vote-item': option.isSelected}" @click="select(option.id)">
             <p>{{ option.content }}</p>
           </div>
         </div>
@@ -49,10 +49,21 @@ export default {
       this.$store.dispatch("popVote", content)
     })
   },
+  computed: {
+    question: {
+      get() {
+        return this.$store.state.question
+      }
+    },
+    options: {
+      get() {
+        return this.$store.state.options
+      }
+    }
+  },
   methods: {
     select(id) {
-      console.log(id)
-      this.$store.state.options[id-1].isSelected = !this.$store.state.options[id-1].isSelected
+      this.$store.dispatch('selectVote', id)
     },
     vote() {
       this.showResult = true
@@ -116,7 +127,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .vote-area-bottom {

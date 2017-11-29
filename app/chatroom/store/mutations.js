@@ -31,11 +31,15 @@ export default {
   },
   popVote(state, vote) {
     state.question = vote.question
+    state.options = vote.options
 
     // Add 'isSelected' property to option
-    state.options = vote.options.map((option) => {
+    vote.options = vote.options.map(option => {
       option.isSelected = false
     })
+  },
+  selectVote(state, id) {
+    state.options[id-1].isSelected = !state.options[id-1].isSelected
   },
   doneVote(state) {
     state.question = ''
