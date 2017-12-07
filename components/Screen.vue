@@ -2,7 +2,8 @@
   <div id="screen-container" ref="screen-container" v-bind:class="{ hide: isHide }">
 
     <div id="have-video" v-if="this.$store.state.streaming">
-      <video id="current-video" ref="current-video"></video>
+      <!-- <video id="current-video" ref="current-video"></video> -->
+      <canvas id="current-video" ref="current-video"></canvas>
 
       <div id="remote-video-bar">
         <div id="remote-videos">
@@ -32,11 +33,43 @@ import SimpleWebRTC from 'simplewebrtc'
 export default {
   data() {
     return {
-      'streaming': false
+      streaming: false,
+      drawing: false
     }
   },
   mounted() {
-    // TODO
+    // this.processor.doLoad = function doLoad() {
+    //   console.log('doload!!!')
+
+    //   this.video = document.getElementById('first-video')
+    //   this.c = document.getElementById('current-video')
+    //   this.ctx = this.c.getContext('2d')
+
+    //   let self = this
+    //   self.timerCallback()
+    //   // this.video.addEventListener('play', function() {
+    //   //   self.timerCallback()
+    //   // }, false)
+    // }
+
+    // this.processor.timerCallback = function timerCallback() {
+    //   console.log('timerCallback!!')
+    //   if (this.video.paused || this.video.ended) {
+    //     return
+    //   }
+
+    //   this.computeFrame()
+
+    //   let self = this
+    //   setTimeout(function() {
+    //     self.timerCallback()
+    //   }, 0)
+    // }
+
+    // this.processor.computeFrame = function computeFrame() {
+    //   console.log('computeFrame!')
+    //   this.ctx.drawImage(this.video, 0, 0, 500, 500)
+    // }
   },
   computed: {
     isHide() {
@@ -66,17 +99,11 @@ export default {
         webrtc.joinRoom('your awesome room name')
         console.log('ready to call!!!!')
 
-        this.$el.querySelector('#current-video').src = this.$el.querySelector('#first-video').src
-        this.$el.querySelector('#current-video').play()
-
-        // DEBUG
-        console.log(this.$el.querySelector('#first-video').src)
-        console.log(this.$el.querySelector('#current-video').src)
+        this.load(this.$el.querySelector('#first-video'))
 
         this.$el.querySelector('#first-video').addEventListener('click', () => {
           console.log('click!!!!')
-          this.$el.querySelector('#current-video').src = this.$el.querySelector('#first-video').src
-          this.$el.querySelector('#current-video').play()
+          this.load(this.$el.querySelector('#first-video'))
         })
       })
 
@@ -95,7 +122,7 @@ export default {
 
           container.addEventListener('click', () => {
             console.log('click!!!!')
-            this.$el.querySelector('#current-video').src = video.src
+            this.load(video)
           })
 
           // suppress contextmenu
@@ -119,15 +146,6 @@ export default {
       this.$store.state.webrtc = webrtc
       this.$store.state.streaming = true
       this.$store.state.playLocalVideo = false
-
-      // setTimeout(() => {
-      //   console.log('test')
-      //   this.$el.querySelector('#first-video').addEventListener('click', () => {
-      //     console.log('click!!!!')
-      //     this.$el.querySelector('#current-video').src = this.$el.querySelector('#first-video').src
-      //     this.$el.querySelector('#current-video').play()
-      //   })
-      // }, 1000)
     },
     
     stopStreaming() {
@@ -150,6 +168,32 @@ export default {
 
     resumeVideo() {
       this.webrtc.resumeVideo()
+    },
+    load(video) {
+      var canvas = document.getElementById('current-video')
+      var context = canvas.getContext('2d')
+
+      // context.scale(-1,1)
+      this.drawing = false
+
+      setTimeout(() => {
+        var cw = 640
+        var ch = 480
+        canvas.width = cw
+        canvas.height = ch
+
+        this.drawing = true
+        this.draw(video, context, cw, ch)
+      }, 1000)
+    },
+
+    draw(video, canvas, width, height) {
+      if (video.paused || video.ended)
+        return false
+      if (this.drawing === false)
+        return false
+      canvas.drawImage(video, 0, 0, width, height)
+      setTimeout(this.draw, 20, video, canvas, width, height);
     }
   }
 }
