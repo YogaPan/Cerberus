@@ -3,7 +3,7 @@
 
     <div id="have-video" v-if="this.$store.state.streaming">
       <!-- <video id="current-video" ref="current-video"></video> -->
-      <canvas id="current-video" ref="current-video"></canvas>
+      <canvas id="current-video" ref="current-video" :class="{ mirror: currentVideoMirror }"></canvas>
 
       <div id="remote-video-bar">
         <div id="remote-videos">
@@ -34,7 +34,8 @@ export default {
   data() {
     return {
       streaming: false,
-      drawing: false
+      drawing: false,
+      currentVideoMirror: true
     }
   },
   mounted() {
@@ -104,6 +105,7 @@ export default {
         this.$el.querySelector('#first-video').addEventListener('click', () => {
           console.log('click!!!!')
           this.load(this.$el.querySelector('#first-video'))
+          this.currentVideoMirror = true
         })
       })
 
@@ -123,6 +125,7 @@ export default {
           container.addEventListener('click', () => {
             console.log('click!!!!')
             this.load(video)
+            this.currentVideoMirror = false
           })
 
           // suppress contextmenu
@@ -173,7 +176,6 @@ export default {
       var canvas = document.getElementById('current-video')
       var context = canvas.getContext('2d')
 
-      // context.scale(-1,1)
       this.drawing = false
 
       setTimeout(() => {
@@ -348,5 +350,9 @@ export default {
 
 .hide {
   display: none;
+}
+
+.mirror {
+  transform: scaleX(-1);
 }
 </style>
