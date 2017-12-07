@@ -61,17 +61,17 @@ export default {
         // }
       })
 
-      webrtc.on('readyToCall', function () {
+      webrtc.on('readyToCall', () => {
         // you can name it anything
         webrtc.joinRoom('your awesome room name')
         console.log('ready to call!!!!')
 
-        // DEBUG
-        console.log(this.$el.querySelector('#current-video').src)
-
-        // first video sour
         this.$el.querySelector('#current-video').src = this.$el.querySelector('#first-video').src
         this.$el.querySelector('#current-video').play()
+
+        // DEBUG
+        console.log(this.$el.querySelector('#first-video').src)
+        console.log(this.$el.querySelector('#current-video').src)
 
         this.$el.querySelector('#first-video').addEventListener('click', () => {
           console.log('click!!!!')
@@ -81,7 +81,7 @@ export default {
       })
 
       // a peer video has been added
-      webrtc.on('videoAdded', function (video, peer) {
+      webrtc.on('videoAdded', (video, peer) => {
         console.log('video added', peer)
 
         const remotes = document.getElementById('remote-videos')
@@ -106,7 +106,7 @@ export default {
       })
 
       // a peer video was removed
-      webrtc.on('videoRemoved', function (video, peer) {
+      webrtc.on('videoRemoved', (video, peer) => {
         console.log('video removed ', peer)
 
         const remotes = document.getElementById('remote-videos')
