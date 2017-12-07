@@ -2,11 +2,13 @@
   <div id="screen-container" ref="screen-container" v-bind:class="{ hide: isHide }">
 
     <div id="have-video" v-if="this.$store.state.streaming">
-      <video id="localVideo" ref="localVideo"></video>
+      <video id="current-video" ref="current-video"></video>
 
       <div id="remote-video-bar">
         <div id="remote-videos">
-          <video id="first-video" autoplay="true"></video>
+          <!-- <video id="first-video" src="http://www.html5videoplayer.net/videos/toystory.mp4" autoplay="true"></video> -->
+          <video id="first-video"></video>
+          <!-- <video id="second-video" src="http://www.html5videoplayer.net/videos/toystory.mp4" autoplay="true"></video> -->
         </div>
       </div>
 
@@ -48,11 +50,8 @@ export default {
   methods: {
     startStreaming() {
       const webrtc = new SimpleWebRTC({
-        // the id/element dom element that will hold "our" video
-        localVideoEl: 'localVideo',
-        // the id/element dom element that will hold remote videos
+        localVideoEl: 'first-video',
         remoteVideosEl: '',
-        // immediately ask for camera access
         autoRequestMedia: true,
         // url: 'https://cerberus.csie.fju.edu.tw:7777',
         // url: 'http://localhost:8888',
@@ -66,7 +65,19 @@ export default {
         // you can name it anything
         webrtc.joinRoom('your awesome room name')
         console.log('ready to call!!!!')
-        this.$el.querySelector('#first-video').src = this.$el.querySelector('#localVideo').src
+
+        // DEBUG
+        console.log(this.$el.querySelector('#current-video').src)
+
+        // first video sour
+        this.$el.querySelector('#current-video').src = this.$el.querySelector('#first-video').src
+        this.$el.querySelector('#current-video').play()
+
+        this.$el.querySelector('#first-video').addEventListener('click', () => {
+          console.log('click!!!!')
+          this.$el.querySelector('#current-video').src = this.$el.querySelector('#first-video').src
+          this.$el.querySelector('#current-video').play()
+        })
       })
 
       // a peer video has been added
@@ -84,6 +95,7 @@ export default {
 
           container.addEventListener('click', () => {
             console.log('click!!!!')
+            this.$el.querySelector('#current-video').src = video.src
           })
 
           // suppress contextmenu
@@ -107,6 +119,15 @@ export default {
       this.$store.state.webrtc = webrtc
       this.$store.state.streaming = true
       this.$store.state.playLocalVideo = false
+
+      // setTimeout(() => {
+      //   console.log('test')
+      //   this.$el.querySelector('#first-video').addEventListener('click', () => {
+      //     console.log('click!!!!')
+      //     this.$el.querySelector('#current-video').src = this.$el.querySelector('#first-video').src
+      //     this.$el.querySelector('#current-video').play()
+      //   })
+      // }, 1000)
     },
     
     stopStreaming() {
@@ -147,7 +168,7 @@ export default {
   animation: fadein .5s;
 }
 
-#localVideo {
+#current-video {
   position: absolute;
   top: 0;
   left: 0;
@@ -173,7 +194,14 @@ export default {
   left: 0;
 
   width: 150px;
-  height: 100%;
+  height: 100%; 
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  // padding-top: 10px;
 
   background-color: black;
   // opacity: 0.5;
@@ -182,8 +210,8 @@ export default {
 
 #remote-videos {
   video {
-    position: absolute;
-    left: 10px;
+    //position: absolute;
+    //left: 10px;
 
     width: 125px;
     height: 125px;
