@@ -5,7 +5,9 @@
       <video id="localVideo" ref="localVideo"></video>
 
       <div id="remote-video-bar">
-        <div id="remoteVideos"></div>
+        <div id="remote-videos">
+          <video id="first-video" autoplay="true"></video>
+        </div>
       </div>
 
       <div id="button-bar">
@@ -49,10 +51,10 @@ export default {
         // the id/element dom element that will hold "our" video
         localVideoEl: 'localVideo',
         // the id/element dom element that will hold remote videos
-        remoteVideosEl: 'remoteVideos',
+        remoteVideosEl: '',
         // immediately ask for camera access
         autoRequestMedia: true,
-        url: 'https://cerberus.csie.fju.edu.tw:7777',
+        // url: 'https://cerberus.csie.fju.edu.tw:7777',
         // url: 'http://localhost:8888',
 
         // localVideo: {
@@ -63,6 +65,43 @@ export default {
       webrtc.on('readyToCall', function () {
         // you can name it anything
         webrtc.joinRoom('your awesome room name')
+        console.log('ready to call!!!!')
+        this.$el.querySelector('#first-video').src = this.$el.querySelector('#localVideo').src
+      })
+
+      // a peer video has been added
+      webrtc.on('videoAdded', function (video, peer) {
+        console.log('video added', peer)
+
+        const remotes = document.getElementById('remote-videos')
+
+        if (remotes) {
+          const container = document.createElement('div')
+
+          container.className = 'videoContainer'
+          container.id = 'container_' + webrtc.getDomId(peer)
+          container.appendChild(video)
+
+          container.addEventListener('click', () => {
+            console.log('click!!!!')
+          })
+
+          // suppress contextmenu
+          video.oncontextmenu = function () { return false }
+
+          remotes.appendChild(container)
+        }
+      })
+
+      // a peer video was removed
+      webrtc.on('videoRemoved', function (video, peer) {
+        console.log('video removed ', peer)
+
+        const remotes = document.getElementById('remote-videos')
+        const el = document.getElementById(peer ? 'container_' + webrtc.getDomId(peer) : 'localScreenContainer')
+        if (remotes && el) {
+          remotes.removeChild(el)
+        }
       })
 
       this.$store.state.webrtc = webrtc
@@ -137,11 +176,11 @@ export default {
   height: 100%;
 
   background-color: black;
-  opacity: 0.5; 
+  // opacity: 0.5;
   z-index: 99;
 }
 
-#remoteVideos {
+#remote-videos {
   video {
     position: absolute;
     left: 10px;
