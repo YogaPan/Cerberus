@@ -2,10 +2,15 @@
   <div id="screen-container" ref="screen-container" v-bind:class="{ hide: isHide }">
 
     <div id="have-video" v-if="this.$store.state.streaming">
-      <video id="localVideo" ref="localVideo"></video>
+      <!-- <video id="current-video" ref="current-video"></video> -->
+      <canvas id="current-video" ref="current-video" :class="{ mirror: currentVideoMirror }"></canvas>
 
       <div id="remote-video-bar">
-        <div id="remoteVideos"></div>
+        <div id="remote-videos">
+          <!-- <video id="first-video" src="http://www.html5videoplayer.net/videos/toystory.mp4" autoplay="true"></video> -->
+          <video id="first-video"></video>
+          <!-- <video id="second-video" src="http://www.html5videoplayer.net/videos/toystory.mp4" autoplay="true"></video> -->
+        </div>
       </div>
 
       <div id="button-bar">
@@ -28,11 +33,44 @@ import SimpleWebRTC from 'simplewebrtc'
 export default {
   data() {
     return {
-      'streaming': false
+      streaming: false,
+      drawing: false,
+      currentVideoMirror: true
     }
   },
   mounted() {
-    // TODO
+    // this.processor.doLoad = function doLoad() {
+    //   console.log('doload!!!')
+
+    //   this.video = document.getElementById('first-video')
+    //   this.c = document.getElementById('current-video')
+    //   this.ctx = this.c.getContext('2d')
+
+    //   let self = this
+    //   self.timerCallback()
+    //   // this.video.addEventListener('play', function() {
+    //   //   self.timerCallback()
+    //   // }, false)
+    // }
+
+    // this.processor.timerCallback = function timerCallback() {
+    //   console.log('timerCallback!!')
+    //   if (this.video.paused || this.video.ended) {
+    //     return
+    //   }
+
+    //   this.computeFrame()
+
+    //   let self = this
+    //   setTimeout(function() {
+    //     self.timerCallback()
+    //   }, 0)
+    // }
+
+    // this.processor.computeFrame = function computeFrame() {
+    //   console.log('computeFrame!')
+    //   this.ctx.drawImage(this.video, 0, 0, 500, 500)
+    // }
   },
   computed: {
     isHide() {
@@ -46,13 +84,10 @@ export default {
   methods: {
     startStreaming() {
       const webrtc = new SimpleWebRTC({
-        // the id/element dom element that will hold "our" video
-        localVideoEl: 'localVideo',
-        // the id/element dom element that will hold remote videos
-        remoteVideosEl: 'remoteVideos',
-        // immediately ask for camera access
+        localVideoEl: 'first-video',
+        remoteVideosEl: '',
         autoRequestMedia: true,
-        url: 'https://cerberus.csie.fju.edu.tw:7777',
+        // url: 'https://cerberus.csie.fju.edu.tw:7777',
         // url: 'http://localhost:8888',
 
         // localVideo: {
@@ -60,9 +95,55 @@ export default {
         // }
       })
 
-      webrtc.on('readyToCall', function () {
+      webrtc.on('readyToCall', () => {
         // you can name it anything
         webrtc.joinRoom('your awesome room name')
+        console.log('ready to call!!!!')
+
+        this.load(this.$el.querySelector('#first-video'))
+
+        this.$el.querySelector('#first-video').addEventListener('click', () => {
+          console.log('click!!!!')
+          this.load(this.$el.querySelector('#first-video'))
+          this.currentVideoMirror = true
+        })
+      })
+
+      // a peer video has been added
+      webrtc.on('videoAdded', (video, peer) => {
+        console.log('video added', peer)
+
+        const remotes = document.getElementById('remote-videos')
+
+        if (remotes) {
+          const container = document.createElement('div')
+
+          container.className = 'videoContainer'
+          container.id = 'container_' + webrtc.getDomId(peer)
+          container.appendChild(video)
+
+          container.addEventListener('click', () => {
+            console.log('click!!!!')
+            this.load(video)
+            this.currentVideoMirror = false
+          })
+
+          // suppress contextmenu
+          video.oncontextmenu = function () { return false }
+
+          remotes.appendChild(container)
+        }
+      })
+
+      // a peer video was removed
+      webrtc.on('videoRemoved', (video, peer) => {
+        console.log('video removed ', peer)
+
+        const remotes = document.getElementById('remote-videos')
+        const el = document.getElementById(peer ? 'container_' + webrtc.getDomId(peer) : 'localScreenContainer')
+        if (remotes && el) {
+          remotes.removeChild(el)
+        }
       })
 
       this.$store.state.webrtc = webrtc
@@ -90,6 +171,31 @@ export default {
 
     resumeVideo() {
       this.webrtc.resumeVideo()
+    },
+    load(video) {
+      var canvas = document.getElementById('current-video')
+      var context = canvas.getContext('2d')
+
+      this.drawing = false
+
+      setTimeout(() => {
+        var cw = 640
+        var ch = 480
+        canvas.width = cw
+        canvas.height = ch
+
+        this.drawing = true
+        this.draw(video, context, cw, ch)
+      }, 1000)
+    },
+
+    draw(video, canvas, width, height) {
+      if (video.paused || video.ended)
+        return false
+      if (this.drawing === false)
+        return false
+      canvas.drawImage(video, 0, 0, width, height)
+      setTimeout(this.draw, 20, video, canvas, width, height);
     }
   }
 }
@@ -108,7 +214,7 @@ export default {
   animation: fadein .5s;
 }
 
-#localVideo {
+#current-video {
   position: absolute;
   top: 0;
   left: 0;
@@ -134,17 +240,24 @@ export default {
   left: 0;
 
   width: 150px;
-  height: 100%;
+  height: 100%; 
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  // padding-top: 10px;
 
   background-color: black;
-  opacity: 0.5; 
+  // opacity: 0.5;
   z-index: 99;
 }
 
-#remoteVideos {
+#remote-videos {
   video {
-    position: absolute;
-    left: 10px;
+    //position: absolute;
+    //left: 10px;
 
     width: 125px;
     height: 125px;
@@ -237,5 +350,9 @@ export default {
 
 .hide {
   display: none;
+}
+
+.mirror {
+  transform: scaleX(-1);
 }
 </style>
