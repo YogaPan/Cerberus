@@ -94,7 +94,7 @@ export default {
       roomID: '',
       showEmojiMenu,
       currentEmoji: { id: '+1' },
-      onlinelists: ['huskylin', 'yogapan85321', 'yanwei841112','garylai00000'],
+      onlinelists: [],
       msg: '',
     }
   },
@@ -150,7 +150,17 @@ export default {
           const messageContainer = this.$el.querySelector(".message-container")
           messageContainer.scrollTop = messageContainer.scrollHeight
         }, 50)
-        //this.userID = data.username;
+    });
+    socket.on('online', data => {
+      console.log(data)
+      console.log(data.username)
+      console.log(data.online)
+        if(data.online == 1){
+          this.onlinelists.push(data.username)
+        }
+        else if(data.online == 0){
+          this.removeArray(ary, data.username)
+        }
     });
   },
   methods: {
@@ -227,6 +237,16 @@ export default {
       .catch(function (error) {
         console.log(error);
       });
+    },
+    removeArray(arr) {
+      var what, a = arguments, L = a.length, ax;
+      while (L > 1 && arr.length) {
+      what = a[--L];
+        while ((ax= arr.indexOf(what)) !== -1) {
+          arr.splice(ax, 1);
+        }
+      }
+      return arr;
     },
   },
   filters: {

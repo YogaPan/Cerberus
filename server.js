@@ -452,20 +452,7 @@ io.on('connection', function (socket) {
   console.log(socket.handshake.session.username);
   socket.room = socket.handshake.session.joinroom;
   socket.join(socket.room);
-  if(socket.handshake.session.uid!=undefined) {
-    connection.query('UPDATE chatmember SET exist = 1 WHERE cid=(SELECT id FROM chatroom WHERE url="'+socket.room+'") AND uid='+socket.handshake.session.uid+'', function (error, results, fields) {
-      if (error) throw error;
-    });
-  }
-  var roomtmp = socket.room;
-  var uidtmp = socket.handshake.session.uid;
-  socket.on('disconnect', function () {
-    console.log('fuckyou byebye');
-    connection.query('UPDATE chatmember SET exist = 0 WHERE cid=(SELECT id FROM chatroom WHERE url="'+roomtmp+'") AND uid='+uidtmp+'', function (error, results, fields) {
-      if (error) throw error;
-    });
-  });
-
+  
   socket.on('new message', function (data) { // when the client emits 'new message', this listens and executes
 
     var mid; // MessageID for the first message for the room
@@ -542,27 +529,13 @@ io.on('connection', function (socket) {
 });
 
 io.on('connection', function(socket) {
-  //console.log(socket.handshake.session.joinroom);
   socket.room = socket.handshake.session.joinroom;
   socket.join(socket.room);
-  if(socket.handshake.session.uid!=undefined) {
-    io.in(socket.room).emit('online', {
-      username: socket.handshake.session.username,
-      online: 1,
-    });
-  }
-  var tmp = socket.handshake.session.username;
-  socket.on('disconnect', function () {
-    //console.log('fuckyou byebye haha');
-    io.in(socket.room).emit('online', {
-      username: tmp,
-      online: 0,
-    });
-  });
+  socket.on('doc', (val) => io.in(socket.room).emit('doc', val));
 });
 
 io.on('connection', function(socket) {
   socket.room = socket.handshake.session.joinroom;
   socket.join(socket.room);
-  socket.on('doc', (val) => io.in(socket.room).emit('doc', val));
+  socket.on('ask', (data) => io.in(socket.room).emit('ask', data));
 });
