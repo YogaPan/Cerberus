@@ -142,6 +142,12 @@ export default {
     //  Get Data from API
     this.oldMessages();
     //  Submit to State
+    
+    //  加入房间
+      socket.on('connect', function () {
+        socket.emit('join');
+      });
+
   },
   mounted: function () {
     socket.on('new message', data => {
@@ -151,17 +157,12 @@ export default {
           messageContainer.scrollTop = messageContainer.scrollHeight
         }, 50)
     });
-    socket.on('online', data => {
-      console.log(data)
-      console.log(data.username)
-      console.log(data.online)
-        if(data.online == 1){
-          this.onlinelists.push(data.username)
-        }
-        else if(data.online == 0){
-          this.removeArray(ary, data.username)
-        }
-    });
+    socket.on('online', function (onlineArr) {
+        this.onlinelists = onlineArr
+      });
+  },
+  beforeDestroy: function () {
+    socket.emit('leave');
   },
   methods: {
     read() {
@@ -181,12 +182,9 @@ export default {
     oldMessages() {
       var pathname = window.location.pathname.substring(window.location.pathname.lastIndexOf('/')+1);
       var that = this
-      console.log(pathname);
         axios.post('/oldMessages',{url:pathname})
           .then(function (response) {
-            console.log(response);
             response.data.message.forEach(element => {
-              console.log(element);
               that.$store.dispatch('insert', element);
             });
           })
