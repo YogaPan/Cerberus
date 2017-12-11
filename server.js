@@ -487,7 +487,8 @@ io.on('connection', function (socket) {
           io.sockets.in(socket.room).emit('new message', {
             username: socket.handshake.session.username,
             message: data,
-            id: mid
+            id: mid,
+            uid: socket.handshake.session.uid
           });
         }
         else if(results[0].mid==null&&counter>1) {
@@ -510,7 +511,8 @@ io.on('connection', function (socket) {
           io.sockets.in(socket.room).emit('new message', {
             username: socket.handshake.session.username,
             message: data,
-            id: mid2
+            id: mid2,
+            uid: socket.handshake.session.uid
           });
         }
         if(error) throw error;
@@ -554,7 +556,6 @@ io.on('connection', function(socket) {
     roomInfo[roomID].push(userID);
     socket.join(roomID);
     io.to(roomID).emit('online', roomInfo[roomID]);
-    console.log(userID+' join '+roomID);
   });
   socket.on('leave', function () {
     socket.emit('disconnect');
@@ -567,7 +568,6 @@ io.on('connection', function(socket) {
     }
     socket.leave(roomID);
     io.to(roomID).emit('online', roomInfo[roomID]);
-    console.log(userID + ' leave ' + roomID);
   });
 
 });
