@@ -80,8 +80,12 @@ export default {
 #right-container {
   flex: 1 0 auto;
   height: 100%;
-
-  background-color: @black;
+  background-image: url( '/assets/teamwork.jpg' );
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-color: #400080;
+  background-position:90% 50%;
+  background-attachment:fixed;
 
   @media all and (max-width: 1250px) {
     flex: 1 0 100px;
