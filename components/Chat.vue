@@ -158,8 +158,20 @@ export default {
         }, 50)
     });
     socket.on('online', function (onlineArr) {
-        this.onlinelists = onlineArr
-      });
+        //  刪除陣列重複元素
+        var new_array = onlineArr
+        for(var i=0; i<new_array.length; ++i) 
+        {
+          for(var j=i+1; j<new_array.length; ++j)
+          {
+              if(new_array[i] === new_array[j])
+              new_array.splice(j, 1);
+          } 
+        }
+        this.onlinelists = new_array
+        //console.log(onlineArr)
+        console.log(this.onlinelists)
+    });
   },
   beforeDestroy: function () {
     socket.emit('leave');
