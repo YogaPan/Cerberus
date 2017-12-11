@@ -3,7 +3,7 @@
     <div id="left-container">
 
       <div id="app-name">
-        <a class="app-link" href="/board">Cerberus</a>
+        <a class="app-link" href="/board">GODS</a>
       </div>
       <router-view></router-view>
 
