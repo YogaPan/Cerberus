@@ -531,11 +531,43 @@ io.on('connection', function (socket) {
 io.on('connection', function(socket) {
   socket.room = socket.handshake.session.joinroom;
   socket.join(socket.room);
-  socket.on('doc', (val) => io.in(socket.room).emit('doc', val));
+  socket.on('doc', (val) => socket.broadcast.emit('doc', val));
 });
 
 io.on('connection', function(socket) {
   socket.room = socket.handshake.session.joinroom;
   socket.join(socket.room);
   socket.on('ask', (data) => io.in(socket.room).emit('ask', data));
+});
+
+var roomInfo = {};
+io.on('connection', function(socket) {
+  var url = socket.request.headers.referer;
+  var splited = url.split('/');
+  var roomID = splited[splited.length - 1];
+  var userID = '';
+  socket.on('join', function() {
+    userID = socket.handshake.session.uid;
+    if(!roomInfo[roomID]) {
+      roomInfo[roomID] = [];
+    }
+    roomInfo[roomID].push(userID);
+    socket.join(roomID);
+    io.to(roomID).emit('online', roomInfo[roomID]);
+    console.log(userID+' join '+roomID);
+  });
+  socket.on('leave', function () {
+    socket.emit('disconnect');
+  });
+  var tmp = socket.handshake.session.uid;
+  socket.on('disconnect', function () {
+    var index = roomInfo[roomID].indexOf(tmp);
+    if (index !== -1) {
+      roomInfo[roomID].splice(index, 1);
+    }
+    socket.leave(roomID);
+    io.to(roomID).emit('online', roomInfo[roomID]);
+    console.log(userID + ' leave ' + roomID);
+  });
+
 });
