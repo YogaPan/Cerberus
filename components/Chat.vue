@@ -169,7 +169,7 @@ export default {
           } 
         }
         this.onlinelists = new_array
-        console.log(onlineArr)
+        //console.log(onlineArr)
         console.log(this.onlinelists)
     });
   },
