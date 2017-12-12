@@ -13,7 +13,6 @@
         <div class="text-area">
           <div class="user">
             <p>{{message.username}}</p>
-            <p>{{message.uid}}</p>
           </div>
 
           <div class="message-area">
