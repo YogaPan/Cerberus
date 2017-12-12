@@ -27,7 +27,7 @@
         </div>
 
         <div class="result-area-bottom">
-
+          <app-chart ref="chart" :chart-data="dataCollection"></app-chart>
         </div>
       </div>
 
@@ -38,16 +38,40 @@
 <script>
 var socket = require('socket.io-client')('https://cerberus.csie.fju.edu.tw:8888')
 
+import Chart from './Chart'
+
 export default {
   data() {
     return {
-      showResult: false
+      showResult: false,
+      dataCollection: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+        datasets: [
+          {
+            label: 'GitHub Commits',
+            backgroundColor: [
+              '#fff',
+              '##1AB49C',
+              '#222',
+              '##F3672C',
+              '#D45954',
+              '#560DE3'
+            ],
+            data: [40, 20, 12, 39, 10, 40]
+          }
+        ]
+      }
     }
   },
   mounted() {
     socket.on('ask', content => {
       this.$store.dispatch("popVote", content)
     })
+
+    setInterval(() => {
+      this.dataCollection.datasets[0].data[0] += 20
+      this.$refs.chart.update()
+    }, 3000)
   },
   computed: {
     question: {
@@ -71,6 +95,9 @@ export default {
     cancel() {
       this.$store.dispatch('doneVote')
     }
+  },
+  components: {
+    'app-chart': Chart
   },
 }
 </script>
