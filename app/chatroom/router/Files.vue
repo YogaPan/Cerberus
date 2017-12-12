@@ -31,7 +31,7 @@ export default {
       localVideoEl: '',
       remoteVideosEl: '',
       autoRequestMedia: false,
-      //url: 'http://localhost:8888',
+      url: 'https://cerberus.csie.fju.edu.tw:8888',
       receiveMedia: {
         offerToReceiveAudio: 0,
         offerToReceiveVideo: 0
