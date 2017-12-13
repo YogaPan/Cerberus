@@ -1,4 +1,4 @@
-<template>
+<template> 
   <div id="vote-pop-container" class="pop-fullscreen">
     <div id="vote-inside-container">
 
@@ -11,13 +11,9 @@
         </div>
 
         <div class="vote-area-middle">
-          <div class="vote-item" v-for="(option, index) in options" :key="index" v-bind:class="{'selected-vote-item': option.isSelected}" @click="select(option.id)">
+          <div class="vote-item" v-for="(option, index) in options" :key="index" v-bind:class="{'selected-vote-item': option.isSelected}" @click="vote(option.id)">
             <p>{{ option.content }}</p>
           </div>
-        </div>
-
-        <div class="vote-area-bottom">
-          <button class="button-trans" @click="vote">Confirm -></button>
         </div>
       </div>
 
@@ -36,31 +32,39 @@
 </template>
 
 <script>
-var socket = require('socket.io-client')('https://cerberus.csie.fju.edu.tw:8888')
+const socket = require('socket.io-client')('https://cerberus.csie.fju.edu.tw:8888')
 
 import Chart from './Chart'
 
 export default {
   data() {
+    const len = this.$store.state.options
+    const dataCollection = {
+      labels: [],  // initial to empty array
+      datasets: [
+        {
+          label: this.$store.state.question,
+          backgroundColor: [
+            '#fff',
+            '#1AB49C',
+            '#F3672C',
+            '#D45954',
+            '#560DE3'
+          ],
+          data: []
+        }
+      ]
+    }
+    
+    this.$store.state.options.forEach(option => {
+      dataCollection.labels.push(option.content)
+    })
+
+    dataCollection.datasets[0].data = new Array(len).fill(0);
+
     return {
       showResult: false,
-      dataCollection: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-        datasets: [
-          {
-            label: 'GitHub Commits',
-            backgroundColor: [
-              '#fff',
-              '##1AB49C',
-              '#222',
-              '##F3672C',
-              '#D45954',
-              '#560DE3'
-            ],
-            data: [40, 20, 12, 39, 10, 40]
-          }
-        ]
-      }
+      dataCollection: dataCollection,
     }
   },
   mounted() {
@@ -68,10 +72,14 @@ export default {
       this.$store.dispatch("popVote", content)
     })
 
-    setInterval(() => {
-      this.dataCollection.datasets[0].data[0] += 20
-      this.$refs.chart.update()
-    }, 3000)
+    socket.on('vote', id => {
+      this.dataCollection.datasets[0].data[id] += 1
+    })
+
+    // setInterval(() => {
+    //   this.dataCollection.datasets[0].data[0] += 1
+    //   this.$refs.chart.update()
+    // }, 3000)
   },
   computed: {
     question: {
@@ -86,10 +94,8 @@ export default {
     }
   },
   methods: {
-    select(id) {
-      this.$store.dispatch('selectVote', id)
-    },
-    vote() {
+    vote(id) {
+      socket.emit(id)
       this.showResult = true
     },
     cancel() {
