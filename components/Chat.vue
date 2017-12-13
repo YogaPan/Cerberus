@@ -2,13 +2,13 @@
   <div id="app-chat">
     <div class="online-list">
       <p v-for="onlinelist in onlinelists" style="height:35px;">
-        <img class="online-user"  v-bind:src="'/assets/' + onlinelist+ '.jpg'">
+        <img class="online-user"  v-bind:src="'https://cerberus.csie.fju.edu.tw:8888/getavatar/' + onlinelist">
       </p>
     </div>
     <div class="message-container">
       <div v-for="message in sortedMessages">
       <div class="single-message">
-        <img class="user-img"  v-bind:src="'/assets/' + message.username + '.jpg'">
+        <img class="user-img"  v-bind:src="'https://cerberus.csie.fju.edu.tw:8888/getavatar/' + message.uid">
 
         <div class="text-area">
           <div class="user">
@@ -157,7 +157,7 @@ export default {
           messageContainer.scrollTop = messageContainer.scrollHeight
         }, 50)
     });
-    socket.on('online', function (onlineArr) {
+    socket.on('online', onlineArr => {
         //  刪除陣列重複元素
         var new_array = onlineArr
         for(var i=0; i<new_array.length; ++i) 
@@ -196,6 +196,7 @@ export default {
       var that = this
         axios.post('/oldMessages',{url:pathname})
           .then(function (response) {
+            console.log(response);
             response.data.message.forEach(element => {
               that.$store.dispatch('insert', element);
             });
@@ -296,6 +297,7 @@ export default {
   align-items:stretch;
   justify-content: center;
   margin-left: 10px;
+  object-fit: cover;
 }
 #app-chat {
   display: flex;
@@ -327,6 +329,7 @@ export default {
   margin-right: 5px;
   border: 1px solid #555555;
   border-radius: 3px;
+  object-fit: cover;
 }
 .text-area{
   flex-direction:column;

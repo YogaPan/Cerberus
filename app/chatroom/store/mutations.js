@@ -7,7 +7,8 @@ export default {
       content: messageContent.message,
       time: getTimeString(),
       read: false,
-      username: messageContent.username
+      username: messageContent.username,
+      uid: messageContent.uid
     })
 
     state.count++
@@ -23,7 +24,8 @@ export default {
       content: messageContent.content,
       time: messageContent.time,
       read: false,
-      username: messageContent.username
+      username: messageContent.username,
+      uid: messageContent.uid
     })
 
     state.count++
