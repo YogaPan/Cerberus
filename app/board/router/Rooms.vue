@@ -7,10 +7,10 @@
           <p>{{ room.description }}</p>
         </div>
         <div class="room-people">
+          <!-- <img class="person" src="/assets/snake.jpg" alt="person">
           <img class="person" src="/assets/snake.jpg" alt="person">
           <img class="person" src="/assets/snake.jpg" alt="person">
-          <img class="person" src="/assets/snake.jpg" alt="person">
-          <img class="person" src="/assets/snake.jpg" alt="person">
+          <img class="person" src="/assets/snake.jpg" alt="person"> -->
         </div>
       </div>
     </div>
