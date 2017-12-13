@@ -321,13 +321,13 @@ app.post('/oldMessages', function(req,res) {
   //console.log(req.session.username);
   console.log(req.body.url);
   if(req.session.uid) {
-    connection.query('SELECT mid, message, SUBSTRING(time,12,5) as time, username FROM chatmessage WHERE url="'+ req.body.url + '" Order by mid DESC limit 20', function(error, results, fields) {
+    connection.query('SELECT mid, message, SUBSTRING(time,12,5) as time, username, uid FROM chatmessage WHERE url="'+ req.body.url + '" Order by mid DESC limit 20', function(error, results, fields) {
       if (error) throw error;
-      //console.log(results);
+      console.log(results);
       if(results==0) {
         //console.log("no results");
         res.write('{"message":[');
-        res.write('{"id":,"content":"","time":"","username":""}');
+        res.write('{"id":,"content":"","time":"","username":"","uid":""}');
         res.write("]}");
         res.end();
       }
@@ -335,9 +335,9 @@ app.post('/oldMessages', function(req,res) {
         res.write('{"message":[');
         for(var i in results) {
           if(i == 0)
-            res.write('{"id":'+results[i].mid+',"content":"'+results[i].message+'","time":"'+results[i].time+'","username":"'+results[i].username+'"}');
+            res.write('{"id":'+results[i].mid+',"content":"'+results[i].message+'","time":"'+results[i].time+'","username":"'+results[i].username+'","uid":'+results[i].uid+'}');
           else
-            res.write(',{"id":'+results[i].mid+',"content":"'+results[i].message+'","time":"'+results[i].time+'","username":"'+results[i].username+'"}');
+            res.write(',{"id":'+results[i].mid+',"content":"'+results[i].message+'","time":"'+results[i].time+'","username":"'+results[i].username+'","uid":'+results[i].uid+'}');
         }
         res.write("]}");
         res.end();
@@ -454,7 +454,6 @@ io.on('connection', function (socket) {
   socket.join(socket.room);
   
   socket.on('new message', function (data) { // when the client emits 'new message', this listens and executes
-
     var mid; // MessageID for the first message for the room
     var mid2; // MessageID for the message for the room
     var counter; // Count the message in the room is 1 or >1
@@ -484,6 +483,7 @@ io.on('connection', function (socket) {
           else {
             console.log('Please login');
           }
+          console.log(socket.handshake.session.uid+" test1");
           io.sockets.in(socket.room).emit('new message', {
             username: socket.handshake.session.username,
             message: data,
@@ -508,6 +508,7 @@ io.on('connection', function (socket) {
             }
             if(error) throw error;
           });
+          console.log(socket.handshake.session.uid+" test2");
           io.sockets.in(socket.room).emit('new message', {
             username: socket.handshake.session.username,
             message: data,
@@ -570,4 +571,10 @@ io.on('connection', function(socket) {
     io.to(roomID).emit('online', roomInfo[roomID]);
   });
 
+});
+
+io.on('connection', function(socket) {
+  socket.room = socket.handshake.session.joinroom;
+  socket.join(socket.room);
+  socket.on('vote', (id) => io.in(socket.room).emit('vote', id));
 });
