@@ -8,7 +8,7 @@
 
         <div id="matched-users" class="dropdown-content">
           <li v-for="user in this.$store.state.matchedUsers" @click="addMember(user)">
-            <img class="circle-image" src="/assets/snake.jpg" alt="head">
+            <img class="circle-image" :src="'getavatar/' + user.id" alt="head">
             <p>{{ user.name }}</p>
           </li>
         </div>
