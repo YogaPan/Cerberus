@@ -323,7 +323,7 @@ app.post('/oldMessages', function(req,res) {
   if(req.session.uid) {
     connection.query('SELECT mid, message, SUBSTRING(time,12,5) as time, username, uid FROM chatmessage WHERE url="'+ req.body.url + '" Order by mid DESC limit 20', function(error, results, fields) {
       if (error) throw error;
-      console.log(results);
+      //console.log(results);
       if(results==0) {
         //console.log("no results");
         res.write('{"message":[');
