@@ -25,7 +25,7 @@ var session = require('express-session')({
   secret: "Haha&!@^#%&^!@%8787ni hao Ma?",
   resave: true,
   saveUninitialized: true,
-  cookie: { maxAge: 600 * 1000 }
+  cookie: { maxAge: 6000 * 1000 }
 });
 var io = require('socket.io')(server);
 io.use(sharedsession(session, {
