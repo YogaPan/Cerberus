@@ -1,7 +1,7 @@
 {
   "isDev": false,
   "server": {
-    "port": 8888,
+    "port": 443,
     "/* secure */": "/* whether this connects via https */",
     "secure": true,
     "key": "ssl/private.key",

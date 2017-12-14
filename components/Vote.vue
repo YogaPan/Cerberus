@@ -32,7 +32,7 @@
 </template>
 
 <script>
-const socket = require('socket.io-client')('https://cerberus.csie.fju.edu.tw:8888')
+const socket = require('socket.io-client')('https://cerberus.csie.fju.edu.tw:443')
 
 import Chart from './Chart'
 

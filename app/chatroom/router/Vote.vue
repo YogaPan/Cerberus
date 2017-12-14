@@ -24,7 +24,7 @@
 </template>
 
 <script>
-var socket = require('socket.io-client')('https://cerberus.csie.fju.edu.tw:8888')
+var socket = require('socket.io-client')('https://cerberus.csie.fju.edu.tw:443')
 
 export default {
   data() {

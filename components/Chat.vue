@@ -2,13 +2,13 @@
   <div id="app-chat">
     <div class="online-list">
       <p v-for="onlinelist in onlinelists" style="height:35px;">
-        <img class="online-user"  v-bind:src="'https://cerberus.csie.fju.edu.tw:8888/getavatar/' + onlinelist">
+        <img class="online-user"  v-bind:src="'https://cerberus.csie.fju.edu.tw:443/getavatar/' + onlinelist">
       </p>
     </div>
     <div class="message-container">
       <div v-for="message in sortedMessages">
       <div class="single-message">
-        <img class="user-img"  v-bind:src="'https://cerberus.csie.fju.edu.tw:8888/getavatar/' + message.uid">
+        <img class="user-img"  v-bind:src="'https://cerberus.csie.fju.edu.tw:443/getavatar/' + message.uid">
 
         <div class="text-area">
           <div class="user">
@@ -75,7 +75,7 @@
 <script src="linkify.min.js"></script>
 <script src="linkify-jquery.min.js"></script>
 <script>
-var socket = require('socket.io-client')('https://cerberus.csie.fju.edu.tw:8888');
+var socket = require('socket.io-client')('https://cerberus.csie.fju.edu.tw:443');
 var linkify = require('linkifyjs');
 var linkifyHtml = require('linkifyjs/html');
                   require('linkifyjs/plugins/hashtag')(linkify);

@@ -9,7 +9,7 @@ const options = {
   key: fs.readFileSync('ssl/private.key'),
   cert: fs.readFileSync('ssl/certificate.crt')
 };
-var server = https.createServer(options,app).listen(8888);
+var server = https.createServer(options,app).listen(443);
 var crypto = require("crypto");
 var bodyParser = require('body-parser'); // for json
 app.use(bodyParser.json());
@@ -40,8 +40,8 @@ var createchatroomhtml = fs.readFileSync('./pages/create-chatroom.html');
 app.use('/dist', express.static('dist'));
 app.use('/assets', express.static('assets'));
 app.use('/', express.static('static'));
-server.listen(8888, function() {
-    console.log('Listenging on port 8888');
+server.listen(443, function() {
+    console.log('Listenging on port 443');
 });
 
 app.get('/test', function(req,res){ // test
