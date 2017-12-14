@@ -38,7 +38,7 @@ import Chart from './Chart'
 
 export default {
   data() {
-    const len = this.$store.state.options
+    const len = this.$store.state.options.length
     const dataCollection = {
       labels: [],  // initial to empty array
       datasets: [
@@ -56,6 +56,7 @@ export default {
       ]
     }
     
+    console.log('len is ', len)
     this.$store.state.options.forEach(option => {
       dataCollection.labels.push(option.content)
     })
@@ -69,11 +70,15 @@ export default {
   },
   mounted() {
     socket.on('ask', content => {
+      console.info('recieve ask event')
       this.$store.dispatch("popVote", content)
     })
 
     socket.on('vote', id => {
-      this.dataCollection.datasets[0].data[id] += 1
+      console.info('receive vote event:', id)
+
+      this.dataCollection.datasets[0].data[id-1] += 1
+      this.$refs.chart.update()
     })
 
     // setInterval(() => {
@@ -95,7 +100,8 @@ export default {
   },
   methods: {
     vote(id) {
-      socket.emit(id)
+      console.log('emit event ', id)
+      socket.emit('vote', id)
       this.showResult = true
     },
     cancel() {
